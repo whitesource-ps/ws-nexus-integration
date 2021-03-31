@@ -1,7 +1,7 @@
 ![Logo](https://whitesource-resources.s3.amazonaws.com/ws-sig-images/Whitesource_Logo_178x44.png)  
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-yellowgreen.svg)](https://opensource.org/licenses/Apache-2.0)
-[![GitHub release](https://img.shields.io/github/v/release/whitesource-ps/ws-nexus)](https://github.com/whitesource-ps/whitesource-nexus-integration/releases/latest) 
+[![GitHub release](https://img.shields.io/github/v/release/whitesource-ps/whitesource-nexus-integration)](https://github.com/whitesource-ps/whitesource-nexus-integration/releases/latest) 
 [![WS Nexus Integration Build and Publish](https://github.com/whitesource-ps/whitesource-nexus-integration/actions/workflows/ci.yml/badge.svg)](https://github.com/whitesource-ps/whitesource-nexus-integration/actions/workflows/ci.yml)
 [![Python 3.6](https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Blue_Python_3.6%2B_Shield_Badge.svg/86px-Blue_Python_3.6%2B_Shield_Badge.svg.png)](https://www.python.org/downloads/release/python-360/)
 ```
