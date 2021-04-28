@@ -14,7 +14,7 @@
 ```
 
 # WhiteSource for Nexus
-**wss-4-nexus** is a command line tool for scanning Nexus repositories.  
+**ws-nexus** is a command line tool for scanning Nexus repositories.  
 This tool can be deployed either on the Nexus host or on a separate machine that has access to the Nexus instance.
 Supported formats: `maven2`, `npm`, `pypi`, `rubygems`, `nuget`, and `raw`.
 
@@ -23,14 +23,14 @@ Supported formats: `maven2`, `npm`, `pypi`, `rubygems`, `nuget`, and `raw`.
 - Python 3.5 or above
 
 ### Deployment
-1. On the target machine, create a new directory (e.g. wss-4-nexus) and extract **wss-4-nexus.zip** to that directory.
-2. From the command line, navigate to the wss-4-nexus directory and install the package:  
+1. On the target machine, create a new directory (e.g. ws-nexus) and extract **ws-nexus.zip** to that directory.
+2. From the command line, navigate to the ws-nexus directory and install the package:  
    `pip install -r requirements.txt`
 3. Edit the **params.config** file and update the relevant parameters (see the configuration parameters below)
 
 ### Execution
 From the command line, execute the command:  
-`python wss-scan.py`
+`python ws-scan.py`
 
 **Note:** If more than one version of Python is installed on the target machine, use the appropriate executables
 for the installation and the execution (`pip3` and `python3` respectively)
