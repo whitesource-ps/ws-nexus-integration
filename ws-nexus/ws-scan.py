@@ -52,6 +52,7 @@ class Configuration:
         self.nexus_password = config.get('Nexus Settings', 'NexusPassword')
         self.nexus_config_input_repositories = config.get('Nexus Settings', 'NexusRepositories')
         # WhiteSource Settings
+        self.user_key = config.get('WhiteSource Settings', 'WSUserKey')
         self.api_key = config.get('WhiteSource Settings', 'WSApiKey')
         self.product_name = config.get('WhiteSource Settings', 'WSProductName', fallback='Nexus')
         # self.ua_dir = config.get('WhiteSource Settings', 'UADir')
@@ -98,7 +99,7 @@ def main():
 
     validate_nexus_user_pass(config.nexus_user, config.nexus_password, config.nexus_auth_token)
 
-    validate_api_key_and_ua_url(config.api_key, config.ws_url)
+    validate_ws_credentials(config.user_key, config.api_key, config.ws_url)
 
     ua_jar_with_path = download_unified_agent_and_config()
 
@@ -131,8 +132,8 @@ def main():
                                           config.threads_number)
 
     print_header('WhiteSource Scan')
-    exit_code = whitesource_scan(config.product_name, config.api_key, config.check_policies, config.ws_url,
-                                 ua_jar_with_path)
+    exit_code = whitesource_scan(config.product_name, config.user_key, config.api_key, config.check_policies,
+                                 config.ws_url, ua_jar_with_path)
 
     move_all_files_in_dir(WS_LOG_DIR, LOG_DIR)
 
@@ -192,21 +193,28 @@ def validate_nexus_user_pass(nexus_user, nexus_password, nexus_auth_token):
     logging.info('Nexus credentials validated')
 
 
-def validate_api_key_and_ua_url(api_key, ua_url):
+def validate_ws_credentials(user_key, api_key, ua_url):
     """
 
+    :param user_key:
     :param api_key:
     :param ua_url:
     :return:
     """
-    logging.info('Validating WhiteSource API Key and URL')
-    if not api_key:
-        logging.error(f'{FAILED} {BASIC_AUTH_DELIMITER}  WSApiKey must be provided. Check params.config and try again.')
+    logging.info('Validating WhiteSource User Key, API Key and URL')
+
+    check_if_param_exists(user_key, 'WSUserKey')
+    check_if_param_exists(api_key, 'WSApiKey')
+    check_if_param_exists(ua_url, 'WSUrl')
+
+    logging.info('WhiteSource User Key, API Key and URL validated')
+
+
+def check_if_param_exists(param=str, param_name=str):
+    if not param:
+        logging.error(f'{FAILED} {BASIC_AUTH_DELIMITER} {param_name} '
+                      f'must be provided. Check params.config and try again.')
         ws_exit()
-    if not ua_url:
-        logging.error(f'{FAILED} {BASIC_AUTH_DELIMITER} WSUrl must be provided. Check params.config and try again.')
-        ws_exit()
-    logging.info('WhiteSource API Key and URL validated')
 
 
 def convert_to_basic_string(user_name, password):
@@ -413,10 +421,11 @@ def download_unified_agent_and_config():
     return ua_jar_with_path
 
 
-def whitesource_scan(product_name, api_key, check_policies, ws_url, ua_jar_with_path) -> int:
+def whitesource_scan(product_name, user_key, api_key, check_policies, ws_url, ua_jar_with_path) -> int:
     """
 
     :param product_name:
+    :param user_key:
     :param api_key:
     :param ws_url:
     :param check_policies:
@@ -425,13 +434,9 @@ def whitesource_scan(product_name, api_key, check_policies, ws_url, ua_jar_with_
     """
 
     logging.info('Starting WhiteSource scan')
-
-    # Popen('java -jar "{0}" -c "{1}" -d "{2}" -product "{3}" -projectPerFolder true -apiKey {4} -wss.url {5}'.format(
-    #     ua_jar_with_path, ua_config_with_path, SCAN_DIR, product_name, api_key, ua_url), shell=True, cwd=LOGS_DIR)
-
     policies = 'true' if check_policies else 'false'
 
-    ws_env = {**os.environ, **{'WS_APIKEY': api_key, 'WS_PROJECTPERFOLDER': 'true',
+    ws_env = {**os.environ, **{'WS_USERKEY': user_key, 'WS_APIKEY': api_key, 'WS_PROJECTPERFOLDER': 'true',
                                'WS_PRODUCTNAME': product_name, 'WS_WSS_URL': ws_url,
                                'WS_INCLUDES': '**/*.*', 'WS_CHECKPOLICIES': policies,
                                'WS_FORCECHECKALLDEPENDENCIES': policies}}
