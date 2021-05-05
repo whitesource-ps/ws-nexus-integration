@@ -15,6 +15,7 @@ import re
 
 
 # constants
+
 BASIC_AUTH_DELIMITER = ':'
 PACKAGE_NAME = 'wss-4-nexus'
 PACKAGE_VERSION = '1.2.0'
@@ -36,6 +37,7 @@ SAAS_URL = 'https://saas.whitesourcesoftware.com/agent'
 SAAS_EU_URL = 'https://saas-eu.whitesourcesoftware.com/agent'
 APP_URL = 'https://app.whitesourcesoftware.com/agent'
 APP_EU_URL = 'https://app-eu.whitesourcesoftware.com/agent'
+SUPPORTED_FORMATS = {'maven2', 'npm', 'pypi', 'rubygems', 'nuget', 'raw'}
 
 logger = logging.getLogger()
 
@@ -116,9 +118,10 @@ def main():
                                                                                existing_nexus_repository_list)
     else:
         print_header('Available Repositories')
+        print('Only supported repositories will be available for the WS scan')
 
         for number, entry in enumerate(existing_nexus_repository_list):
-            print('   ', number, '-', entry)
+            print(f'   {number} - {entry}')
 
         nexus_input_repositories_str = input('Select repositories to scan by entering their numbers '
                                              '(space delimited list): ')
@@ -257,8 +260,12 @@ def retrieve_nexus_repositories(user, password, nexus_auth_token, nexus_api_url_
 
     existing_nexus_repository_list = []
     for json_repository in json_response_repository_headers:
-        rep_name = json_repository["name"]
-        existing_nexus_repository_list.append(rep_name)
+        repo_format = json_repository.get("format")
+        if repo_format in SUPPORTED_FORMATS:
+            rep_name = json_repository["name"]
+            existing_nexus_repository_list.append(rep_name)
+        else:
+            continue
     return headers, existing_nexus_repository_list
 
 
@@ -336,7 +343,8 @@ def download_components_from_repositories(selected_repositories, nexus_api_url_c
             continuation_token = cur_json_response_cur_components['continuationToken']
 
         if not all_repo_items:
-            logging.info('No artifacts found in ' + repo_name)
+            logging.info(f'No artifacts found in {repo_name}')
+            logging.info(' -- > ')
         else:
             script_path = pathlib.Path(__file__).parent.absolute()
             cur_dest_folder = f'{script_path}/{SCAN_DIR}/{repo_name}'
@@ -347,6 +355,7 @@ def download_components_from_repositories(selected_repositories, nexus_api_url_c
             with Pool(threads_number) as pool:
                 pool.starmap(repo_worker, [(comp, repo_name, cur_dest_folder, header)
                                            for i, comp in enumerate(all_repo_items)])
+            logging.info(' -- > ')
 
 
 def repo_worker(comp, repo_name, cur_dest_folder, header):
