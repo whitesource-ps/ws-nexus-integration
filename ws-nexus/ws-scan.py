@@ -109,12 +109,13 @@ def main():
                                                                          config.nexus_auth_token, nexus_api_url_repos)
 
     if not config.interactive_mode:
-        if not config.nexus_config_input_repositories:
+        nexus_input_repositories = config.nexus_config_input_repositories
+        if not nexus_input_repositories:
             selected_repositories = existing_nexus_repository_list
             logging.info('No repositories specified, all repositories will be scanned')
         else:
             logging.info('Validate specified repositories')
-            selected_repositories = validate_selected_repositories_from_config(config.nexus_config_input_repositories,
+            selected_repositories = validate_selected_repositories_from_config(nexus_input_repositories,
                                                                                existing_nexus_repository_list)
     else:
         print_header('Available Repositories')
@@ -304,8 +305,8 @@ def validate_selected_repositories_from_config(nexus_input_repositories, existin
     missing_repos = user_selected_repos_set - existing_nexus_repository_set
     if missing_repos:
         logging.error(f'Could not find the following repositories: {",".join(missing_repos)}')
-        logging.error(f'{FAILED} {BASIC_AUTH_DELIMITER} Specified repositories not found, check params.config and try '
-                      f'again.')
+        logging.error(f'{FAILED} {BASIC_AUTH_DELIMITER} Specified repositories not found or their format is not'
+                      f' supported, check params.config and try again.')
         ws_exit()
     # ToDo - only ws_exit if ALL specified repos not found, continue scan if some were found.
 
