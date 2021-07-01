@@ -43,7 +43,7 @@ config = None
 
 logging.basicConfig(level=logging.INFO,
                     handlers=[logging.StreamHandler(stream=sys.stdout), logging.FileHandler(LOG_FILE_WITH_PATH)],
-                    format='%(levelname)s %(asctime)s %(process)p: %(message)s',
+                    format='%(levelname)s %(asctime)s %(process)d: %(message)s',
                     datefmt='%y-%m-%d %H:%M:%S')
 
 
