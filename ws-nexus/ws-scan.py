@@ -9,13 +9,11 @@ import sys
 import subprocess
 import os
 from configparser import ConfigParser
-from multiprocessing import Pool
+from multiprocessing import Pool, Manager
 import requests
 import re
 
-
 # constants
-
 BASIC_AUTH_DELIMITER = ':'
 PACKAGE_NAME = 'wss-4-nexus'
 PACKAGE_VERSION = '1.2.0'
@@ -37,73 +35,70 @@ SAAS_URL = 'https://saas.whitesourcesoftware.com/agent'
 SAAS_EU_URL = 'https://saas-eu.whitesourcesoftware.com/agent'
 APP_URL = 'https://app.whitesourcesoftware.com/agent'
 APP_EU_URL = 'https://app-eu.whitesourcesoftware.com/agent'
-SUPPORTED_FORMATS = {'maven2', 'npm', 'pypi', 'rubygems', 'nuget', 'raw'}
+SUPPORTED_FORMATS = {'maven2', 'npm', 'pypi', 'rubygems', 'nuget', 'raw', 'docker'}
+DOCKER_TIMEOUT = 600
+BETA_REPOS_URL = "/service/rest/beta/repositories"
 
-logger = logging.getLogger()
+config = None
+
+logging.basicConfig(level=logging.INFO,
+                    handlers=[logging.StreamHandler(stream=sys.stdout), logging.FileHandler(LOG_FILE_WITH_PATH)],
+                    format='%(levelname)s %(asctime)s %(process)p: %(message)s',
+                    datefmt='%y-%m-%d %H:%M:%S')
 
 
 class Configuration:
     def __init__(self):
-        config = ConfigParser()
-        config.optionxform = str
-        config.read('../config/params.config')
+        conf = ConfigParser()
+        conf.optionxform = str
+        conf.read('../config/params.config')
         # Nexus Settings
-        self.nexus_base_url = config.get('Nexus Settings', 'NexusBaseUrl', fallback='http://localhost:8081').strip('/')
-        self.nexus_auth_token = config.get('Nexus Settings', 'NexusAuthToken')
-        self.nexus_user = config.get('Nexus Settings', 'NexusUser')
-        self.nexus_password = config.get('Nexus Settings', 'NexusPassword')
-        self.nexus_config_input_repositories = config.get('Nexus Settings', 'NexusRepositories')
+        self.nexus_base_url = conf.get('Nexus Settings', 'NexusBaseUrl', fallback='http://localhost:8081').strip('/')
+        self.nexus_auth_token = conf.get('Nexus Settings', 'NexusAuthToken')
+        self.nexus_user = conf.get('Nexus Settings', 'NexusUser')
+        self.nexus_password = conf.get('Nexus Settings', 'NexusPassword')
+        self.nexus_config_input_repositories = conf.get('Nexus Settings', 'NexusRepositories')
         # WhiteSource Settings
-        self.user_key = config.get('WhiteSource Settings', 'WSUserKey')
-        self.api_key = config.get('WhiteSource Settings', 'WSApiKey')
-        self.product_name = config.get('WhiteSource Settings', 'WSProductName', fallback='Nexus')
-        # self.ua_dir = config.get('WhiteSource Settings', 'UADir')
-        self.check_policies = config.getboolean('WhiteSource Settings', 'WSCheckPolicies', fallback=False)
-        self.ws_url = config.get('WhiteSource Settings', 'WSUrl')
+        self.user_key = conf.get('WhiteSource Settings', 'WSUserKey')
+        self.api_key = conf.get('WhiteSource Settings', 'WSApiKey')
+        self.product_name = conf.get('WhiteSource Settings', 'WSProductName', fallback='Nexus')
+        # self.ua_dir = conf.get('WhiteSource Settings', 'UADir')
+        self.check_policies = conf.getboolean('WhiteSource Settings', 'WSCheckPolicies', fallback=False)
+        self.policies = 'true' if self.check_policies else 'false'
+        self.ws_url = conf.get('WhiteSource Settings', 'WSUrl')
         if not self.ws_url.endswith('/agent'):
             self.ws_url = self.ws_url + '/agent'
         # General Settings
-        self.interactive_mode = config.getboolean('General Settings', 'InteractiveMode', fallback=False)
-        self.threads_number = config.getint('General Settings', 'ThreadCount', fallback=5)
+        self.interactive_mode = conf.getboolean('General Settings', 'InteractiveMode', fallback=False)
+        self.threads_number = conf.getint('General Settings', 'ThreadCount', fallback=5)
 
-
-def init_logger():
-    """
-    Initializes loggers to include timestamps and set outputs
-
-    :return:
-    """
-    logger = logging.getLogger()
-    format_string = '[%(asctime)s] %(message)s'
-    formatter = logging.Formatter(format_string)
-    std_handler = logging.StreamHandler(sys.stdout)
-    std_handler.setFormatter(formatter)
-    std_handler.setLevel(logging.INFO)
-    debug_handler = logging.FileHandler(LOG_FILE_WITH_PATH)
-    debug_handler.setFormatter(formatter)
-    debug_handler.setLevel(logging.DEBUG)
-    logger.addHandler(std_handler)
-    logger.addHandler(debug_handler)
-    logger.setLevel(logging.DEBUG)
+        self.ws_env_var = {**os.environ, **{'WS_USERKEY': self.user_key,
+                                            'WS_APIKEY': self.api_key,
+                                            'WS_PROJECTPERFOLDER': 'true',
+                                            'WS_PRODUCTNAME': self.product_name,
+                                            'WS_WSS_URL': self.ws_url,
+                                            'WS_INCLUDES': '**/*.*',
+                                            'WS_CHECKPOLICIES': self.policies,
+                                            'WS_FORCECHECKALLDEPENDENCIES': self.policies,
+                                            'WS_OFFLINE': 'false'}}
+        self.nexus_ip = self.nexus_base_url.split('//')[1].split(':')[0]
 
 
 def main():
-
+    global config
     print_header('WhiteSource for Nexus')
 
     config = Configuration()
-    creating_folder_and_log_file()
-    init_logger()
 
-    logger.info("Starting")
+    logging.info("Starting")
 
-    nexus_api_url_repos, nexus_api_url_components = define_nexus_parameters(config)
+    nexus_api_url_repos, nexus_api_url_components = define_nexus_parameters()
 
     validate_nexus_user_pass(config.nexus_user, config.nexus_password, config.nexus_auth_token)
 
     validate_ws_credentials(config.user_key, config.api_key, config.ws_url)
 
-    ua_jar_with_path = download_unified_agent_and_config()
+    config.ua_jar_with_path = download_unified_agent_and_config()
 
     header, existing_nexus_repository_list = retrieve_nexus_repositories(config.nexus_user, config.nexus_password,
                                                                          config.nexus_auth_token, nexus_api_url_repos)
@@ -136,8 +131,7 @@ def main():
                                           config.threads_number)
 
     print_header('WhiteSource Scan')
-    exit_code = whitesource_scan(config.product_name, config.user_key, config.api_key, config.check_policies,
-                                 config.ws_url, ua_jar_with_path)
+    exit_code = whitesource_scan()
 
     move_all_files_in_dir(WS_LOG_DIR, LOG_DIR)
 
@@ -167,7 +161,8 @@ def creating_folder_and_log_file():
     os.makedirs(SCAN_DIR, exist_ok=True)
 
 
-def define_nexus_parameters(config):
+def define_nexus_parameters():
+    global config
     """
     Build Nexus URLs according to configuration
 
@@ -177,6 +172,7 @@ def define_nexus_parameters(config):
     nexus_api_url = config.nexus_base_url + '/service/rest/v1'
     nexus_api_url_repos = nexus_api_url + '/repositories'
     nexus_api_url_components = nexus_api_url + '/components'
+
     return nexus_api_url_repos, nexus_api_url_components
 
 
@@ -353,15 +349,57 @@ def download_components_from_repositories(selected_repositories, nexus_api_url_c
 
             logging.info('Retrieving artifacts...')
 
+            manager = Manager()
+            docker_images_q = manager.Queue()
             with Pool(threads_number) as pool:
-                pool.starmap(repo_worker, [(comp, repo_name, cur_dest_folder, header)
+                pool.starmap(repo_worker, [(comp, repo_name, cur_dest_folder, header, config, docker_images_q)
                                            for i, comp in enumerate(all_repo_items)])
+            # Updating UA env vars to include Docker images from Nexus
+            docker_images = []
+            while not docker_images_q.empty():
+                docker_images.append(docker_images_q.get(block=True, timeout=0.05))
+
+            if docker_images:
+                logging.info(f"Found {len(docker_images)} Docker Images")
+                config.ws_env_var['WS_DOCKER_SCANIMAGES'] = 'True'
+                config.ws_env_var['WS_DOCKER_INCLUDES'] = ",".join(docker_images)
             logging.info(' -- > ')
 
 
-def repo_worker(comp, repo_name, cur_dest_folder, header):
+def handle_docker_repo(component: dict, conf, header) -> str:
+    def get_repo_as_dict() -> dict:
+        repo_resp = requests.get(conf.nexus_base_url + BETA_REPOS_URL, headers=header)
+        repos_list = json.loads(repo_resp.text)
+        repo_dict = {}
+        for repo in repos_list:
+            repo_dict[repo['name']] = repo
+
+        return repo_dict
+
+    dl_url = component['assets'][0]["downloadUrl"]
+    manifest_resp = requests.get(dl_url, headers=header)
+    manifest = json.loads(manifest_resp.text)
+    repos = get_repo_as_dict()
+    import docker
+    client = docker.from_env(timeout=DOCKER_TIMEOUT)
+    repo_port = repos[component['repository']]['docker'].get('httpsPort', repos[component['repository']]['docker']['httpPort'])
+    image_name = f"{conf.nexus_ip}:{repo_port}/{manifest['name']}:{manifest['tag']}"
+    logging.info(f"Pulling Docker image: {image_name}")
+    try:
+        pull_res = client.images.pull(image_name)
+    except docker.errors.APIError:
+        logging.exception(f"Unable to pull image: {image_name}")
+    image_id = pull_res.id.split(':')[1][0:12]
+    logging.debug(f"Image:  Image ID: {image_id}")
+
+    return image_id  # Shorten ID to match docker images IMAGE ID
+
+
+def repo_worker(comp, repo_name, cur_dest_folder, header, conf, d_images_q):
     """
 
+    :param d_images_q:
+    :param conf:
     :param comp:
     :param repo_name:
     :param cur_dest_folder:
@@ -370,6 +408,7 @@ def repo_worker(comp, repo_name, cur_dest_folder, header):
 
     all_components = []
     component_assets = comp['assets']
+    logging.debug(f"Handling component ID: {comp['id']} on repository: {comp['repository']} Format: {comp['format']}")
     if comp['format'] == 'nuget':
         comp_name = '{}.{}.nupkg'.format(comp['name'], comp['version'])
         all_components.append(comp_name)
@@ -379,6 +418,8 @@ def repo_worker(comp, repo_name, cur_dest_folder, header):
             comp_name = component_assets[asset]['path'].rpartition('/')[-1]
             if comp_name.split(".")[-1] == JAR_EXTENSION:
                 all_components.append(comp_name)
+    elif comp['format'] == 'docker':
+        d_images_q.put(handle_docker_repo(comp, conf, header))
     else:
         comp_name = component_assets[0]['path'].rpartition('/')[-1]
         all_components.append(comp_name)
@@ -399,6 +440,7 @@ def comp_worker(repo_name, component_assets, cur_dest_folder, header, comp_name)
     logging.info(f'Downloading {comp_name} component from {repo_name}')
     comp_download_url = component_assets[0]["downloadUrl"]
     response = requests.get(comp_download_url, headers=header)
+    logging.debug(f"Download URL: {comp_download_url}")
     path = os.path.dirname(f'{cur_dest_folder}/{comp_name}')
     if not os.path.exists(path):
         os.makedirs(path, exist_ok=True)
@@ -414,6 +456,7 @@ def download_unified_agent_and_config():
     """
     logging.info('Verifying agent parameters')
     ua_jar_with_path = f'{UA_DIR}/{UA_JAR_NAME}'
+    ua_conf_with_path = f'{UA_DIR}/{UA_CONFIG_NAME}'
 
     if not os.path.isdir(UA_DIR):
         logging.info(f'Creating directory "{UA_DIR}"')
@@ -427,11 +470,17 @@ def download_unified_agent_and_config():
         with open(ua_jar_with_path, 'wb') as f:
             f.write(r.content)
 
+        r = requests.get(URL_UA_CONFIG)
+        with open(ua_conf_with_path, 'wb') as f:
+            f.write(r.content)
+
     logging.info('WhiteSource agent download complete')
+
     return ua_jar_with_path
 
 
-def whitesource_scan(product_name, user_key, api_key, check_policies, ws_url, ua_jar_with_path) -> int:
+def whitesource_scan() -> int:
+    global config
     """
 
     :param product_name:
@@ -444,15 +493,9 @@ def whitesource_scan(product_name, user_key, api_key, check_policies, ws_url, ua
     """
 
     logging.info('Starting WhiteSource scan')
-    policies = 'true' if check_policies else 'false'
 
-    ws_env = {**os.environ, **{'WS_USERKEY': user_key, 'WS_APIKEY': api_key, 'WS_PROJECTPERFOLDER': 'true',
-                               'WS_PRODUCTNAME': product_name, 'WS_WSS_URL': ws_url,
-                               'WS_INCLUDES': '**/*.*', 'WS_CHECKPOLICIES': policies,
-                               'WS_FORCECHECKALLDEPENDENCIES': policies}}
-
-    return_code = subprocess.run(['java', '-jar', ua_jar_with_path,  '-d', SCAN_DIR, '-logLevel', ERROR],
-                                 env=ws_env, stdout=subprocess.DEVNULL).returncode
+    return_code = subprocess.run(['java', '-jar', config.ua_jar_with_path, '-d', SCAN_DIR, '-logLevel', ERROR],
+                                 env=config.ws_env_var, stdout=subprocess.DEVNULL).returncode
 
     return_msg = 'SUCCESS'
     if return_code != 0:

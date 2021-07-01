@@ -19,3 +19,8 @@ target/
 
 # Excluded Files - Naming Convention
 local-env.*
+/venv/
+/ws-nexus/_wstemp/
+/ws-nexus/whitesource/
+/ws-nexus/ua/
+/ws-nexus/logs/
