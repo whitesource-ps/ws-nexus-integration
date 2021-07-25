@@ -8,10 +8,12 @@
 # WhiteSource for Nexus
 **ws-nexus** is a command line tool for scanning Nexus repositories.  
 This tool can be deployed either on the Nexus host or on a separate machine that has access to the Nexus instance.
-Supported formats: `maven2`, `npm`, `pypi`, `rubygems`, `nuget`, and `raw`.
+Supported formats: `maven2`, `npm`, `pypi`, `rubygems`, `nuget`, `docker` and `raw`.
 
 ### Prerequisites
 - Nexus Repository Manager 3.x (any edition)
+- Java VM > 8 
+- Docker
 - Python 3.5 or above
 
 ### Deployment
