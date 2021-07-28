@@ -1,15 +1,32 @@
-[2021-03-24 17:58:16,751] Starting
-[2021-03-24 17:58:16,751] Getting region parameters
-[2021-03-24 17:58:16,751] Validating Nexus credentials
-[2021-03-24 17:58:16,751] Nexus credentials validated
-[2021-03-24 17:58:16,751] Validating WhiteSource API Key and URL
-[2021-03-24 17:58:16,751] WhiteSource API Key and URL validated
-[2021-03-24 17:58:16,751] Verifying agent parameters
-[2021-03-24 17:58:16,751] Creating directory "ua"
-[2021-03-24 17:58:16,752] (this may take a few minutes on first run)
-[2021-03-24 17:58:16,752] Downloading WhiteSource agent
-[2021-03-24 17:58:16,754] Starting new HTTPS connection (1): github.com:443
-[2021-03-24 17:58:17,033] https://github.com:443 "GET /whitesource/unified-agent-distribution/releases/latest/download/wss-unified-agent.jar HTTP/1.1" 302 171
-[2021-03-24 17:58:17,098] https://github.com:443 "GET /whitesource/unified-agent-distribution/releases/download/v21.2.2/wss-unified-agent.jar HTTP/1.1" 302 629
-[2021-03-24 17:58:17,103] Starting new HTTPS connection (1): github-releases.githubusercontent.com:443
-[2021-03-24 17:58:17,456] https://github-releases.githubusercontent.com:443 "GET /164440136/03040f00-84a5-11eb-9ee4-4123df14b4bb?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20210324%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210324T155746Z&X-Amz-Expires=300&X-Amz-Signature=85aa2681ed2a119af9445037ee25b17909b4899b9b27bac6f93f65c5045c2dd9&X-Amz-SignedHeaders=host&actor_id=0&key_id=0&repo_id=164440136&response-content-disposition=attachment%3B%20filename%3Dwss-unified-agent.jar&response-content-type=application%2Foctet-stream HTTP/1.1" 200 79654112
+INFO 21-07-28 18:50:46 16768: Starting
+INFO 21-07-28 18:50:46 16768: Getting region parameters
+INFO 21-07-28 18:50:46 16768: Validating Nexus credentials
+INFO 21-07-28 18:50:46 16768: Nexus credentials validated
+INFO 21-07-28 18:50:46 16768: Validating WhiteSource User Key, API Key and URL
+INFO 21-07-28 18:50:46 16768: WhiteSource User Key, API Key and URL validated
+INFO 21-07-28 18:50:46 16768: Verifying agent parameters
+INFO 21-07-28 18:50:46 16768: WhiteSource agent download complete
+INFO 21-07-28 18:50:46 16768: Converting user and password to basic string
+INFO 21-07-28 18:50:46 16768: Sending request for retrieving Nexus repository list
+INFO 21-07-28 18:51:55 22952: Starting
+INFO 21-07-28 18:51:55 22952: Getting region parameters
+INFO 21-07-28 18:51:55 22952: Validating Nexus credentials
+INFO 21-07-28 18:51:55 22952: Nexus credentials validated
+INFO 21-07-28 18:51:55 22952: Validating WhiteSource User Key, API Key and URL
+INFO 21-07-28 18:51:55 22952: WhiteSource User Key, API Key and URL validated
+INFO 21-07-28 18:51:55 22952: Verifying agent parameters
+INFO 21-07-28 18:51:55 22952: WhiteSource agent download complete
+INFO 21-07-28 18:51:55 22952: Converting user and password to basic string
+INFO 21-07-28 18:51:55 22952: Sending request for retrieving Nexus repository list
+INFO 21-07-28 18:52:28 22952: Nexus Version: 3.26
+INFO 21-07-28 18:53:32 29488: Starting
+INFO 21-07-28 18:53:32 29488: Getting region parameters
+INFO 21-07-28 18:53:32 29488: Validating Nexus credentials
+INFO 21-07-28 18:53:32 29488: Nexus credentials validated
+INFO 21-07-28 18:53:32 29488: Validating WhiteSource User Key, API Key and URL
+INFO 21-07-28 18:53:32 29488: WhiteSource User Key, API Key and URL validated
+INFO 21-07-28 18:53:32 29488: Verifying agent parameters
+INFO 21-07-28 18:53:32 29488: WhiteSource agent download complete
+INFO 21-07-28 18:53:32 29488: Converting user and password to basic string
+INFO 21-07-28 18:53:32 29488: Sending request for retrieving Nexus repository list
+INFO 21-07-28 18:54:07 29488: {'Date': 'Wed, 28 Jul 2021 15:53:32 GMT', 'Server': 'Nexus/3.23.0-03 (OSS)', 'X-Content-Type-Options': 'nosniff', 'Content-Type': 'application/json', 'Content-Length': '1447'}
