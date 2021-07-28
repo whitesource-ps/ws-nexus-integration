@@ -1,5 +1,6 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 import base64
+from distutils.dir_util import copy_tree, remove_tree
 import glob
 import json
 import logging
@@ -10,6 +11,8 @@ import subprocess
 import os
 from configparser import ConfigParser
 from multiprocessing import Pool, Manager
+from urllib.parse import urlparse
+
 import requests
 import re
 
@@ -37,13 +40,12 @@ APP_URL = 'https://app.whitesourcesoftware.com/agent'
 APP_EU_URL = 'https://app-eu.whitesourcesoftware.com/agent'
 SUPPORTED_FORMATS = {'maven2', 'npm', 'pypi', 'rubygems', 'nuget', 'raw', 'docker'}
 DOCKER_TIMEOUT = 600
-BETA_REPOS_URL = "/service/rest/beta/repositories"
-
+VER_3_26 = ["3", "26"]
 config = None
 
 logging.basicConfig(level=logging.INFO,
                     handlers=[logging.StreamHandler(stream=sys.stdout), logging.FileHandler(LOG_FILE_WITH_PATH)],
-                    format='%(levelname)s %(asctime)s %(process)d: %(message)s',
+                    format='%(levelname)s %(asctime)s %(process)s: %(message)s',
                     datefmt='%y-%m-%d %H:%M:%S')
 
 
@@ -83,13 +85,25 @@ class Configuration:
                                             'WS_OFFLINE': 'false'}}
         self.nexus_ip = self.nexus_base_url.split('//')[1].split(':')[0]
 
+        # Validation authentication details
+        if self.nexus_user and self.nexus_password:
+            logging.debug('Converting user and password to basic string')
+            self.nexus_auth_token = convert_to_basic_string(self.nexus_user, self.nexus_password)
+        elif self.nexus_auth_token:
+            logging.debug(f"Using configure Nexus token: {self.nexus_auth_token}")
+        else:
+            logging.error("Missing Nexus authentication. Configure username and password or Token")
+            return
+
+        self.headers = {'Authorization': f'Basic {self.nexus_auth_token}',
+                        'accept': 'application/json'}
+
 
 def main():
     global config
     print_header('WhiteSource for Nexus')
 
     config = Configuration()
-
     logging.info("Starting")
 
     nexus_api_url_repos, nexus_api_url_components = define_nexus_parameters()
@@ -102,6 +116,7 @@ def main():
 
     header, existing_nexus_repository_list = retrieve_nexus_repositories(config.nexus_user, config.nexus_password,
                                                                          config.nexus_auth_token, nexus_api_url_repos)
+    set_resources_url(config.nexus_version)
 
     if not config.interactive_mode:
         nexus_input_repositories = config.nexus_config_input_repositories
@@ -138,6 +153,15 @@ def main():
     delete_files(WS_LOG_DIR, SCAN_DIR)
 
     sys.exit(exit_code)
+
+
+def set_resources_url(full_version: str):
+    ver = full_version.strip("Nexus/ (OSS)").split(".")
+    if ver[0] < VER_3_26[0] or (ver[0] == VER_3_26[0] and ver[1] < VER_3_26[1]):
+        config.resources_url = "/service/rest/beta/repositories"
+    else:
+        config.resources_url = "/service/rest/v1/repositorySettings"
+    logging.debug(f"Using repository: {config.resources_url}")
 
 
 def print_header(hdr_txt: str):
@@ -244,8 +268,7 @@ def retrieve_nexus_repositories(user, password, nexus_auth_token, nexus_api_url_
     if user and password:
         logging.info('Converting user and password to basic string')
         nexus_auth_token = convert_to_basic_string(user, password)
-    else:
-        nexus_auth_token = nexus_auth_token
+
     headers = {'Authorization': 'Basic %s' % nexus_auth_token}
     logging.info('Sending request for retrieving Nexus repository list')
     try:
@@ -254,6 +277,9 @@ def retrieve_nexus_repositories(user, password, nexus_auth_token, nexus_api_url_
     except Exception:
         logging.info(f'{FAILED} to retrieve Nexus repositories. Verify Nexus URL and credentials and try again.')
         ws_exit()
+
+    config.nexus_version = response_repository_headers.headers['Server']
+    logging.info(f"Nexus Version: {config.nexus_version}")
 
     existing_nexus_repository_list = []
     for json_repository in json_response_repository_headers:
@@ -360,15 +386,21 @@ def download_components_from_repositories(selected_repositories, nexus_api_url_c
                 docker_images.append(docker_images_q.get(block=True, timeout=0.05))
 
             if docker_images:
-                logging.info(f"Found {len(docker_images)} Docker Images")
+                logging.info(f"Found {len(docker_images)} Docker images")
                 config.ws_env_var['WS_DOCKER_SCANIMAGES'] = 'True'
                 config.ws_env_var['WS_DOCKER_INCLUDES'] = ",".join(docker_images)
             logging.info(' -- > ')
 
 
-def handle_docker_repo(component: dict, conf, header) -> str:
-    def get_repo_as_dict() -> dict:
-        repo_resp = requests.get(conf.nexus_base_url + BETA_REPOS_URL, headers=header)
+def handle_docker_repo(component: dict, conf) -> str:
+    """
+    Locally pull Docker Image from a given repository (component)
+    :param component:
+    :param conf: global config
+    :return: Retrieve Docker Image ID so UA will only scan images downloaded from Nexus
+    """
+    def get_repos_as_dict() -> dict:
+        repo_resp = requests.get(conf.nexus_base_url + conf.resources_url, headers=conf.headers)
         repos_list = json.loads(repo_resp.text)
         repo_dict = {}
         for repo in repos_list:
@@ -376,21 +408,47 @@ def handle_docker_repo(component: dict, conf, header) -> str:
 
         return repo_dict
 
+    def get_docker_repo_url(repo: dict) -> str:
+        """
+        Retrieves Repository URL with port
+        :param repo:
+        :return: Image ID in form of string
+        """
+        https_port = repo['docker'].get('httpsPort')
+        http_port = repo['docker']['httpPort']
+        parsed_url = urlparse(repo['url'])
+        if http_port:
+            r_url = f"{parsed_url.hostname}:{http_port}"
+        elif https_port:
+            r_url = f"{parsed_url.hostname}:{https_port}"
+        else:
+            logging.error("Unable to get repository port. Using default URL")
+            r_url = f"{parsed_url.hostname}:{parsed_url.port}"
+        logging.debug(f"Returned docker repo URL: {r_url}")
+
+        return r_url
+
     dl_url = component['assets'][0]["downloadUrl"]
-    manifest_resp = requests.get(dl_url, headers=header)
+    logging.debug(f"Getting manifest file from: {dl_url}")
+    manifest_resp = requests.get(dl_url, headers=conf.headers)
     manifest = json.loads(manifest_resp.text)
-    repos = get_repo_as_dict()
+    repos = get_repos_as_dict()
+
     import docker
-    client = docker.from_env(timeout=DOCKER_TIMEOUT)
-    repo_port = repos[component['repository']]['docker'].get('httpsPort', repos[component['repository']]['docker']['httpPort'])
-    image_name = f"{conf.nexus_ip}:{repo_port}/{manifest['name']}:{manifest['tag']}"
+    docker_repo_url = get_docker_repo_url(repos[component['repository']])
+    image_name = f"{docker_repo_url}/{manifest['name']}:{manifest['tag']}"
     logging.info(f"Pulling Docker image: {image_name}")
     try:
+        client = docker.from_env(timeout=DOCKER_TIMEOUT)
+        # Configuring Nexus user and password are mandatory for non-anonymous Docker repositories
+        client.login(username=conf.nexus_user, password=conf.nexus_password, registry=docker_repo_url)
         pull_res = client.images.pull(image_name)
-    except docker.errors.APIError:
-        logging.exception(f"Unable to pull image: {image_name}")
+    except docker.errors.DockerException:
+        logging.exception(f"Error loading image: {image_name}")
+        return ""
+
     image_id = pull_res.id.split(':')[1][0:12]
-    logging.debug(f"Image:  Image ID: {image_id}")
+    logging.debug(f"Image ID: {image_id} successfully pulled")
 
     return image_id  # Shorten ID to match docker images IMAGE ID
 
@@ -419,7 +477,7 @@ def repo_worker(comp, repo_name, cur_dest_folder, header, conf, d_images_q):
             if comp_name.split(".")[-1] == JAR_EXTENSION:
                 all_components.append(comp_name)
     elif comp['format'] == 'docker':
-        d_images_q.put(handle_docker_repo(comp, conf, header))
+        d_images_q.put(handle_docker_repo(comp, conf))
     else:
         comp_name = component_assets[0]['path'].rpartition('/')[-1]
         all_components.append(comp_name)
@@ -531,8 +589,9 @@ def move_all_files_in_dir(src_dir, dst_dir):
     logging.info('Moving logs after the WhiteSource scan has finished')
     if os.path.isdir(src_dir) and os.path.isdir(dst_dir):
         for filePath in glob.glob(src_dir):
-            shutil.move(filePath, dst_dir)
-            logging.info('Moving logs has successfully finished')
+            copy_tree(filePath, dst_dir)
+        remove_tree(src_dir)
+        logging.info('Moving logs has successfully finished')
     else:
         logging.info(f'{src_dir} or {dst_dir} are not directories')
         logging.info('Moving logs after WhiteSource scan has failed')
