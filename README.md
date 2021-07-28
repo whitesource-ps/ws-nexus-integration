@@ -5,7 +5,7 @@
 [![WS Nexus Integration Build and Publish](https://github.com/whitesource-ps/whitesource-nexus-integration/actions/workflows/ci.yml/badge.svg)](https://github.com/whitesource-ps/whitesource-nexus-integration/actions/workflows/ci.yml)
 [![Python 3.6](https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Blue_Python_3.6%2B_Shield_Badge.svg/86px-Blue_Python_3.6%2B_Shield_Badge.svg.png)](https://www.python.org/downloads/release/python-360/)
 
-# WhiteSource for Nexus
+# [WhiteSource for Nexus](https://github.com/whitesource-ps/ws-nexus-integration)
 **ws-nexus** is a command line tool for scanning Nexus repositories.  
 This tool can be deployed either on the Nexus host or on a separate machine that has access to the Nexus instance.
 Supported formats: `maven2`, `npm`, `pypi`, `rubygems`, `nuget`, `docker` and `raw`.
