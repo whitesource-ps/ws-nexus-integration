@@ -278,7 +278,7 @@ def retrieve_nexus_repositories(user, password, nexus_auth_token, nexus_api_url_
         logging.info(f'{FAILED} to retrieve Nexus repositories. Verify Nexus URL and credentials and try again.')
         ws_exit()
 
-    config.nexus_version = response_repository_headers.headers['Server']
+    config.nexus_version = response_repository_headers.headers.get('Server', "3.26")
     logging.info(f"Nexus Version: {config.nexus_version}")
 
     existing_nexus_repository_list = []
