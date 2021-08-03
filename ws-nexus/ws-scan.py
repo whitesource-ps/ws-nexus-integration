@@ -281,7 +281,7 @@ def retrieve_nexus_repositories(user, password, nexus_auth_token, nexus_api_url_
     try:
         response_repository_headers = requests.get(nexus_api_url_repos, headers=headers)
         json_response_repository_headers = json.loads(response_repository_headers.text)
-    except Exception:
+    except requests.RequestException:
         logging.info(f'{FAILED} to retrieve Nexus repositories. Verify Nexus URL and credentials and try again.')
         ws_exit()
 
@@ -452,7 +452,7 @@ def handle_docker_repo(component: dict, conf) -> str:
     repos = get_repos_as_dict()
 
     import docker
-    repo = repos[component['repository']]
+    repo = repos.get(component['repository'])
     if repo:
         logging.debug(f"Repository data: {repo}")
         docker_repo_url = get_docker_repo_url(repo)
