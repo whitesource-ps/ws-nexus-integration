@@ -1,6 +1,5 @@
 ###### Requirements without Version Specifiers ######
-requests~=2.25.1
+requests==2.26.0
 wget~=3.2
-setuptools~=57.0.0
 docker[docker]~=5.0.0
 six[docker]~=1.16.0
