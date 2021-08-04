@@ -11,6 +11,7 @@ import subprocess
 import os
 from configparser import ConfigParser
 from multiprocessing import Pool, Manager
+from typing import Union
 from urllib.parse import urlparse
 
 import requests
@@ -45,6 +46,8 @@ LOG_LEVEL = logging.DEBUG if os.environ.get("DEBUG") else logging.INFO
 
 config = None
 
+if not os.path.exists(LOG_DIR):
+    os.mkdir(LOG_DIR)
 logging.basicConfig(level=LOG_LEVEL,
                     handlers=[logging.StreamHandler(stream=sys.stdout), logging.FileHandler(LOG_FILE_WITH_PATH)],
                     format='%(levelname)s %(asctime)s %(process)s: %(message)s',
@@ -181,7 +184,6 @@ def creating_folder_and_log_file():
     """
     Create empty directories for logs and scan results
     Directories from previous runs are deleted
-
     :return:
     """
     if os.path.exists(LOG_DIR):
@@ -393,15 +395,30 @@ def download_components_from_repositories(selected_repositories, nexus_api_url_c
                 pool.starmap(repo_worker, [(comp, repo_name, cur_dest_folder, header, config, docker_images_q)
                                            for i, comp in enumerate(all_repo_items)])
             # Updating UA env vars to include Docker images from Nexus
-            docker_images = []
+            docker_images = set()
             while not docker_images_q.empty():
-                docker_images.append(docker_images_q.get(block=True, timeout=0.05))
+                docker_images.add(docker_images_q.get(block=True, timeout=0.05))
 
             if docker_images:
                 logging.info(f"Found {len(docker_images)} Docker images")
                 config.ws_env_var['WS_DOCKER_SCANIMAGES'] = 'True'
                 config.ws_env_var['WS_DOCKER_INCLUDES'] = ",".join(docker_images)
             logging.info(' -- > ')
+
+
+def call_nexus_api(url: str, headers: dict) -> Union[dict, bytes]:
+    logging.debug(f"Calling Nexus URL: {url}")
+    try:
+        resp = requests.get(url, headers=headers)
+    except requests.RequestException:
+        logging.exception(f"Received Error on endpoint: {url}")
+    try:
+        ret = json.loads(resp.text)
+        logging.debug(f"Returned value: {ret}")
+    except json.decoder.JSONDecodeError:
+        ret = resp.content
+
+    return ret
 
 
 def handle_docker_repo(component: dict, conf) -> str:
@@ -411,17 +428,17 @@ def handle_docker_repo(component: dict, conf) -> str:
     :param conf: global config
     :return: Retrieve Docker Image ID so UA will only scan images downloaded from Nexus
     """
-    def get_repos_as_dict() -> dict:
+    def get_repos_as_dict(c) -> dict:
         """
         Convert repository data into dictionary
         :returns name -> repo dictionary
         :rtype: dict
         """
-        repo_resp = requests.get(conf.nexus_base_url + conf.resources_url, headers=conf.headers)
-        repos_list = json.loads(repo_resp.text)
+        repos_list = call_nexus_api(conf.nexus_base_url + conf.resources_url, c.headers)
         repo_dict = {}
         for r in repos_list:
             repo_dict[r['name']] = r
+        logging.debug(f"Repositories found: {repo_dict.keys()}")
 
         return repo_dict
 
@@ -447,12 +464,13 @@ def handle_docker_repo(component: dict, conf) -> str:
 
     dl_url = component['assets'][0]["downloadUrl"]
     logging.debug(f"Getting manifest file from: {dl_url}")
-    manifest_resp = requests.get(dl_url, headers=conf.headers)
-    manifest = json.loads(manifest_resp.text)
-    repos = get_repos_as_dict()
+    manifest = call_nexus_api(dl_url, conf.headers)
+    logging.debug(f"manifest: {manifest}")
+    repos = get_repos_as_dict(conf)
 
     import docker
     repo = repos.get(component['repository'])
+    ret = None
     if repo:
         logging.debug(f"Repository data: {repo}")
         docker_repo_url = get_docker_repo_url(repo)
@@ -463,17 +481,15 @@ def handle_docker_repo(component: dict, conf) -> str:
             # Configuring Nexus user and password are mandatory for non-anonymous Docker repositories
             client.login(username=conf.nexus_user, password=conf.nexus_password, registry=docker_repo_url)
             pull_res = client.images.pull(image_name)
+            image_id = pull_res.id.split(':')[1][0:12]
+            logging.debug(f"Image ID: {image_id} successfully pulled")
+            ret = image_id  # Shorten ID to match docker images IMAGE ID
         except docker.errors.DockerException:
             logging.exception(f"Error loading image: {image_name}")
-            return ""
-
-        image_id = pull_res.id.split(':')[1][0:12]
-        logging.debug(f"Image ID: {image_id} successfully pulled")
-
-        return image_id  # Shorten ID to match docker images IMAGE ID
     else:
-        logging.warning("Repository was not found. Skipping")
-        logging.debug(f"Repositories found: {repos}")
+        logging.warning(f"Repository was not found for {component['repository']}. Skipping")
+
+    return ret
 
 
 def repo_worker(comp, repo_name, cur_dest_folder, header, conf, d_images_q):
@@ -500,7 +516,9 @@ def repo_worker(comp, repo_name, cur_dest_folder, header, conf, d_images_q):
             if comp_name.split(".")[-1] == JAR_EXTENSION:
                 all_components.append(comp_name)
     elif comp['format'] == 'docker':
-        d_images_q.put(handle_docker_repo(comp, conf))
+        image_id = handle_docker_repo(comp, conf)
+        if image_id:
+            d_images_q.put(image_id)
     else:
         comp_name = component_assets[0]['path'].rpartition('/')[-1]
         all_components.append(comp_name)
@@ -520,13 +538,13 @@ def comp_worker(repo_name, component_assets, cur_dest_folder, header, comp_name)
     """
     logging.info(f'Downloading {comp_name} component from {repo_name}')
     comp_download_url = component_assets[0]["downloadUrl"]
-    response = requests.get(comp_download_url, headers=header)
+    response = call_nexus_api(comp_download_url, header)
     logging.debug(f"Download URL: {comp_download_url}")
     path = os.path.dirname(f'{cur_dest_folder}/{comp_name}')
     if not os.path.exists(path):
         os.makedirs(path, exist_ok=True)
     with open(f'{cur_dest_folder}/{comp_name}', 'wb') as f:
-        f.write(response.content)
+        f.write(response)
         logging.info(f'Component {comp_name} has successfully downloaded')
 
 
