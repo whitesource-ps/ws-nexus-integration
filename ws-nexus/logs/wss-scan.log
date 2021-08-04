@@ -1,744 +1,563 @@
-[2021-03-24 17:58:16,751] Starting
-[2021-03-24 17:58:16,751] Getting region parameters
-[2021-03-24 17:58:16,751] Validating Nexus credentials
-[2021-03-24 17:58:16,751] Nexus credentials validated
-[2021-03-24 17:58:16,751] Validating WhiteSource API Key and URL
-[2021-03-24 17:58:16,751] WhiteSource API Key and URL validated
-[2021-03-24 17:58:16,751] Verifying agent parameters
-[2021-03-24 17:58:16,751] Creating directory "ua"
-[2021-03-24 17:58:16,752] (this may take a few minutes on first run)
-[2021-03-24 17:58:16,752] Downloading WhiteSource agent
-[2021-03-24 17:58:16,754] Starting new HTTPS connection (1): github.com:443
-[2021-03-24 17:58:17,033] https://github.com:443 "GET /whitesource/unified-agent-distribution/releases/latest/download/wss-unified-agent.jar HTTP/1.1" 302 171
-[2021-03-24 17:58:17,098] https://github.com:443 "GET /whitesource/unified-agent-distribution/releases/download/v21.2.2/wss-unified-agent.jar HTTP/1.1" 302 629
-[2021-03-24 17:58:17,103] Starting new HTTPS connection (1): github-releases.githubusercontent.com:443
-[2021-03-24 17:58:17,456] https://github-releases.githubusercontent.com:443 "GET /164440136/03040f00-84a5-11eb-9ee4-4123df14b4bb?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20210324%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210324T155746Z&X-Amz-Expires=300&X-Amz-Signature=85aa2681ed2a119af9445037ee25b17909b4899b9b27bac6f93f65c5045c2dd9&X-Amz-SignedHeaders=host&actor_id=0&key_id=0&repo_id=164440136&response-content-disposition=attachment%3B%20filename%3Dwss-unified-agent.jar&response-content-type=application%2Foctet-stream HTTP/1.1" 200 79654112
-DEBUG 21-08-02 15:32:06 316: Using configuration file: ../config/params_3_32.config
-DEBUG 21-08-02 15:32:06 316: Converting user and password to basic string
-INFO 21-08-02 15:32:06 316: Starting
-INFO 21-08-02 15:32:06 316: Getting region parameters
-INFO 21-08-02 15:32:06 316: Validating Nexus credentials
-INFO 21-08-02 15:32:06 316: Nexus credentials validated
-INFO 21-08-02 15:32:06 316: Validating WhiteSource User Key, API Key and URL
-INFO 21-08-02 15:32:06 316: WhiteSource User Key, API Key and URL validated
-INFO 21-08-02 15:32:06 316: Verifying agent parameters
-INFO 21-08-02 15:32:06 316: WhiteSource agent download complete
-INFO 21-08-02 15:32:06 316: Converting user and password to basic string
-INFO 21-08-02 15:32:06 316: Sending request for retrieving Nexus repository list
-DEBUG 21-08-02 15:32:09 316: Starting new HTTP connection (1): 52.14.229.244:8081
-INFO 21-08-02 15:32:30 316: FAILED to retrieve Nexus repositories. Verify Nexus URL and credentials and try again.
-INFO 21-08-02 15:32:30 316: Start deleting the scan dir
-INFO 21-08-02 15:32:30 316: Deleting the scan dir has successfully finished
-DEBUG 21-08-02 15:32:44 20596: Using configuration file: ../config/params_3_32.config
-DEBUG 21-08-02 15:32:44 20596: Converting user and password to basic string
-INFO 21-08-02 15:32:44 20596: Starting
-INFO 21-08-02 15:32:44 20596: Getting region parameters
-INFO 21-08-02 15:32:44 20596: Validating Nexus credentials
-INFO 21-08-02 15:32:44 20596: Nexus credentials validated
-INFO 21-08-02 15:32:44 20596: Validating WhiteSource User Key, API Key and URL
-INFO 21-08-02 15:32:44 20596: WhiteSource User Key, API Key and URL validated
-INFO 21-08-02 15:32:44 20596: Verifying agent parameters
-INFO 21-08-02 15:32:44 20596: WhiteSource agent download complete
-INFO 21-08-02 15:32:44 20596: Converting user and password to basic string
-INFO 21-08-02 15:32:44 20596: Sending request for retrieving Nexus repository list
-DEBUG 21-08-02 15:32:44 20596: Starting new HTTP connection (1): 52.14.229.244:8081
-INFO 21-08-02 15:33:05 20596: FAILED to retrieve Nexus repositories. Verify Nexus URL and credentials and try again.
-INFO 21-08-02 15:33:05 20596: Start deleting the scan dir
-INFO 21-08-02 15:33:05 20596: Deleting the scan dir has successfully finished
-DEBUG 21-08-02 15:46:42 22156: Using configuration file: ../config/params_3_32.config
-DEBUG 21-08-02 15:46:42 22156: Converting user and password to basic string
-INFO 21-08-02 15:46:42 22156: Starting
-INFO 21-08-02 15:46:42 22156: Getting region parameters
-INFO 21-08-02 15:46:42 22156: Validating Nexus credentials
-INFO 21-08-02 15:46:42 22156: Nexus credentials validated
-INFO 21-08-02 15:46:42 22156: Validating WhiteSource User Key, API Key and URL
-INFO 21-08-02 15:46:42 22156: WhiteSource User Key, API Key and URL validated
-INFO 21-08-02 15:46:42 22156: Verifying agent parameters
-INFO 21-08-02 15:46:42 22156: WhiteSource agent download complete
-INFO 21-08-02 15:46:42 22156: Converting user and password to basic string
-INFO 21-08-02 15:46:42 22156: Sending request for retrieving Nexus repository list
-DEBUG 21-08-02 15:46:42 22156: Starting new HTTP connection (1): 52.14.229.244:8081
-DEBUG 21-08-02 15:46:42 22156: http://52.14.229.244:8081 "GET /service/rest/v1/repositories HTTP/1.1" 200 1453
-DEBUG 21-08-02 15:46:42 22156:  Nexus Headers: {'Date': 'Mon, 02 Aug 2021 12:46:42 GMT', 'Server': 'Nexus/3.32.0-03 (OSS)', 'X-Content-Type-Options': 'nosniff', 'Content-Type': 'application/json', 'Content-Length': '1453'}
-INFO 21-08-02 15:46:42 22156: Nexus Version: Nexus/3.32.0-03 (OSS)
-DEBUG 21-08-02 15:46:42 22156: Using repository: /service/rest/v1/repositorySettings
-INFO 21-08-02 15:46:42 22156: No repositories specified, all repositories will be scanned
-INFO 21-08-02 15:46:42 22156: Repository: maven-snapshots
-INFO 21-08-02 15:46:42 22156: Validate artifact list
-DEBUG 21-08-02 15:46:42 22156: Starting new HTTP connection (1): 52.14.229.244:8081
-DEBUG 21-08-02 15:46:43 22156: http://52.14.229.244:8081 "GET /service/rest/v1/components?repository=maven-snapshots HTTP/1.1" 200 49
-INFO 21-08-02 15:46:43 22156: No artifacts found in maven-snapshots
-INFO 21-08-02 15:46:43 22156:  -- > 
-INFO 21-08-02 15:46:43 22156: Repository: maven-central
-INFO 21-08-02 15:46:43 22156: Validate artifact list
-DEBUG 21-08-02 15:46:43 22156: Starting new HTTP connection (1): 52.14.229.244:8081
-DEBUG 21-08-02 15:46:43 22156: http://52.14.229.244:8081 "GET /service/rest/v1/components?repository=maven-central HTTP/1.1" 200 49
-INFO 21-08-02 15:46:43 22156: No artifacts found in maven-central
-INFO 21-08-02 15:46:43 22156:  -- > 
-INFO 21-08-02 15:46:43 22156: Repository: nuget-group
-INFO 21-08-02 15:46:43 22156: Validate artifact list
-DEBUG 21-08-02 15:46:43 22156: Starting new HTTP connection (1): 52.14.229.244:8081
-DEBUG 21-08-02 15:46:43 22156: http://52.14.229.244:8081 "GET /service/rest/v1/components?repository=nuget-group HTTP/1.1" 200 49
-INFO 21-08-02 15:46:43 22156: No artifacts found in nuget-group
-INFO 21-08-02 15:46:43 22156:  -- > 
-INFO 21-08-02 15:46:43 22156: Repository: nuget.org-proxy
-INFO 21-08-02 15:46:43 22156: Validate artifact list
-DEBUG 21-08-02 15:46:43 22156: Starting new HTTP connection (1): 52.14.229.244:8081
-DEBUG 21-08-02 15:46:44 22156: http://52.14.229.244:8081 "GET /service/rest/v1/components?repository=nuget.org-proxy HTTP/1.1" 200 49
-INFO 21-08-02 15:46:44 22156: No artifacts found in nuget.org-proxy
-INFO 21-08-02 15:46:44 22156:  -- > 
-INFO 21-08-02 15:46:44 22156: Repository: maven-releases
-INFO 21-08-02 15:46:44 22156: Validate artifact list
-DEBUG 21-08-02 15:46:44 22156: Starting new HTTP connection (1): 52.14.229.244:8081
-DEBUG 21-08-02 15:46:46 11108: Using configuration file: ../config/params_3_32.config
-DEBUG 21-08-02 15:46:46 11108: Converting user and password to basic string
-INFO 21-08-02 15:46:46 11108: Starting
-INFO 21-08-02 15:46:46 11108: Getting region parameters
-INFO 21-08-02 15:46:46 11108: Validating Nexus credentials
-INFO 21-08-02 15:46:46 11108: Nexus credentials validated
-INFO 21-08-02 15:46:46 11108: Validating WhiteSource User Key, API Key and URL
-INFO 21-08-02 15:46:46 11108: WhiteSource User Key, API Key and URL validated
-INFO 21-08-02 15:46:46 11108: Verifying agent parameters
-INFO 21-08-02 15:46:46 11108: WhiteSource agent download complete
-INFO 21-08-02 15:46:46 11108: Converting user and password to basic string
-INFO 21-08-02 15:46:46 11108: Sending request for retrieving Nexus repository list
-DEBUG 21-08-02 15:46:46 11108: Starting new HTTP connection (1): 52.14.229.244:8081
-DEBUG 21-08-02 15:46:47 11108: http://52.14.229.244:8081 "GET /service/rest/v1/repositories HTTP/1.1" 200 1453
-DEBUG 21-08-02 15:46:47 11108:  Nexus Headers: {'Date': 'Mon, 02 Aug 2021 12:46:47 GMT', 'Server': 'Nexus/3.32.0-03 (OSS)', 'X-Content-Type-Options': 'nosniff', 'Content-Type': 'application/json', 'Content-Length': '1453'}
-INFO 21-08-02 15:46:47 11108: Nexus Version: Nexus/3.32.0-03 (OSS)
-DEBUG 21-08-02 15:46:47 11108: Using repository: /service/rest/v1/repositorySettings
-INFO 21-08-02 15:46:47 11108: No repositories specified, all repositories will be scanned
-INFO 21-08-02 15:46:47 11108: Repository: maven-snapshots
-INFO 21-08-02 15:46:47 11108: Validate artifact list
-DEBUG 21-08-02 15:46:47 11108: Starting new HTTP connection (1): 52.14.229.244:8081
-DEBUG 21-08-02 15:46:47 11108: http://52.14.229.244:8081 "GET /service/rest/v1/components?repository=maven-snapshots HTTP/1.1" 200 49
-INFO 21-08-02 15:46:47 11108: No artifacts found in maven-snapshots
-INFO 21-08-02 15:46:47 11108:  -- > 
-INFO 21-08-02 15:46:47 11108: Repository: maven-central
-INFO 21-08-02 15:46:47 11108: Validate artifact list
-DEBUG 21-08-02 15:46:47 11108: Starting new HTTP connection (1): 52.14.229.244:8081
-DEBUG 21-08-02 15:46:47 11108: http://52.14.229.244:8081 "GET /service/rest/v1/components?repository=maven-central HTTP/1.1" 200 49
-INFO 21-08-02 15:46:47 11108: No artifacts found in maven-central
-INFO 21-08-02 15:46:47 11108:  -- > 
-INFO 21-08-02 15:46:47 11108: Repository: nuget-group
-INFO 21-08-02 15:46:47 11108: Validate artifact list
-DEBUG 21-08-02 15:46:47 11108: Starting new HTTP connection (1): 52.14.229.244:8081
-DEBUG 21-08-02 15:46:48 11108: http://52.14.229.244:8081 "GET /service/rest/v1/components?repository=nuget-group HTTP/1.1" 200 49
-INFO 21-08-02 15:46:48 11108: No artifacts found in nuget-group
-INFO 21-08-02 15:46:48 11108:  -- > 
-INFO 21-08-02 15:46:48 11108: Repository: nuget.org-proxy
-INFO 21-08-02 15:46:48 11108: Validate artifact list
-DEBUG 21-08-02 15:46:48 11108: Starting new HTTP connection (1): 52.14.229.244:8081
-DEBUG 21-08-02 15:46:48 11108: http://52.14.229.244:8081 "GET /service/rest/v1/components?repository=nuget.org-proxy HTTP/1.1" 200 49
-INFO 21-08-02 15:46:48 11108: No artifacts found in nuget.org-proxy
-INFO 21-08-02 15:46:48 11108:  -- > 
-INFO 21-08-02 15:46:48 11108: Repository: maven-releases
-INFO 21-08-02 15:46:48 11108: Validate artifact list
-DEBUG 21-08-02 15:46:48 11108: Starting new HTTP connection (1): 52.14.229.244:8081
-DEBUG 21-08-02 15:46:48 11108: http://52.14.229.244:8081 "GET /service/rest/v1/components?repository=maven-releases HTTP/1.1" 200 5904
-INFO 21-08-02 15:46:48 11108: Retrieving artifacts...
-DEBUG 21-08-02 15:56:58 23572: Using configuration file: ../config/params_3_32.config
-DEBUG 21-08-02 15:56:58 23572: Converting user and password to basic string
-INFO 21-08-02 15:56:58 23572: Starting
-INFO 21-08-02 15:56:58 23572: Getting region parameters
-INFO 21-08-02 15:56:58 23572: Validating Nexus credentials
-INFO 21-08-02 15:56:58 23572: Nexus credentials validated
-INFO 21-08-02 15:56:58 23572: Validating WhiteSource User Key, API Key and URL
-INFO 21-08-02 15:56:58 23572: WhiteSource User Key, API Key and URL validated
-INFO 21-08-02 15:56:58 23572: Verifying agent parameters
-INFO 21-08-02 15:56:58 23572: WhiteSource agent download complete
-INFO 21-08-02 15:56:58 23572: Converting user and password to basic string
-INFO 21-08-02 15:56:58 23572: Sending request for retrieving Nexus repository list
-DEBUG 21-08-02 15:56:58 23572: Starting new HTTP connection (1): 52.14.229.244:8081
-INFO 21-08-02 15:57:19 23572: FAILED to retrieve Nexus repositories. Verify Nexus URL and credentials and try again.
-INFO 21-08-02 15:57:19 23572: Start deleting the scan dir
-INFO 21-08-02 15:57:19 23572: Deleting the scan dir has successfully finished
-DEBUG 21-08-02 15:57:30 23428: Using configuration file: ../config/params_3_23.config
-DEBUG 21-08-02 15:57:30 23428: Converting user and password to basic string
-INFO 21-08-02 15:57:30 23428: Starting
-INFO 21-08-02 15:57:30 23428: Getting region parameters
-INFO 21-08-02 15:57:30 23428: Validating Nexus credentials
-INFO 21-08-02 15:57:30 23428: Nexus credentials validated
-INFO 21-08-02 15:57:30 23428: Validating WhiteSource User Key, API Key and URL
-INFO 21-08-02 15:57:30 23428: WhiteSource User Key, API Key and URL validated
-INFO 21-08-02 15:57:30 23428: Verifying agent parameters
-INFO 21-08-02 15:57:30 23428: WhiteSource agent download complete
-INFO 21-08-02 15:57:30 23428: Converting user and password to basic string
-INFO 21-08-02 15:57:30 23428: Sending request for retrieving Nexus repository list
-DEBUG 21-08-02 15:57:30 23428: Starting new HTTP connection (1): 18.118.119.71:8081
-DEBUG 21-08-02 15:57:30 23428: http://18.118.119.71:8081 "GET /service/rest/v1/repositories HTTP/1.1" 200 1447
-DEBUG 21-08-02 15:57:30 23428:  Nexus Headers: {'Date': 'Mon, 02 Aug 2021 12:57:30 GMT', 'Server': 'Nexus/3.23.0-03 (OSS)', 'X-Content-Type-Options': 'nosniff', 'Content-Type': 'application/json', 'Content-Length': '1447'}
-INFO 21-08-02 15:57:30 23428: Nexus Version: Nexus/3.23.0-03 (OSS)
-DEBUG 21-08-02 15:57:30 23428: Using repository: /service/rest/beta/repositories
-INFO 21-08-02 15:57:30 23428: No repositories specified, all repositories will be scanned
-INFO 21-08-02 15:57:30 23428: Repository: nuget-group
-INFO 21-08-02 15:57:30 23428: Validate artifact list
-DEBUG 21-08-02 15:57:30 23428: Starting new HTTP connection (1): 18.118.119.71:8081
-DEBUG 21-08-02 15:57:30 23428: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=nuget-group HTTP/1.1" 200 49
-INFO 21-08-02 15:57:30 23428: No artifacts found in nuget-group
-INFO 21-08-02 15:57:30 23428:  -- > 
-INFO 21-08-02 15:57:30 23428: Repository: maven-snapshots
-INFO 21-08-02 15:57:30 23428: Validate artifact list
-DEBUG 21-08-02 15:57:30 23428: Starting new HTTP connection (1): 18.118.119.71:8081
-DEBUG 21-08-02 15:57:31 23428: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=maven-snapshots HTTP/1.1" 200 49
-INFO 21-08-02 15:57:31 23428: No artifacts found in maven-snapshots
-INFO 21-08-02 15:57:31 23428:  -- > 
-INFO 21-08-02 15:57:31 23428: Repository: maven-central
-INFO 21-08-02 15:57:31 23428: Validate artifact list
-DEBUG 21-08-02 15:57:31 23428: Starting new HTTP connection (1): 18.118.119.71:8081
-DEBUG 21-08-02 15:57:31 23428: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=maven-central HTTP/1.1" 200 49
-INFO 21-08-02 15:57:31 23428: No artifacts found in maven-central
-INFO 21-08-02 15:57:31 23428:  -- > 
-INFO 21-08-02 15:57:31 23428: Repository: nuget.org-proxy
-INFO 21-08-02 15:57:31 23428: Validate artifact list
-DEBUG 21-08-02 15:57:31 23428: Starting new HTTP connection (1): 18.118.119.71:8081
-DEBUG 21-08-02 15:57:31 23428: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=nuget.org-proxy HTTP/1.1" 200 49
-INFO 21-08-02 15:57:31 23428: No artifacts found in nuget.org-proxy
-INFO 21-08-02 15:57:31 23428:  -- > 
-INFO 21-08-02 15:57:31 23428: Repository: maven-releases
-INFO 21-08-02 15:57:31 23428: Validate artifact list
-DEBUG 21-08-02 15:57:31 23428: Starting new HTTP connection (1): 18.118.119.71:8081
-DEBUG 21-08-02 15:57:32 23428: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=maven-releases HTTP/1.1" 200 5589
-INFO 21-08-02 15:57:32 23428: Retrieving artifacts...
-DEBUG 21-08-02 16:02:06 24028: Using configuration file: ../config/params_3_23.config
-DEBUG 21-08-02 16:02:06 24028: Converting user and password to basic string
-INFO 21-08-02 16:02:06 24028: Starting
-INFO 21-08-02 16:02:06 24028: Getting region parameters
-INFO 21-08-02 16:02:06 24028: Validating Nexus credentials
-INFO 21-08-02 16:02:06 24028: Nexus credentials validated
-INFO 21-08-02 16:02:06 24028: Validating WhiteSource User Key, API Key and URL
-INFO 21-08-02 16:02:06 24028: WhiteSource User Key, API Key and URL validated
-INFO 21-08-02 16:02:06 24028: Verifying agent parameters
-INFO 21-08-02 16:02:06 24028: WhiteSource agent download complete
-INFO 21-08-02 16:02:06 24028: Converting user and password to basic string
-INFO 21-08-02 16:02:06 24028: Sending request for retrieving Nexus repository list
-DEBUG 21-08-02 16:02:06 24028: Starting new HTTP connection (1): 18.118.119.71:8081
-DEBUG 21-08-02 16:02:07 24028: http://18.118.119.71:8081 "GET /service/rest/v1/repositories HTTP/1.1" 200 1447
-DEBUG 21-08-02 16:02:07 24028:  Nexus Headers: {'Date': 'Mon, 02 Aug 2021 13:02:07 GMT', 'Server': 'Nexus/3.23.0-03 (OSS)', 'X-Content-Type-Options': 'nosniff', 'Content-Type': 'application/json', 'Content-Length': '1447'}
-INFO 21-08-02 16:02:07 24028: Nexus Version: Nexus/3.23.0-03 (OSS)
-DEBUG 21-08-02 16:02:07 24028: Using repository: /service/rest/beta/repositories
-INFO 21-08-02 16:02:07 24028: No repositories specified, all repositories will be scanned
-INFO 21-08-02 16:02:07 24028: Repository: nuget-group
-INFO 21-08-02 16:02:07 24028: Validate artifact list
-DEBUG 21-08-02 16:02:07 24028: Starting new HTTP connection (1): 18.118.119.71:8081
-DEBUG 21-08-02 16:02:07 24028: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=nuget-group HTTP/1.1" 200 49
-INFO 21-08-02 16:02:07 24028: No artifacts found in nuget-group
-INFO 21-08-02 16:02:07 24028:  -- > 
-INFO 21-08-02 16:02:07 24028: Repository: maven-snapshots
-INFO 21-08-02 16:02:07 24028: Validate artifact list
-DEBUG 21-08-02 16:02:07 24028: Starting new HTTP connection (1): 18.118.119.71:8081
-DEBUG 21-08-02 16:02:07 24028: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=maven-snapshots HTTP/1.1" 200 49
-INFO 21-08-02 16:02:07 24028: No artifacts found in maven-snapshots
-INFO 21-08-02 16:02:07 24028:  -- > 
-INFO 21-08-02 16:02:07 24028: Repository: maven-central
-INFO 21-08-02 16:02:07 24028: Validate artifact list
-DEBUG 21-08-02 16:02:07 24028: Starting new HTTP connection (1): 18.118.119.71:8081
-DEBUG 21-08-02 16:02:08 24028: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=maven-central HTTP/1.1" 200 49
-INFO 21-08-02 16:02:08 24028: No artifacts found in maven-central
-INFO 21-08-02 16:02:08 24028:  -- > 
-INFO 21-08-02 16:02:08 24028: Repository: nuget.org-proxy
-INFO 21-08-02 16:02:08 24028: Validate artifact list
-DEBUG 21-08-02 16:02:08 24028: Starting new HTTP connection (1): 18.118.119.71:8081
-DEBUG 21-08-02 16:02:08 24028: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=nuget.org-proxy HTTP/1.1" 200 49
-INFO 21-08-02 16:02:08 24028: No artifacts found in nuget.org-proxy
-INFO 21-08-02 16:02:08 24028:  -- > 
-INFO 21-08-02 16:02:08 24028: Repository: maven-releases
-INFO 21-08-02 16:02:08 24028: Validate artifact list
-DEBUG 21-08-02 16:02:08 24028: Starting new HTTP connection (1): 18.118.119.71:8081
-DEBUG 21-08-02 16:02:08 24028: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=maven-releases HTTP/1.1" 200 5589
-INFO 21-08-02 16:02:08 24028: Retrieving artifacts...
-DEBUG 21-08-02 16:03:20 12216: Using configuration file: ../config/params_3_23.config
-DEBUG 21-08-02 16:03:20 12216: Converting user and password to basic string
-INFO 21-08-02 16:03:20 12216: Starting
-INFO 21-08-02 16:03:20 12216: Getting region parameters
-INFO 21-08-02 16:03:20 12216: Validating Nexus credentials
-INFO 21-08-02 16:03:20 12216: Nexus credentials validated
-INFO 21-08-02 16:03:20 12216: Validating WhiteSource User Key, API Key and URL
-INFO 21-08-02 16:03:20 12216: WhiteSource User Key, API Key and URL validated
-INFO 21-08-02 16:03:20 12216: Verifying agent parameters
-INFO 21-08-02 16:03:20 12216: WhiteSource agent download complete
-INFO 21-08-02 16:03:20 12216: Converting user and password to basic string
-INFO 21-08-02 16:03:20 12216: Sending request for retrieving Nexus repository list
-DEBUG 21-08-02 16:03:20 12216: Starting new HTTP connection (1): 18.118.119.71:8081
-DEBUG 21-08-02 16:03:20 12216: http://18.118.119.71:8081 "GET /service/rest/v1/repositories HTTP/1.1" 200 1447
-DEBUG 21-08-02 16:03:20 12216:  Nexus Headers: {'Date': 'Mon, 02 Aug 2021 13:03:20 GMT', 'Server': 'Nexus/3.23.0-03 (OSS)', 'X-Content-Type-Options': 'nosniff', 'Content-Type': 'application/json', 'Content-Length': '1447'}
-INFO 21-08-02 16:03:20 12216: Nexus Version: Nexus/3.23.0-03 (OSS)
-DEBUG 21-08-02 16:03:20 12216: Using repository: /service/rest/beta/repositories
-INFO 21-08-02 16:03:20 12216: No repositories specified, all repositories will be scanned
-INFO 21-08-02 16:03:20 12216: Repository: nuget-group
-INFO 21-08-02 16:03:20 12216: Validate artifact list
-DEBUG 21-08-02 16:03:45 12216: Starting new HTTP connection (1): 18.118.119.71:8081
-DEBUG 21-08-02 16:03:45 12216: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=nuget-group HTTP/1.1" 200 49
-INFO 21-08-02 16:05:24 12216: No artifacts found in nuget-group
-INFO 21-08-02 16:05:24 12216:  -- > 
-INFO 21-08-02 16:05:28 12216: Repository: maven-snapshots
-INFO 21-08-02 16:05:33 12216: Validate artifact list
-DEBUG 21-08-02 16:05:40 12216: Starting new HTTP connection (1): 18.118.119.71:8081
-DEBUG 21-08-02 16:05:40 12216: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=maven-snapshots HTTP/1.1" 200 49
-INFO 21-08-02 16:05:51 12216: No artifacts found in maven-snapshots
-INFO 21-08-02 16:05:51 12216:  -- > 
-INFO 21-08-02 16:05:51 12216: Repository: maven-central
-INFO 21-08-02 16:05:51 12216: Validate artifact list
-DEBUG 21-08-02 16:06:11 12216: Starting new HTTP connection (1): 18.118.119.71:8081
-DEBUG 21-08-02 16:06:11 12216: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=maven-central HTTP/1.1" 200 49
-INFO 21-08-02 16:06:12 12216: No artifacts found in maven-central
-INFO 21-08-02 16:06:12 12216:  -- > 
-INFO 21-08-02 16:06:12 12216: Repository: nuget.org-proxy
-INFO 21-08-02 16:06:12 12216: Validate artifact list
-DEBUG 21-08-02 16:06:15 12216: Starting new HTTP connection (1): 18.118.119.71:8081
-DEBUG 21-08-02 16:06:16 12216: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=nuget.org-proxy HTTP/1.1" 200 49
-INFO 21-08-02 16:06:16 12216: No artifacts found in nuget.org-proxy
-INFO 21-08-02 16:06:16 12216:  -- > 
-INFO 21-08-02 16:06:16 12216: Repository: maven-releases
-INFO 21-08-02 16:06:16 12216: Validate artifact list
-DEBUG 21-08-02 16:06:16 12216: Starting new HTTP connection (1): 18.118.119.71:8081
-DEBUG 21-08-02 16:06:16 12216: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=maven-releases HTTP/1.1" 200 5589
-INFO 21-08-02 16:06:20 12216: Retrieving artifacts...
-DEBUG 21-08-02 16:16:45 14512: Using configuration file: ../config/params_3_32.config
-DEBUG 21-08-02 16:16:45 14512: Converting user and password to basic string
-INFO 21-08-02 16:16:45 14512: Starting
-INFO 21-08-02 16:16:45 14512: Getting region parameters
-INFO 21-08-02 16:16:45 14512: Validating Nexus credentials
-INFO 21-08-02 16:16:45 14512: Nexus credentials validated
-INFO 21-08-02 16:16:45 14512: Validating WhiteSource User Key, API Key and URL
-INFO 21-08-02 16:16:45 14512: WhiteSource User Key, API Key and URL validated
-INFO 21-08-02 16:16:45 14512: Verifying agent parameters
-INFO 21-08-02 16:16:45 14512: WhiteSource agent download complete
-INFO 21-08-02 16:16:45 14512: Converting user and password to basic string
-INFO 21-08-02 16:16:45 14512: Sending request for retrieving Nexus repository list
-DEBUG 21-08-02 16:16:45 14512: Starting new HTTP connection (1): 52.14.229.244:8081
-DEBUG 21-08-02 16:16:45 14512: http://52.14.229.244:8081 "GET /service/rest/v1/repositories HTTP/1.1" 200 1453
-DEBUG 21-08-02 16:16:45 14512:  Nexus Headers: {'Date': 'Mon, 02 Aug 2021 13:16:45 GMT', 'Server': 'Nexus/3.32.0-03 (OSS)', 'X-Content-Type-Options': 'nosniff', 'Content-Type': 'application/json', 'Content-Length': '1453'}
-INFO 21-08-02 16:16:45 14512: Nexus Version: Nexus/3.32.0-03 (OSS)
-DEBUG 21-08-02 16:16:45 14512: Using repository: /service/rest/v1/repositorySettings
-INFO 21-08-02 16:16:45 14512: No repositories specified, all repositories will be scanned
-INFO 21-08-02 16:16:45 14512: Repository: maven-snapshots
-INFO 21-08-02 16:16:45 14512: Validate artifact list
-DEBUG 21-08-02 16:16:45 14512: Starting new HTTP connection (1): 52.14.229.244:8081
-DEBUG 21-08-02 16:16:45 14512: http://52.14.229.244:8081 "GET /service/rest/v1/components?repository=maven-snapshots HTTP/1.1" 200 49
-INFO 21-08-02 16:16:45 14512: No artifacts found in maven-snapshots
-INFO 21-08-02 16:16:45 14512:  -- > 
-INFO 21-08-02 16:16:45 14512: Repository: maven-central
-INFO 21-08-02 16:16:45 14512: Validate artifact list
-DEBUG 21-08-02 16:16:45 14512: Starting new HTTP connection (1): 52.14.229.244:8081
-DEBUG 21-08-02 16:16:46 14512: http://52.14.229.244:8081 "GET /service/rest/v1/components?repository=maven-central HTTP/1.1" 200 49
-INFO 21-08-02 16:16:46 14512: No artifacts found in maven-central
-INFO 21-08-02 16:16:46 14512:  -- > 
-INFO 21-08-02 16:16:46 14512: Repository: nuget-group
-INFO 21-08-02 16:16:46 14512: Validate artifact list
-DEBUG 21-08-02 16:16:46 14512: Starting new HTTP connection (1): 52.14.229.244:8081
-DEBUG 21-08-02 16:16:46 14512: http://52.14.229.244:8081 "GET /service/rest/v1/components?repository=nuget-group HTTP/1.1" 200 49
-INFO 21-08-02 16:16:46 14512: No artifacts found in nuget-group
-INFO 21-08-02 16:16:46 14512:  -- > 
-INFO 21-08-02 16:16:46 14512: Repository: nuget.org-proxy
-INFO 21-08-02 16:16:46 14512: Validate artifact list
-DEBUG 21-08-02 16:16:46 14512: Starting new HTTP connection (1): 52.14.229.244:8081
-DEBUG 21-08-02 16:16:46 14512: http://52.14.229.244:8081 "GET /service/rest/v1/components?repository=nuget.org-proxy HTTP/1.1" 200 49
-INFO 21-08-02 16:16:46 14512: No artifacts found in nuget.org-proxy
-INFO 21-08-02 16:16:46 14512:  -- > 
-INFO 21-08-02 16:16:46 14512: Repository: maven-releases
-INFO 21-08-02 16:16:46 14512: Validate artifact list
-DEBUG 21-08-02 16:16:46 14512: Starting new HTTP connection (1): 52.14.229.244:8081
-DEBUG 21-08-02 16:16:47 14512: http://52.14.229.244:8081 "GET /service/rest/v1/components?repository=maven-releases HTTP/1.1" 200 5904
-INFO 21-08-02 16:16:56 14512: Retrieving artifacts...
-DEBUG 21-08-02 16:22:05 21356: Using configuration file: ../config/params_3_32.config
-DEBUG 21-08-02 16:22:05 21356: Converting user and password to basic string
-INFO 21-08-02 16:22:05 21356: Starting
-INFO 21-08-02 16:22:05 21356: Getting region parameters
-INFO 21-08-02 16:22:05 21356: Validating Nexus credentials
-INFO 21-08-02 16:22:05 21356: Nexus credentials validated
-INFO 21-08-02 16:22:05 21356: Validating WhiteSource User Key, API Key and URL
-INFO 21-08-02 16:22:05 21356: WhiteSource User Key, API Key and URL validated
-INFO 21-08-02 16:22:05 21356: Verifying agent parameters
-INFO 21-08-02 16:22:05 21356: WhiteSource agent download complete
-INFO 21-08-02 16:22:05 21356: Converting user and password to basic string
-INFO 21-08-02 16:22:05 21356: Sending request for retrieving Nexus repository list
-DEBUG 21-08-02 16:22:05 21356: Starting new HTTP connection (1): 52.14.229.244:8081
-DEBUG 21-08-02 16:22:05 21356: http://52.14.229.244:8081 "GET /service/rest/v1/repositories HTTP/1.1" 200 1453
-DEBUG 21-08-02 16:22:05 21356:  Nexus Headers: {'Date': 'Mon, 02 Aug 2021 13:22:05 GMT', 'Server': 'Nexus/3.32.0-03 (OSS)', 'X-Content-Type-Options': 'nosniff', 'Content-Type': 'application/json', 'Content-Length': '1453'}
-INFO 21-08-02 16:22:05 21356: Nexus Version: Nexus/3.32.0-03 (OSS)
-DEBUG 21-08-02 16:22:05 21356: Using repository: /service/rest/v1/repositorySettings
-INFO 21-08-02 16:22:05 21356: No repositories specified, all repositories will be scanned
-INFO 21-08-02 16:22:05 21356: Repository: maven-snapshots
-INFO 21-08-02 16:22:05 21356: Validate artifact list
-DEBUG 21-08-02 16:22:05 21356: Starting new HTTP connection (1): 52.14.229.244:8081
-DEBUG 21-08-02 16:22:05 21356: http://52.14.229.244:8081 "GET /service/rest/v1/components?repository=maven-snapshots HTTP/1.1" 200 49
-INFO 21-08-02 16:22:05 21356: No artifacts found in maven-snapshots
-INFO 21-08-02 16:22:05 21356:  -- > 
-INFO 21-08-02 16:22:05 21356: Repository: maven-central
-INFO 21-08-02 16:22:05 21356: Validate artifact list
-DEBUG 21-08-02 16:22:05 21356: Starting new HTTP connection (1): 52.14.229.244:8081
-DEBUG 21-08-02 16:22:06 21356: http://52.14.229.244:8081 "GET /service/rest/v1/components?repository=maven-central HTTP/1.1" 200 49
-INFO 21-08-02 16:22:06 21356: No artifacts found in maven-central
-INFO 21-08-02 16:22:06 21356:  -- > 
-INFO 21-08-02 16:22:06 21356: Repository: nuget-group
-INFO 21-08-02 16:22:06 21356: Validate artifact list
-DEBUG 21-08-02 16:22:06 21356: Starting new HTTP connection (1): 52.14.229.244:8081
-DEBUG 21-08-02 16:22:06 21356: http://52.14.229.244:8081 "GET /service/rest/v1/components?repository=nuget-group HTTP/1.1" 200 49
-INFO 21-08-02 16:22:06 21356: No artifacts found in nuget-group
-INFO 21-08-02 16:22:06 21356:  -- > 
-INFO 21-08-02 16:22:06 21356: Repository: nuget.org-proxy
-INFO 21-08-02 16:22:06 21356: Validate artifact list
-DEBUG 21-08-02 16:22:06 21356: Starting new HTTP connection (1): 52.14.229.244:8081
-DEBUG 21-08-02 16:22:06 21356: http://52.14.229.244:8081 "GET /service/rest/v1/components?repository=nuget.org-proxy HTTP/1.1" 200 49
-INFO 21-08-02 16:22:06 21356: No artifacts found in nuget.org-proxy
-INFO 21-08-02 16:22:06 21356:  -- > 
-INFO 21-08-02 16:22:06 21356: Repository: maven-releases
-INFO 21-08-02 16:22:06 21356: Validate artifact list
-DEBUG 21-08-02 16:22:06 21356: Starting new HTTP connection (1): 52.14.229.244:8081
-DEBUG 21-08-02 16:23:25 548: Using configuration file: ../config/params_3_32.config
-DEBUG 21-08-02 16:23:25 548: Converting user and password to basic string
-INFO 21-08-02 16:23:25 548: Starting
-INFO 21-08-02 16:23:25 548: Getting region parameters
-INFO 21-08-02 16:23:25 548: Validating Nexus credentials
-INFO 21-08-02 16:23:25 548: Nexus credentials validated
-INFO 21-08-02 16:23:25 548: Validating WhiteSource User Key, API Key and URL
-INFO 21-08-02 16:23:25 548: WhiteSource User Key, API Key and URL validated
-INFO 21-08-02 16:23:25 548: Verifying agent parameters
-INFO 21-08-02 16:23:25 548: WhiteSource agent download complete
-INFO 21-08-02 16:23:25 548: Converting user and password to basic string
-INFO 21-08-02 16:23:25 548: Sending request for retrieving Nexus repository list
-DEBUG 21-08-02 16:23:25 548: Starting new HTTP connection (1): 52.14.229.244:8081
-DEBUG 21-08-02 16:23:26 548: http://52.14.229.244:8081 "GET /service/rest/v1/repositories HTTP/1.1" 200 1453
-DEBUG 21-08-02 16:23:26 548:  Nexus Headers: {'Date': 'Mon, 02 Aug 2021 13:23:26 GMT', 'Server': 'Nexus/3.32.0-03 (OSS)', 'X-Content-Type-Options': 'nosniff', 'Content-Type': 'application/json', 'Content-Length': '1453'}
-INFO 21-08-02 16:23:26 548: Nexus Version: Nexus/3.32.0-03 (OSS)
-DEBUG 21-08-02 16:23:26 548: Using repository: /service/rest/v1/repositorySettings
-INFO 21-08-02 16:23:26 548: No repositories specified, all repositories will be scanned
-INFO 21-08-02 16:23:26 548: Repository: maven-snapshots
-INFO 21-08-02 16:23:26 548: Validate artifact list
-DEBUG 21-08-02 16:23:26 548: Starting new HTTP connection (1): 52.14.229.244:8081
-DEBUG 21-08-02 16:23:26 548: http://52.14.229.244:8081 "GET /service/rest/v1/components?repository=maven-snapshots HTTP/1.1" 200 49
-INFO 21-08-02 16:23:26 548: No artifacts found in maven-snapshots
-INFO 21-08-02 16:23:26 548:  -- > 
-INFO 21-08-02 16:23:26 548: Repository: maven-central
-INFO 21-08-02 16:23:26 548: Validate artifact list
-DEBUG 21-08-02 16:23:26 548: Starting new HTTP connection (1): 52.14.229.244:8081
-DEBUG 21-08-02 16:23:26 548: http://52.14.229.244:8081 "GET /service/rest/v1/components?repository=maven-central HTTP/1.1" 200 49
-INFO 21-08-02 16:23:26 548: No artifacts found in maven-central
-INFO 21-08-02 16:23:26 548:  -- > 
-INFO 21-08-02 16:23:26 548: Repository: nuget-group
-INFO 21-08-02 16:23:26 548: Validate artifact list
-DEBUG 21-08-02 16:23:26 548: Starting new HTTP connection (1): 52.14.229.244:8081
-DEBUG 21-08-02 16:23:27 548: http://52.14.229.244:8081 "GET /service/rest/v1/components?repository=nuget-group HTTP/1.1" 200 49
-INFO 21-08-02 16:23:27 548: No artifacts found in nuget-group
-INFO 21-08-02 16:23:27 548:  -- > 
-INFO 21-08-02 16:23:27 548: Repository: nuget.org-proxy
-INFO 21-08-02 16:23:27 548: Validate artifact list
-DEBUG 21-08-02 16:23:27 548: Starting new HTTP connection (1): 52.14.229.244:8081
-DEBUG 21-08-02 16:23:27 548: http://52.14.229.244:8081 "GET /service/rest/v1/components?repository=nuget.org-proxy HTTP/1.1" 200 49
-INFO 21-08-02 16:23:27 548: No artifacts found in nuget.org-proxy
-INFO 21-08-02 16:23:27 548:  -- > 
-INFO 21-08-02 16:23:27 548: Repository: maven-releases
-INFO 21-08-02 16:23:27 548: Validate artifact list
-DEBUG 21-08-02 16:23:27 548: Starting new HTTP connection (1): 52.14.229.244:8081
-DEBUG 21-08-02 16:23:27 548: http://52.14.229.244:8081 "GET /service/rest/v1/components?repository=maven-releases HTTP/1.1" 200 5904
-INFO 21-08-02 16:23:27 548: Retrieving artifacts...
-DEBUG 21-08-02 16:33:30 24372: Using configuration file: ../config/params_3_32.config
-DEBUG 21-08-02 16:33:30 24372: Converting user and password to basic string
-INFO 21-08-02 16:33:30 24372: Starting
-INFO 21-08-02 16:33:30 24372: Getting region parameters
-INFO 21-08-02 16:33:30 24372: Validating Nexus credentials
-INFO 21-08-02 16:33:30 24372: Nexus credentials validated
-INFO 21-08-02 16:33:30 24372: Validating WhiteSource User Key, API Key and URL
-INFO 21-08-02 16:33:30 24372: WhiteSource User Key, API Key and URL validated
-INFO 21-08-02 16:33:30 24372: Verifying agent parameters
-INFO 21-08-02 16:33:30 24372: WhiteSource agent download complete
-INFO 21-08-02 16:33:30 24372: Converting user and password to basic string
-INFO 21-08-02 16:33:30 24372: Sending request for retrieving Nexus repository list
-DEBUG 21-08-02 16:33:30 24372: Starting new HTTP connection (1): 52.14.229.244:8081
-DEBUG 21-08-02 16:33:31 24372: http://52.14.229.244:8081 "GET /service/rest/v1/repositories HTTP/1.1" 200 1453
-DEBUG 21-08-02 16:33:31 24372:  Nexus Headers: {'Date': 'Mon, 02 Aug 2021 13:33:31 GMT', 'Server': 'Nexus/3.32.0-03 (OSS)', 'X-Content-Type-Options': 'nosniff', 'Content-Type': 'application/json', 'Content-Length': '1453'}
-INFO 21-08-02 16:33:31 24372: Nexus Version: Nexus/3.32.0-03 (OSS)
-DEBUG 21-08-02 16:33:31 24372: Using repository: /service/rest/v1/repositorySettings
-INFO 21-08-02 16:33:31 24372: No repositories specified, all repositories will be scanned
-INFO 21-08-02 16:33:31 24372: Repository: maven-snapshots
-INFO 21-08-02 16:33:31 24372: Validate artifact list
-DEBUG 21-08-02 16:33:31 24372: Starting new HTTP connection (1): 52.14.229.244:8081
-DEBUG 21-08-02 16:33:31 24372: http://52.14.229.244:8081 "GET /service/rest/v1/components?repository=maven-snapshots HTTP/1.1" 200 49
-INFO 21-08-02 16:33:31 24372: No artifacts found in maven-snapshots
-INFO 21-08-02 16:33:31 24372:  -- > 
-INFO 21-08-02 16:33:31 24372: Repository: maven-central
-INFO 21-08-02 16:33:31 24372: Validate artifact list
-DEBUG 21-08-02 16:33:31 24372: Starting new HTTP connection (1): 52.14.229.244:8081
-DEBUG 21-08-02 16:33:31 24372: http://52.14.229.244:8081 "GET /service/rest/v1/components?repository=maven-central HTTP/1.1" 200 49
-INFO 21-08-02 16:33:31 24372: No artifacts found in maven-central
-INFO 21-08-02 16:33:31 24372:  -- > 
-INFO 21-08-02 16:33:31 24372: Repository: nuget-group
-INFO 21-08-02 16:33:31 24372: Validate artifact list
-DEBUG 21-08-02 16:33:31 24372: Starting new HTTP connection (1): 52.14.229.244:8081
-DEBUG 21-08-02 16:33:32 24372: http://52.14.229.244:8081 "GET /service/rest/v1/components?repository=nuget-group HTTP/1.1" 200 49
-INFO 21-08-02 16:33:32 24372: No artifacts found in nuget-group
-INFO 21-08-02 16:33:32 24372:  -- > 
-INFO 21-08-02 16:33:32 24372: Repository: nuget.org-proxy
-INFO 21-08-02 16:33:32 24372: Validate artifact list
-DEBUG 21-08-02 16:33:32 24372: Starting new HTTP connection (1): 52.14.229.244:8081
-DEBUG 21-08-02 16:33:32 24372: http://52.14.229.244:8081 "GET /service/rest/v1/components?repository=nuget.org-proxy HTTP/1.1" 200 49
-INFO 21-08-02 16:33:32 24372: No artifacts found in nuget.org-proxy
-INFO 21-08-02 16:33:32 24372:  -- > 
-INFO 21-08-02 16:33:32 24372: Repository: maven-releases
-INFO 21-08-02 16:33:32 24372: Validate artifact list
-DEBUG 21-08-02 16:33:32 24372: Starting new HTTP connection (1): 52.14.229.244:8081
-DEBUG 21-08-02 16:33:32 24372: http://52.14.229.244:8081 "GET /service/rest/v1/components?repository=maven-releases HTTP/1.1" 200 5904
-INFO 21-08-02 16:33:32 24372: Retrieving artifacts...
-INFO 21-08-02 16:36:24 15028: Starting
-INFO 21-08-02 16:36:24 15028: Getting region parameters
-INFO 21-08-02 16:36:24 15028: Validating Nexus credentials
-INFO 21-08-02 16:36:24 15028: Nexus credentials validated
-INFO 21-08-02 16:36:24 15028: Validating WhiteSource User Key, API Key and URL
-INFO 21-08-02 16:36:24 15028: WhiteSource User Key, API Key and URL validated
-INFO 21-08-02 16:36:24 15028: Verifying agent parameters
-INFO 21-08-02 16:36:24 15028: WhiteSource agent download complete
-INFO 21-08-02 16:36:24 15028: Converting user and password to basic string
-INFO 21-08-02 16:36:24 15028: Sending request for retrieving Nexus repository list
-INFO 21-08-02 16:36:24 15028: Nexus Version: Nexus/3.32.0-03 (OSS)
-INFO 21-08-02 16:36:24 15028: No repositories specified, all repositories will be scanned
-INFO 21-08-02 16:36:24 15028: Repository: maven-snapshots
-INFO 21-08-02 16:36:24 15028: Validate artifact list
-INFO 21-08-02 16:36:24 15028: No artifacts found in maven-snapshots
-INFO 21-08-02 16:36:24 15028:  -- > 
-INFO 21-08-02 16:36:24 15028: Repository: maven-central
-INFO 21-08-02 16:36:24 15028: Validate artifact list
-INFO 21-08-02 16:36:25 15028: No artifacts found in maven-central
-INFO 21-08-02 16:36:25 15028:  -- > 
-INFO 21-08-02 16:36:25 15028: Repository: nuget-group
-INFO 21-08-02 16:36:25 15028: Validate artifact list
-INFO 21-08-02 16:36:25 15028: No artifacts found in nuget-group
-INFO 21-08-02 16:36:25 15028:  -- > 
-INFO 21-08-02 16:36:25 15028: Repository: nuget.org-proxy
-INFO 21-08-02 16:36:25 15028: Validate artifact list
-INFO 21-08-02 16:36:25 15028: No artifacts found in nuget.org-proxy
-INFO 21-08-02 16:36:25 15028:  -- > 
-INFO 21-08-02 16:36:25 15028: Repository: maven-releases
-INFO 21-08-02 16:36:25 15028: Validate artifact list
-INFO 21-08-02 16:36:26 15028: Retrieving artifacts...
-INFO 21-08-02 16:36:26 16524: Downloading plexus-utils-1.4.5.jar component from maven-releases
-INFO 21-08-02 16:36:27 16524: Component plexus-utils-1.4.5.jar has successfully downloaded
-INFO 21-08-02 16:36:27 15028:  -- > 
-INFO 21-08-02 16:36:27 15028: Repository: docker-hosted
-INFO 21-08-02 16:36:27 15028: Validate artifact list
-INFO 21-08-02 16:36:28 15028: Retrieving artifacts...
-INFO 21-08-02 16:36:29 24864: Pulling Docker image: 52.14.229.244:18141/ws-ums:nexus1
-INFO 21-08-02 16:36:33 15028: Found 1 Docker images
-INFO 21-08-02 16:36:33 15028:  -- > 
-INFO 21-08-02 16:36:33 15028: Repository: nuget-hosted
-INFO 21-08-02 16:36:33 15028: Validate artifact list
-INFO 21-08-02 16:36:33 15028: No artifacts found in nuget-hosted
-INFO 21-08-02 16:36:33 15028:  -- > 
-INFO 21-08-02 16:36:33 15028: Repository: maven-public
-INFO 21-08-02 16:36:33 15028: Validate artifact list
-INFO 21-08-02 16:36:33 15028: Retrieving artifacts...
-INFO 21-08-02 16:36:34 6096: Downloading plexus-utils-1.4.5.jar component from maven-public
-INFO 21-08-02 16:36:35 6096: Component plexus-utils-1.4.5.jar has successfully downloaded
-INFO 21-08-02 16:36:35 15028:  -- > 
-INFO 21-08-02 16:36:35 15028: Starting WhiteSource scan
-DEBUG 21-08-02 16:52:02 24632: Using configuration file: ../config/params_3_32.config
-DEBUG 21-08-02 16:52:02 24632: Converting user and password to basic string
-INFO 21-08-02 16:52:02 24632: Starting
-INFO 21-08-02 16:52:02 24632: Getting region parameters
-INFO 21-08-02 16:52:02 24632: Validating Nexus credentials
-INFO 21-08-02 16:52:02 24632: Nexus credentials validated
-INFO 21-08-02 16:52:02 24632: Validating WhiteSource User Key, API Key and URL
-INFO 21-08-02 16:52:02 24632: WhiteSource User Key, API Key and URL validated
-INFO 21-08-02 16:52:02 24632: Verifying agent parameters
-INFO 21-08-02 16:52:02 24632: WhiteSource agent download complete
-INFO 21-08-02 16:52:02 24632: Converting user and password to basic string
-INFO 21-08-02 16:52:02 24632: Sending request for retrieving Nexus repository list
-DEBUG 21-08-02 16:52:02 24632: Starting new HTTP connection (1): 52.14.229.244:8081
-DEBUG 21-08-02 16:52:02 24632: http://52.14.229.244:8081 "GET /service/rest/v1/repositories HTTP/1.1" 200 1453
-DEBUG 21-08-02 16:52:02 24632:  Nexus Headers: {'Date': 'Mon, 02 Aug 2021 13:52:02 GMT', 'Server': 'Nexus/3.32.0-03 (OSS)', 'X-Content-Type-Options': 'nosniff', 'Content-Type': 'application/json', 'Content-Length': '1453'}
-INFO 21-08-02 16:52:02 24632: Nexus Version: Nexus/3.32.0-03 (OSS)
-DEBUG 21-08-02 16:52:02 24632: Using repository: /service/rest/v1/repositorySettings
-INFO 21-08-02 16:52:02 24632: No repositories specified, all repositories will be scanned
-INFO 21-08-02 16:52:02 24632: Repository: maven-snapshots
-INFO 21-08-02 16:52:02 24632: Validate artifact list
-DEBUG 21-08-02 16:52:02 24632: Starting new HTTP connection (1): 52.14.229.244:8081
-DEBUG 21-08-02 16:52:02 24632: http://52.14.229.244:8081 "GET /service/rest/v1/components?repository=maven-snapshots HTTP/1.1" 200 49
-INFO 21-08-02 16:52:02 24632: No artifacts found in maven-snapshots
-INFO 21-08-02 16:52:02 24632:  -- > 
-INFO 21-08-02 16:52:02 24632: Repository: maven-central
-INFO 21-08-02 16:52:02 24632: Validate artifact list
-DEBUG 21-08-02 16:52:02 24632: Starting new HTTP connection (1): 52.14.229.244:8081
-DEBUG 21-08-02 16:52:03 24632: http://52.14.229.244:8081 "GET /service/rest/v1/components?repository=maven-central HTTP/1.1" 200 49
-INFO 21-08-02 16:52:03 24632: No artifacts found in maven-central
-INFO 21-08-02 16:52:03 24632:  -- > 
-INFO 21-08-02 16:52:03 24632: Repository: nuget-group
-INFO 21-08-02 16:52:03 24632: Validate artifact list
-DEBUG 21-08-02 16:52:03 24632: Starting new HTTP connection (1): 52.14.229.244:8081
-DEBUG 21-08-02 16:52:03 24632: http://52.14.229.244:8081 "GET /service/rest/v1/components?repository=nuget-group HTTP/1.1" 200 49
-INFO 21-08-02 16:52:03 24632: No artifacts found in nuget-group
-INFO 21-08-02 16:52:03 24632:  -- > 
-INFO 21-08-02 16:52:03 24632: Repository: nuget.org-proxy
-INFO 21-08-02 16:52:03 24632: Validate artifact list
-DEBUG 21-08-02 16:52:03 24632: Starting new HTTP connection (1): 52.14.229.244:8081
-DEBUG 21-08-02 16:52:03 24632: http://52.14.229.244:8081 "GET /service/rest/v1/components?repository=nuget.org-proxy HTTP/1.1" 200 49
-INFO 21-08-02 16:52:03 24632: No artifacts found in nuget.org-proxy
-INFO 21-08-02 16:52:03 24632:  -- > 
-INFO 21-08-02 16:52:03 24632: Repository: maven-releases
-INFO 21-08-02 16:52:03 24632: Validate artifact list
-DEBUG 21-08-02 16:52:03 24632: Starting new HTTP connection (1): 52.14.229.244:8081
-DEBUG 21-08-02 16:52:03 24632: http://52.14.229.244:8081 "GET /service/rest/v1/components?repository=maven-releases HTTP/1.1" 200 5904
-INFO 21-08-02 16:52:03 24632: Retrieving artifacts...
-DEBUG 21-08-02 17:46:04 3256: Using configuration file: ../config/params_3_23.config
-DEBUG 21-08-02 17:46:04 3256: Converting user and password to basic string
-INFO 21-08-02 17:46:04 3256: Starting
-INFO 21-08-02 17:46:04 3256: Getting region parameters
-INFO 21-08-02 17:46:04 3256: Validating Nexus credentials
-INFO 21-08-02 17:46:04 3256: Nexus credentials validated
-INFO 21-08-02 17:46:04 3256: Validating WhiteSource User Key, API Key and URL
-INFO 21-08-02 17:46:04 3256: WhiteSource User Key, API Key and URL validated
-INFO 21-08-02 17:46:04 3256: Verifying agent parameters
-INFO 21-08-02 17:46:04 3256: WhiteSource agent download complete
-INFO 21-08-02 17:46:04 3256: Converting user and password to basic string
-INFO 21-08-02 17:46:04 3256: Sending request for retrieving Nexus repository list
-DEBUG 21-08-02 17:46:04 3256: Starting new HTTP connection (1): 18.118.119.71:8081
-DEBUG 21-08-02 17:46:05 3256: http://18.118.119.71:8081 "GET /service/rest/v1/repositories HTTP/1.1" 200 1447
-DEBUG 21-08-02 17:46:05 3256:  Nexus Headers: {'Date': 'Mon, 02 Aug 2021 14:46:05 GMT', 'Server': 'Nexus/3.23.0-03 (OSS)', 'X-Content-Type-Options': 'nosniff', 'Content-Type': 'application/json', 'Content-Length': '1447'}
-INFO 21-08-02 17:46:05 3256: Nexus Version: Nexus/3.23.0-03 (OSS)
-DEBUG 21-08-02 17:46:05 3256: Using repository: /service/rest/beta/repositories
-INFO 21-08-02 17:46:05 3256: No repositories specified, all repositories will be scanned
-INFO 21-08-02 17:46:05 3256: Repository: nuget-group
-INFO 21-08-02 17:46:05 3256: Validate artifact list
-DEBUG 21-08-02 17:46:05 3256: Starting new HTTP connection (1): 18.118.119.71:8081
-DEBUG 21-08-02 17:46:05 3256: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=nuget-group HTTP/1.1" 200 49
-INFO 21-08-02 17:46:05 3256: No artifacts found in nuget-group
-INFO 21-08-02 17:46:05 3256:  -- > 
-INFO 21-08-02 17:46:05 3256: Repository: maven-snapshots
-INFO 21-08-02 17:46:05 3256: Validate artifact list
-DEBUG 21-08-02 17:46:05 3256: Starting new HTTP connection (1): 18.118.119.71:8081
-DEBUG 21-08-02 17:46:05 3256: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=maven-snapshots HTTP/1.1" 200 49
-INFO 21-08-02 17:46:05 3256: No artifacts found in maven-snapshots
-INFO 21-08-02 17:46:05 3256:  -- > 
-INFO 21-08-02 17:46:05 3256: Repository: maven-central
-INFO 21-08-02 17:46:05 3256: Validate artifact list
-DEBUG 21-08-02 17:46:05 3256: Starting new HTTP connection (1): 18.118.119.71:8081
-DEBUG 21-08-02 17:46:06 3256: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=maven-central HTTP/1.1" 200 49
-INFO 21-08-02 17:46:06 3256: No artifacts found in maven-central
-INFO 21-08-02 17:46:06 3256:  -- > 
-INFO 21-08-02 17:46:06 3256: Repository: nuget.org-proxy
-INFO 21-08-02 17:46:06 3256: Validate artifact list
-DEBUG 21-08-02 17:46:06 3256: Starting new HTTP connection (1): 18.118.119.71:8081
-DEBUG 21-08-02 17:46:06 3256: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=nuget.org-proxy HTTP/1.1" 200 49
-INFO 21-08-02 17:46:06 3256: No artifacts found in nuget.org-proxy
-INFO 21-08-02 17:46:06 3256:  -- > 
-INFO 21-08-02 17:46:06 3256: Repository: maven-releases
-INFO 21-08-02 17:46:06 3256: Validate artifact list
-DEBUG 21-08-02 17:46:06 3256: Starting new HTTP connection (1): 18.118.119.71:8081
-DEBUG 21-08-02 17:46:06 3256: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=maven-releases HTTP/1.1" 200 5589
-INFO 21-08-02 17:46:06 3256: Retrieving artifacts...
-DEBUG 21-08-02 17:46:08 17740: Handling component ID: bWF2ZW4tcmVsZWFzZXM6OTNiOWI5ZWI5YTdlY2IwNjQ1OTFjMTc5OTg5ODU4ODM on repository: maven-releases Format: maven2
-DEBUG 21-08-02 17:46:08 17740: Handling component ID: bWF2ZW4tcmVsZWFzZXM6NzFhZmVhNTQwZTIzZGRlNWIyZDg0ZjdmYTgwOTkxMzc on repository: maven-releases Format: maven2
-DEBUG 21-08-02 17:46:08 17740: Handling component ID: bWF2ZW4tcmVsZWFzZXM6NzFhZmVhNTQwZTIzZGRlNWVkN2Y0Zjc2YTdiZDdmM2Q on repository: maven-releases Format: maven2
-INFO 21-08-02 17:46:08 17740: Downloading plexus-utils-1.4.5.jar component from maven-releases
-DEBUG 21-08-02 17:46:08 17740: Starting new HTTP connection (1): 18.118.119.71:8081
-DEBUG 21-08-02 17:46:09 17740: http://18.118.119.71:8081 "GET /repository/maven-releases/org/codehaus/plexus/plexus-utils/1.4.5/plexus-utils-1.4.5.jar HTTP/1.1" 200 205043
-DEBUG 21-08-02 17:46:09 17740: Download URL: http://18.118.119.71:8081/repository/maven-releases/org/codehaus/plexus/plexus-utils/1.4.5/plexus-utils-1.4.5.jar
-INFO 21-08-02 17:46:09 17740: Component plexus-utils-1.4.5.jar has successfully downloaded
-INFO 21-08-02 17:46:09 3256:  -- > 
-INFO 21-08-02 17:46:09 3256: Repository: docker-hosted
-INFO 21-08-02 17:46:09 3256: Validate artifact list
-DEBUG 21-08-02 17:46:09 3256: Starting new HTTP connection (1): 18.118.119.71:8081
-DEBUG 21-08-02 17:46:10 3256: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=docker-hosted HTTP/1.1" 200 1487
-INFO 21-08-02 17:46:10 3256: Retrieving artifacts...
-DEBUG 21-08-02 17:46:12 13092: Handling component ID: ZG9ja2VyLWhvc3RlZDo5M2I5YjllYjlhN2VjYjA2ZWZiZThjYjY5MDEyZDc5Mw on repository: docker-hosted Format: docker
-DEBUG 21-08-02 17:46:12 13092: Getting manifest file from: http://18.118.119.71:8081/repository/docker-hosted/v2/mysql/manifests/alpine_tag1
-DEBUG 21-08-02 17:46:12 13092: Starting new HTTP connection (1): 18.118.119.71:8081
-DEBUG 21-08-02 17:46:12 13092: http://18.118.119.71:8081 "GET /repository/docker-hosted/v2/mysql/manifests/alpine_tag1 HTTP/1.1" 200 2012
-DEBUG 21-08-02 17:46:12 13092: Starting new HTTP connection (1): 18.118.119.71:8081
-DEBUG 21-08-02 17:46:13 13092: http://18.118.119.71:8081 "GET /service/rest/beta/repositories HTTP/1.1" 200 3947
-DEBUG 21-08-02 17:46:13 13092: Repository data: {'name': 'docker-hosted', 'url': 'http://18.118.119.71:8081/repository/docker-hosted', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': True, 'writePolicy': 'ALLOW'}, 'cleanup': None, 'docker': {'v1Enabled': False, 'forceBasicAuth': True, 'httpPort': 18442, 'httpsPort': 28442}, 'format': 'docker', 'type': 'hosted'}
-DEBUG 21-08-02 17:46:13 13092: Returned docker repo URL: 18.118.119.71:18442
-INFO 21-08-02 17:46:13 13092: Pulling Docker image: 18.118.119.71:18442/mysql:alpine_tag1
-DEBUG 21-08-02 17:46:13 13092: Trying paths: ['C:\\Users\\OzTamari\\.docker\\config.json', 'C:\\Users\\OzTamari\\.dockercfg']
-DEBUG 21-08-02 17:46:13 13092: Found file at path: C:\Users\OzTamari\.docker\config.json
-DEBUG 21-08-02 17:46:13 13092: Found 'auths' section
-DEBUG 21-08-02 17:46:13 13092: Auth data for 18.118.20.105:18442 is absent. Client might be using a credentials store instead.
-DEBUG 21-08-02 17:46:13 13092: Auth data for 18.118.20.105:18444 is absent. Client might be using a credentials store instead.
-DEBUG 21-08-02 17:46:13 13092: Auth data for 18.118.20.105:28442 is absent. Client might be using a credentials store instead.
-DEBUG 21-08-02 17:46:13 13092: Auth data for 18.118.20.105:28444 is absent. Client might be using a credentials store instead.
-DEBUG 21-08-02 17:46:13 13092: Auth data for 52.14.229.244:18141 is absent. Client might be using a credentials store instead.
-DEBUG 21-08-02 17:46:13 13092: Found 'credsStore' section
-DEBUG 21-08-02 17:46:13 13092: http://localhost:None "GET /version HTTP/1.1" 200 None
-DEBUG 21-08-02 17:46:13 13092: Using credentials store "desktop"
-DEBUG 21-08-02 17:46:13 13092: Looking for auth entry for '18.118.119.71:18442'
-DEBUG 21-08-02 17:46:13 13092: No entry found
-DEBUG 21-08-02 17:46:13 13092: No entry in credstore - fetching from auth dict
-DEBUG 21-08-02 17:46:13 13092: Looking for auth entry for '18.118.119.71:18442'
-DEBUG 21-08-02 17:46:13 13092: No entry found
-DEBUG 21-08-02 17:46:14 13092: http://localhost:None "POST /v1.41/auth HTTP/1.1" 200 None
-DEBUG 21-08-02 17:46:14 13092: Looking for auth config
-DEBUG 21-08-02 17:46:14 13092: Using credentials store "desktop"
-DEBUG 21-08-02 17:46:14 13092: Looking for auth entry for '18.118.119.71:18442'
-DEBUG 21-08-02 17:46:14 13092: No entry found
-DEBUG 21-08-02 17:46:14 13092: No entry in credstore - fetching from auth dict
-DEBUG 21-08-02 17:46:14 13092: Looking for auth entry for '18.118.119.71:18442'
-DEBUG 21-08-02 17:46:14 13092: Found '18.118.119.71:18442'
-DEBUG 21-08-02 17:46:14 13092: Found auth config
-DEBUG 21-08-02 17:46:15 13092: http://localhost:None "POST /v1.41/images/create?tag=alpine_tag1&fromImage=18.118.119.71%3A18442%2Fmysql HTTP/1.1" 200 None
-DEBUG 21-08-02 17:46:15 13092: http://localhost:None "GET /v1.41/images/18.118.119.71:18442/mysql:alpine_tag1/json HTTP/1.1" 200 None
-DEBUG 21-08-02 17:46:15 13092: Image ID: d4ff818577bc successfully pulled
-DEBUG 21-08-02 17:46:15 13092: Handling component ID: ZG9ja2VyLWhvc3RlZDo3MWFmZWE1NDBlMjNkZGU1ZWQ4NGFiZmZjOTkxYTlmOQ on repository: docker-hosted Format: docker
-DEBUG 21-08-02 17:46:15 13092: Getting manifest file from: http://18.118.119.71:8081/repository/docker-hosted/v2/mysql/manifests/mysql_tag2
-DEBUG 21-08-02 17:46:15 13092: Starting new HTTP connection (1): 18.118.119.71:8081
-DEBUG 21-08-02 17:46:16 13092: http://18.118.119.71:8081 "GET /repository/docker-hosted/v2/mysql/manifests/mysql_tag2 HTTP/1.1" 200 12400
-DEBUG 21-08-02 17:46:16 13092: Starting new HTTP connection (1): 18.118.119.71:8081
-DEBUG 21-08-02 17:46:16 13092: http://18.118.119.71:8081 "GET /service/rest/beta/repositories HTTP/1.1" 200 3947
-DEBUG 21-08-02 17:46:16 13092: Repository data: {'name': 'docker-hosted', 'url': 'http://18.118.119.71:8081/repository/docker-hosted', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': True, 'writePolicy': 'ALLOW'}, 'cleanup': None, 'docker': {'v1Enabled': False, 'forceBasicAuth': True, 'httpPort': 18442, 'httpsPort': 28442}, 'format': 'docker', 'type': 'hosted'}
-DEBUG 21-08-02 17:46:16 13092: Returned docker repo URL: 18.118.119.71:18442
-INFO 21-08-02 17:46:16 13092: Pulling Docker image: 18.118.119.71:18442/mysql:mysql_tag2
-DEBUG 21-08-02 17:46:16 13092: Trying paths: ['C:\\Users\\OzTamari\\.docker\\config.json', 'C:\\Users\\OzTamari\\.dockercfg']
-DEBUG 21-08-02 17:46:16 13092: Found file at path: C:\Users\OzTamari\.docker\config.json
-DEBUG 21-08-02 17:46:16 13092: Found 'auths' section
-DEBUG 21-08-02 17:46:16 13092: Auth data for 18.118.20.105:18442 is absent. Client might be using a credentials store instead.
-DEBUG 21-08-02 17:46:16 13092: Auth data for 18.118.20.105:18444 is absent. Client might be using a credentials store instead.
-DEBUG 21-08-02 17:46:16 13092: Auth data for 18.118.20.105:28442 is absent. Client might be using a credentials store instead.
-DEBUG 21-08-02 17:46:16 13092: Auth data for 18.118.20.105:28444 is absent. Client might be using a credentials store instead.
-DEBUG 21-08-02 17:46:16 13092: Auth data for 52.14.229.244:18141 is absent. Client might be using a credentials store instead.
-DEBUG 21-08-02 17:46:16 13092: Found 'credsStore' section
-DEBUG 21-08-02 17:46:16 13092: http://localhost:None "GET /version HTTP/1.1" 200 None
-DEBUG 21-08-02 17:46:16 13092: Using credentials store "desktop"
-DEBUG 21-08-02 17:46:16 13092: Looking for auth entry for '18.118.119.71:18442'
-DEBUG 21-08-02 17:46:16 13092: No entry found
-DEBUG 21-08-02 17:46:16 13092: No entry in credstore - fetching from auth dict
-DEBUG 21-08-02 17:46:16 13092: Looking for auth entry for '18.118.119.71:18442'
-DEBUG 21-08-02 17:46:16 13092: No entry found
-DEBUG 21-08-02 17:46:17 13092: http://localhost:None "POST /v1.41/auth HTTP/1.1" 200 None
-DEBUG 21-08-02 17:46:17 13092: Looking for auth config
-DEBUG 21-08-02 17:46:17 13092: Using credentials store "desktop"
-DEBUG 21-08-02 17:46:17 13092: Looking for auth entry for '18.118.119.71:18442'
-DEBUG 21-08-02 17:46:17 13092: No entry found
-DEBUG 21-08-02 17:46:17 13092: No entry in credstore - fetching from auth dict
-DEBUG 21-08-02 17:46:17 13092: Looking for auth entry for '18.118.119.71:18442'
-DEBUG 21-08-02 17:46:17 13092: Found '18.118.119.71:18442'
-DEBUG 21-08-02 17:46:17 13092: Found auth config
-DEBUG 21-08-02 17:46:18 13092: http://localhost:None "POST /v1.41/images/create?tag=mysql_tag2&fromImage=18.118.119.71%3A18442%2Fmysql HTTP/1.1" 200 None
-DEBUG 21-08-02 17:46:18 13092: http://localhost:None "GET /v1.41/images/18.118.119.71:18442/mysql:mysql_tag2/json HTTP/1.1" 200 None
-DEBUG 21-08-02 17:46:18 13092: Image ID: 5c62e459e087 successfully pulled
-INFO 21-08-02 17:46:18 3256: Found 2 Docker images
-INFO 21-08-02 17:46:18 3256:  -- > 
-INFO 21-08-02 17:46:18 3256: Repository: nuget-hosted
-INFO 21-08-02 17:46:18 3256: Validate artifact list
-DEBUG 21-08-02 17:46:18 3256: Starting new HTTP connection (1): 18.118.119.71:8081
-DEBUG 21-08-02 17:46:19 3256: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=nuget-hosted HTTP/1.1" 200 49
-INFO 21-08-02 17:46:19 3256: No artifacts found in nuget-hosted
-INFO 21-08-02 17:46:19 3256:  -- > 
-INFO 21-08-02 17:46:19 3256: Repository: maven-public
-INFO 21-08-02 17:46:19 3256: Validate artifact list
-DEBUG 21-08-02 17:46:19 3256: Starting new HTTP connection (1): 18.118.119.71:8081
-DEBUG 21-08-02 17:46:19 3256: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=maven-public HTTP/1.1" 200 5511
-INFO 21-08-02 17:46:19 3256: Retrieving artifacts...
-DEBUG 21-08-02 17:46:21 12204: Handling component ID: bWF2ZW4tcHVibGljOjkzYjliOWViOWE3ZWNiMDY0NTkxYzE3OTk4OTg1ODgz on repository: maven-public Format: maven2
-DEBUG 21-08-02 17:46:21 12204: Handling component ID: bWF2ZW4tcHVibGljOjcxYWZlYTU0MGUyM2RkZTViMmQ4NGY3ZmE4MDk5MTM3 on repository: maven-public Format: maven2
-DEBUG 21-08-02 17:46:21 12204: Handling component ID: bWF2ZW4tcHVibGljOjcxYWZlYTU0MGUyM2RkZTVlZDdmNGY3NmE3YmQ3ZjNk on repository: maven-public Format: maven2
-INFO 21-08-02 17:46:21 12204: Downloading plexus-utils-1.4.5.jar component from maven-public
-DEBUG 21-08-02 17:46:21 12204: Starting new HTTP connection (1): 18.118.119.71:8081
-DEBUG 21-08-02 17:46:22 12204: http://18.118.119.71:8081 "GET /repository/maven-public/org/codehaus/plexus/plexus-utils/1.4.5/plexus-utils-1.4.5.jar HTTP/1.1" 200 205043
-DEBUG 21-08-02 17:46:22 12204: Download URL: http://18.118.119.71:8081/repository/maven-public/org/codehaus/plexus/plexus-utils/1.4.5/plexus-utils-1.4.5.jar
-INFO 21-08-02 17:46:22 12204: Component plexus-utils-1.4.5.jar has successfully downloaded
-INFO 21-08-02 17:46:22 3256:  -- > 
-INFO 21-08-02 17:46:23 3256: Starting WhiteSource scan
-INFO 21-08-02 17:50:18 3256: WhiteSource scan complete
-INFO 21-08-02 17:50:18 3256: Result: SUCCESS (0)
-INFO 21-08-02 17:50:18 3256: Moving logs after the WhiteSource scan has finished
-INFO 21-08-02 17:50:18 3256: Moving logs has successfully finished
-INFO 21-08-02 17:50:18 3256: Start deleting the scan dir
-INFO 21-08-02 17:50:18 3256: Deleting the scan dir has successfully finished
+DEBUG 21-08-04 13:24:24 30584: Using configuration file: ../config/params_3_23.config
+DEBUG 21-08-04 13:24:24 30584: Converting user and password to basic string
+INFO 21-08-04 13:24:24 30584: Starting
+INFO 21-08-04 13:24:24 30584: Getting region parameters
+INFO 21-08-04 13:24:24 30584: Validating Nexus credentials
+INFO 21-08-04 13:24:24 30584: Nexus credentials validated
+INFO 21-08-04 13:24:24 30584: Validating WhiteSource User Key, API Key and URL
+INFO 21-08-04 13:24:24 30584: WhiteSource User Key, API Key and URL validated
+INFO 21-08-04 13:24:24 30584: Verifying agent parameters
+INFO 21-08-04 13:24:24 30584: WhiteSource agent download complete
+INFO 21-08-04 13:24:24 30584: Converting user and password to basic string
+INFO 21-08-04 13:24:24 30584: Sending request for retrieving Nexus repository list
+DEBUG 21-08-04 13:24:24 30584: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 13:24:24 30584: http://18.118.119.71:8081 "GET /service/rest/v1/repositories HTTP/1.1" 200 1447
+DEBUG 21-08-04 13:24:24 30584:  Nexus Headers: {'Date': 'Wed, 04 Aug 2021 10:24:25 GMT', 'Server': 'Nexus/3.23.0-03 (OSS)', 'X-Content-Type-Options': 'nosniff', 'Content-Type': 'application/json', 'Content-Length': '1447'}
+INFO 21-08-04 13:24:24 30584: Nexus Version: Nexus/3.23.0-03 (OSS)
+DEBUG 21-08-04 13:24:24 30584: Using repository: /service/rest/beta/repositories
+INFO 21-08-04 13:24:24 30584: No repositories specified, all repositories will be scanned
+INFO 21-08-04 13:24:24 30584: Repository: nuget-group
+INFO 21-08-04 13:24:24 30584: Validate artifact list
+DEBUG 21-08-04 13:24:24 30584: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 13:24:24 30584: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=nuget-group HTTP/1.1" 200 49
+INFO 21-08-04 13:24:24 30584: No artifacts found in nuget-group
+INFO 21-08-04 13:24:24 30584:  -- > 
+INFO 21-08-04 13:24:24 30584: Repository: maven-snapshots
+INFO 21-08-04 13:24:24 30584: Validate artifact list
+DEBUG 21-08-04 13:24:24 30584: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 13:24:25 30584: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=maven-snapshots HTTP/1.1" 200 49
+INFO 21-08-04 13:24:25 30584: No artifacts found in maven-snapshots
+INFO 21-08-04 13:24:25 30584:  -- > 
+INFO 21-08-04 13:24:25 30584: Repository: maven-central
+INFO 21-08-04 13:24:25 30584: Validate artifact list
+DEBUG 21-08-04 13:24:25 30584: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 13:24:25 30584: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=maven-central HTTP/1.1" 200 49
+INFO 21-08-04 13:24:25 30584: No artifacts found in maven-central
+INFO 21-08-04 13:24:25 30584:  -- > 
+INFO 21-08-04 13:24:25 30584: Repository: nuget.org-proxy
+INFO 21-08-04 13:24:25 30584: Validate artifact list
+DEBUG 21-08-04 13:24:25 30584: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 13:24:25 30584: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=nuget.org-proxy HTTP/1.1" 200 49
+INFO 21-08-04 13:24:25 30584: No artifacts found in nuget.org-proxy
+INFO 21-08-04 13:24:25 30584:  -- > 
+INFO 21-08-04 13:24:25 30584: Repository: maven-releases
+INFO 21-08-04 13:24:25 30584: Validate artifact list
+DEBUG 21-08-04 13:24:25 30584: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 13:24:26 30584: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=maven-releases HTTP/1.1" 200 5589
+INFO 21-08-04 13:24:26 30584: Retrieving artifacts...
+DEBUG 21-08-04 13:25:02 30048: Handling component ID: bWF2ZW4tcmVsZWFzZXM6OTNiOWI5ZWI5YTdlY2IwNjQ1OTFjMTc5OTg5ODU4ODM on repository: maven-releases Format: maven2
+DEBUG 21-08-04 13:25:02 30048: Handling component ID: bWF2ZW4tcmVsZWFzZXM6NzFhZmVhNTQwZTIzZGRlNWIyZDg0ZjdmYTgwOTkxMzc on repository: maven-releases Format: maven2
+DEBUG 21-08-04 13:25:02 30048: Handling component ID: bWF2ZW4tcmVsZWFzZXM6NzFhZmVhNTQwZTIzZGRlNWVkN2Y0Zjc2YTdiZDdmM2Q on repository: maven-releases Format: maven2
+INFO 21-08-04 13:25:02 30048: Downloading plexus-utils-1.4.5.jar component from maven-releases
+DEBUG 21-08-04 13:25:02 30048: Calling Nexus URL: http://18.118.119.71:8081/repository/maven-releases/org/codehaus/plexus/plexus-utils/1.4.5/plexus-utils-1.4.5.jar
+DEBUG 21-08-04 13:25:02 30048: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 13:25:02 30048: http://18.118.119.71:8081 "GET /repository/maven-releases/org/codehaus/plexus/plexus-utils/1.4.5/plexus-utils-1.4.5.jar HTTP/1.1" 200 205043
+DEBUG 21-08-04 13:25:03 30048: Download URL: http://18.118.119.71:8081/repository/maven-releases/org/codehaus/plexus/plexus-utils/1.4.5/plexus-utils-1.4.5.jar
+INFO 21-08-04 13:25:03 30048: Component plexus-utils-1.4.5.jar has successfully downloaded
+INFO 21-08-04 13:25:03 30584:  -- > 
+INFO 21-08-04 13:25:03 30584: Repository: docker-hosted
+INFO 21-08-04 13:25:03 30584: Validate artifact list
+DEBUG 21-08-04 13:25:03 30584: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 13:25:03 30584: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=docker-hosted HTTP/1.1" 200 1487
+INFO 21-08-04 13:25:03 30584: Retrieving artifacts...
+DEBUG 21-08-04 13:25:06 26632: Handling component ID: ZG9ja2VyLWhvc3RlZDo5M2I5YjllYjlhN2VjYjA2ZWZiZThjYjY5MDEyZDc5Mw on repository: docker-hosted Format: docker
+DEBUG 21-08-04 13:25:06 26632: Getting manifest file from: http://18.118.119.71:8081/repository/docker-hosted/v2/mysql/manifests/alpine_tag1
+DEBUG 21-08-04 13:25:06 26632: Calling Nexus URL: http://18.118.119.71:8081/repository/docker-hosted/v2/mysql/manifests/alpine_tag1
+DEBUG 21-08-04 13:25:06 26632: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 13:25:06 26632: http://18.118.119.71:8081 "GET /repository/docker-hosted/v2/mysql/manifests/alpine_tag1 HTTP/1.1" 200 2012
+DEBUG 21-08-04 13:25:06 26632: Returned value: {ret}
+DEBUG 21-08-04 13:25:06 26632: Calling Nexus URL: http://18.118.119.71:8081/service/rest/beta/repositories
+DEBUG 21-08-04 13:25:06 26632: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 13:25:07 26632: http://18.118.119.71:8081 "GET /service/rest/beta/repositories HTTP/1.1" 200 3947
+DEBUG 21-08-04 13:25:07 26632: Returned value: {ret}
+DEBUG 21-08-04 13:25:07 26632: Repositories found: dict_keys(['nuget-group', 'maven-snapshots', 'maven-central', 'nuget.org-proxy', 'maven-releases', 'docker-hosted', 'nuget-hosted', 'maven-public'])
+DEBUG 21-08-04 13:34:45 22816: Using configuration file: ../config/params_3_23.config
+DEBUG 21-08-04 13:34:45 22816: Converting user and password to basic string
+INFO 21-08-04 13:34:45 22816: Starting
+INFO 21-08-04 13:34:45 22816: Getting region parameters
+INFO 21-08-04 13:34:45 22816: Validating Nexus credentials
+INFO 21-08-04 13:34:45 22816: Nexus credentials validated
+INFO 21-08-04 13:34:45 22816: Validating WhiteSource User Key, API Key and URL
+INFO 21-08-04 13:34:45 22816: WhiteSource User Key, API Key and URL validated
+INFO 21-08-04 13:34:45 22816: Verifying agent parameters
+INFO 21-08-04 13:34:45 22816: WhiteSource agent download complete
+INFO 21-08-04 13:34:45 22816: Converting user and password to basic string
+INFO 21-08-04 13:34:45 22816: Sending request for retrieving Nexus repository list
+DEBUG 21-08-04 13:34:45 22816: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 13:34:45 22816: http://18.118.119.71:8081 "GET /service/rest/v1/repositories HTTP/1.1" 200 1447
+DEBUG 21-08-04 13:34:45 22816:  Nexus Headers: {'Date': 'Wed, 04 Aug 2021 10:34:46 GMT', 'Server': 'Nexus/3.23.0-03 (OSS)', 'X-Content-Type-Options': 'nosniff', 'Content-Type': 'application/json', 'Content-Length': '1447'}
+INFO 21-08-04 13:34:45 22816: Nexus Version: Nexus/3.23.0-03 (OSS)
+DEBUG 21-08-04 13:34:45 22816: Using repository: /service/rest/beta/repositories
+INFO 21-08-04 13:34:45 22816: No repositories specified, all repositories will be scanned
+INFO 21-08-04 13:34:45 22816: Repository: nuget-group
+INFO 21-08-04 13:34:45 22816: Validate artifact list
+DEBUG 21-08-04 13:34:45 22816: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 13:34:46 22816: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=nuget-group HTTP/1.1" 200 49
+INFO 21-08-04 13:34:46 22816: No artifacts found in nuget-group
+INFO 21-08-04 13:34:46 22816:  -- > 
+INFO 21-08-04 13:34:46 22816: Repository: maven-snapshots
+INFO 21-08-04 13:34:46 22816: Validate artifact list
+DEBUG 21-08-04 13:34:46 22816: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 13:34:46 22816: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=maven-snapshots HTTP/1.1" 200 49
+INFO 21-08-04 13:34:46 22816: No artifacts found in maven-snapshots
+INFO 21-08-04 13:34:46 22816:  -- > 
+INFO 21-08-04 13:34:46 22816: Repository: maven-central
+INFO 21-08-04 13:34:46 22816: Validate artifact list
+DEBUG 21-08-04 13:34:46 22816: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 13:34:46 22816: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=maven-central HTTP/1.1" 200 49
+INFO 21-08-04 13:34:46 22816: No artifacts found in maven-central
+INFO 21-08-04 13:34:46 22816:  -- > 
+INFO 21-08-04 13:34:46 22816: Repository: nuget.org-proxy
+INFO 21-08-04 13:34:46 22816: Validate artifact list
+DEBUG 21-08-04 13:34:46 22816: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 13:34:46 22816: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=nuget.org-proxy HTTP/1.1" 200 49
+INFO 21-08-04 13:34:46 22816: No artifacts found in nuget.org-proxy
+INFO 21-08-04 13:34:46 22816:  -- > 
+INFO 21-08-04 13:34:46 22816: Repository: maven-releases
+INFO 21-08-04 13:34:46 22816: Validate artifact list
+DEBUG 21-08-04 13:34:46 22816: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 13:34:47 22816: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=maven-releases HTTP/1.1" 200 5589
+INFO 21-08-04 13:34:47 22816: Retrieving artifacts...
+DEBUG 21-08-04 13:34:49 29916: Handling component ID: bWF2ZW4tcmVsZWFzZXM6OTNiOWI5ZWI5YTdlY2IwNjQ1OTFjMTc5OTg5ODU4ODM on repository: maven-releases Format: maven2
+DEBUG 21-08-04 13:34:49 29916: Handling component ID: bWF2ZW4tcmVsZWFzZXM6NzFhZmVhNTQwZTIzZGRlNWIyZDg0ZjdmYTgwOTkxMzc on repository: maven-releases Format: maven2
+DEBUG 21-08-04 13:34:49 29916: Handling component ID: bWF2ZW4tcmVsZWFzZXM6NzFhZmVhNTQwZTIzZGRlNWVkN2Y0Zjc2YTdiZDdmM2Q on repository: maven-releases Format: maven2
+INFO 21-08-04 13:34:49 29916: Downloading plexus-utils-1.4.5.jar component from maven-releases
+DEBUG 21-08-04 13:34:49 29916: Calling Nexus URL: http://18.118.119.71:8081/repository/maven-releases/org/codehaus/plexus/plexus-utils/1.4.5/plexus-utils-1.4.5.jar
+DEBUG 21-08-04 13:34:49 29916: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 13:34:49 29916: http://18.118.119.71:8081 "GET /repository/maven-releases/org/codehaus/plexus/plexus-utils/1.4.5/plexus-utils-1.4.5.jar HTTP/1.1" 200 205043
+DEBUG 21-08-04 13:34:50 29916: Download URL: http://18.118.119.71:8081/repository/maven-releases/org/codehaus/plexus/plexus-utils/1.4.5/plexus-utils-1.4.5.jar
+INFO 21-08-04 13:34:50 29916: Component plexus-utils-1.4.5.jar has successfully downloaded
+INFO 21-08-04 13:34:50 22816:  -- > 
+INFO 21-08-04 13:34:50 22816: Repository: docker-hosted
+INFO 21-08-04 13:34:50 22816: Validate artifact list
+DEBUG 21-08-04 13:34:50 22816: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 13:34:50 22816: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=docker-hosted HTTP/1.1" 200 1487
+INFO 21-08-04 13:34:50 22816: Retrieving artifacts...
+DEBUG 21-08-04 13:34:53 21056: Handling component ID: ZG9ja2VyLWhvc3RlZDo5M2I5YjllYjlhN2VjYjA2ZWZiZThjYjY5MDEyZDc5Mw on repository: docker-hosted Format: docker
+DEBUG 21-08-04 13:34:53 21056: Getting manifest file from: http://18.118.119.71:8081/repository/docker-hosted/v2/mysql/manifests/alpine_tag1
+DEBUG 21-08-04 13:34:53 21056: Calling Nexus URL: http://18.118.119.71:8081/repository/docker-hosted/v2/mysql/manifests/alpine_tag1
+DEBUG 21-08-04 13:34:53 21056: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 13:34:53 21056: http://18.118.119.71:8081 "GET /repository/docker-hosted/v2/mysql/manifests/alpine_tag1 HTTP/1.1" 200 2012
+DEBUG 21-08-04 13:34:53 21056: Returned value: {'schemaVersion': 1, 'name': 'mysql', 'tag': 'alpine_tag1', 'architecture': 'amd64', 'fsLayers': [{'blobSum': 'sha256:a3ed95caeb02ffe68cdd9fd84406680ae93d633cb16422d00e8a7c22955b46d4'}, {'blobSum': 'sha256:5843afab387455b37944e709ee8c78d7520df80f8d01cf7f861aae63beeddb6b'}], 'history': [{'v1Compatibility': '{"created":"2021-06-15T22:19:37.842991933Z","docker_version":"19.03.12","architecture":"amd64","config":{"Hostname":"","Domainname":"","User":"","AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"],"Cmd":["/bin/sh"],"Image":"sha256:adc3ec15388a285a57a75278249afca8cef6e9542d280f2b9d52cee06ac55899","Volumes":null,"WorkingDir":"","Entrypoint":null,"OnBuild":null,"Labels":null},"container":"8a1f6c9b61cbbf8d570f0f63099b6649bf6b65e1632bf797727e201801cc21e2","os":"linux","container_config":{"Hostname":"8a1f6c9b61cb","Domainname":"","User":"","AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"],"Cmd":["/bin/sh","-c","#(nop) ","CMD [\\"/bin/sh\\"]"],"Image":"sha256:adc3ec15388a285a57a75278249afca8cef6e9542d280f2b9d52cee06ac55899","Volumes":null,"WorkingDir":"","Entrypoint":null,"OnBuild":null,"Labels":{}},"id":"e0c98c37073a7854c9bc52a873c1edcd7edcea15a1884fd87440663863e79404","parent":"9efabeb27b1a27ce2265be976ddc6727b4ceffec3997d95b4669f3e32e8e8c17"}'}, {'v1Compatibility': '{"id":"9efabeb27b1a27ce2265be976ddc6727b4ceffec3997d95b4669f3e32e8e8c17","created":"2021-06-15T22:19:37.639998211Z","Cmd":{"container_config":"/bin/sh -c #(nop) ADD file:f278386b0cef68136129f5f58c52445590a417b624d62bca158d4dc926c340df in / "}}'}]}
+DEBUG 21-08-04 13:34:53 21056: Calling Nexus URL: http://18.118.119.71:8081/service/rest/beta/repositories
+DEBUG 21-08-04 13:34:53 21056: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 13:34:53 21056: http://18.118.119.71:8081 "GET /service/rest/beta/repositories HTTP/1.1" 200 3947
+DEBUG 21-08-04 13:34:53 21056: Returned value: [{'name': 'nuget-group', 'format': 'nuget', 'url': 'http://18.118.119.71:8081/repository/nuget-group', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': True}, 'group': {'memberNames': ['nuget-hosted', 'nuget.org-proxy']}, 'type': 'group'}, {'name': 'maven-snapshots', 'url': 'http://18.118.119.71:8081/repository/maven-snapshots', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': False, 'writePolicy': 'ALLOW'}, 'cleanup': None, 'maven': {'versionPolicy': 'SNAPSHOT', 'layoutPolicy': 'STRICT'}, 'format': 'maven2', 'type': 'hosted'}, {'name': 'maven-central', 'url': 'http://18.118.119.71:8081/repository/maven-central', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': False, 'writePolicy': 'ALLOW'}, 'cleanup': None, 'proxy': {'remoteUrl': 'https://repo1.maven.org/maven2/', 'contentMaxAge': -1, 'metadataMaxAge': 1440}, 'negativeCache': {'enabled': True, 'timeToLive': 1440}, 'httpClient': {'blocked': False, 'autoBlock': False, 'connection': {'retries': None, 'userAgentSuffix': None, 'timeout': None, 'enableCircularRedirects': False, 'enableCookies': False}, 'authentication': None}, 'routingRuleName': None, 'maven': {'versionPolicy': 'RELEASE', 'layoutPolicy': 'PERMISSIVE'}, 'format': 'maven2', 'type': 'proxy'}, {'name': 'nuget.org-proxy', 'url': 'http://18.118.119.71:8081/repository/nuget.org-proxy', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': True, 'writePolicy': 'ALLOW'}, 'cleanup': None, 'proxy': {'remoteUrl': 'https://www.nuget.org/api/v2/', 'contentMaxAge': 1440, 'metadataMaxAge': 1440}, 'negativeCache': {'enabled': True, 'timeToLive': 1440}, 'httpClient': {'blocked': False, 'autoBlock': False, 'connection': {'retries': None, 'userAgentSuffix': None, 'timeout': None, 'enableCircularRedirects': False, 'enableCookies': False}, 'authentication': None}, 'routingRuleName': None, 'nugetProxy': {'queryCacheItemMaxAge': None}, 'format': 'nuget', 'type': 'proxy'}, {'name': 'maven-releases', 'url': 'http://18.118.119.71:8081/repository/maven-releases', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': False, 'writePolicy': 'ALLOW_ONCE'}, 'cleanup': None, 'maven': {'versionPolicy': 'RELEASE', 'layoutPolicy': 'STRICT'}, 'format': 'maven2', 'type': 'hosted'}, {'name': 'docker-hosted', 'url': 'http://18.118.119.71:8081/repository/docker-hosted', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': True, 'writePolicy': 'ALLOW'}, 'cleanup': None, 'docker': {'v1Enabled': False, 'forceBasicAuth': True, 'httpPort': 18442, 'httpsPort': 28442}, 'format': 'docker', 'type': 'hosted'}, {'name': 'nuget-hosted', 'format': 'nuget', 'url': 'http://18.118.119.71:8081/repository/nuget-hosted', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': True, 'writePolicy': 'ALLOW'}, 'cleanup': None, 'type': 'hosted'}, {'name': 'maven-public', 'format': 'maven2', 'url': 'http://18.118.119.71:8081/repository/maven-public', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': True}, 'group': {'memberNames': ['maven-releases', 'maven-snapshots', 'maven-central']}, 'type': 'group'}]
+DEBUG 21-08-04 13:34:53 21056: Repositories found: dict_keys(['nuget-group', 'maven-snapshots', 'maven-central', 'nuget.org-proxy', 'maven-releases', 'docker-hosted', 'nuget-hosted', 'maven-public'])
+DEBUG 21-08-04 13:50:54 12320: Using configuration file: ../config/params_3_23.config
+DEBUG 21-08-04 13:50:54 12320: Converting user and password to basic string
+INFO 21-08-04 13:50:54 12320: Starting
+INFO 21-08-04 13:50:54 12320: Getting region parameters
+INFO 21-08-04 13:50:54 12320: Validating Nexus credentials
+INFO 21-08-04 13:50:54 12320: Nexus credentials validated
+INFO 21-08-04 13:50:54 12320: Validating WhiteSource User Key, API Key and URL
+INFO 21-08-04 13:50:54 12320: WhiteSource User Key, API Key and URL validated
+INFO 21-08-04 13:50:54 12320: Verifying agent parameters
+INFO 21-08-04 13:50:54 12320: WhiteSource agent download complete
+INFO 21-08-04 13:50:54 12320: Converting user and password to basic string
+INFO 21-08-04 13:50:54 12320: Sending request for retrieving Nexus repository list
+DEBUG 21-08-04 13:50:54 12320: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 13:50:55 12320: http://18.118.119.71:8081 "GET /service/rest/v1/repositories HTTP/1.1" 200 1447
+DEBUG 21-08-04 13:50:55 12320:  Nexus Headers: {'Date': 'Wed, 04 Aug 2021 10:50:56 GMT', 'Server': 'Nexus/3.23.0-03 (OSS)', 'X-Content-Type-Options': 'nosniff', 'Content-Type': 'application/json', 'Content-Length': '1447'}
+INFO 21-08-04 13:50:55 12320: Nexus Version: Nexus/3.23.0-03 (OSS)
+DEBUG 21-08-04 13:50:55 12320: Using repository: /service/rest/beta/repositories
+INFO 21-08-04 13:50:55 12320: No repositories specified, all repositories will be scanned
+INFO 21-08-04 13:50:55 12320: Repository: nuget-group
+INFO 21-08-04 13:50:55 12320: Validate artifact list
+DEBUG 21-08-04 13:50:55 12320: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 13:50:55 12320: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=nuget-group HTTP/1.1" 200 49
+INFO 21-08-04 13:50:55 12320: No artifacts found in nuget-group
+INFO 21-08-04 13:50:55 12320:  -- > 
+INFO 21-08-04 13:50:55 12320: Repository: maven-snapshots
+INFO 21-08-04 13:50:55 12320: Validate artifact list
+DEBUG 21-08-04 13:50:55 12320: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 13:50:55 12320: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=maven-snapshots HTTP/1.1" 200 49
+INFO 21-08-04 13:50:55 12320: No artifacts found in maven-snapshots
+INFO 21-08-04 13:50:55 12320:  -- > 
+INFO 21-08-04 13:50:55 12320: Repository: maven-central
+INFO 21-08-04 13:50:55 12320: Validate artifact list
+DEBUG 21-08-04 13:50:55 12320: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 13:50:56 12320: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=maven-central HTTP/1.1" 200 49
+INFO 21-08-04 13:50:56 12320: No artifacts found in maven-central
+INFO 21-08-04 13:50:56 12320:  -- > 
+INFO 21-08-04 13:50:56 12320: Repository: nuget.org-proxy
+INFO 21-08-04 13:50:56 12320: Validate artifact list
+DEBUG 21-08-04 13:50:56 12320: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 13:50:56 12320: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=nuget.org-proxy HTTP/1.1" 200 49
+INFO 21-08-04 13:50:56 12320: No artifacts found in nuget.org-proxy
+INFO 21-08-04 13:50:56 12320:  -- > 
+INFO 21-08-04 13:50:56 12320: Repository: maven-releases
+INFO 21-08-04 13:50:56 12320: Validate artifact list
+DEBUG 21-08-04 13:50:56 12320: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 13:50:56 12320: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=maven-releases HTTP/1.1" 200 5589
+INFO 21-08-04 13:50:56 12320: Retrieving artifacts...
+DEBUG 21-08-04 13:50:59 548: Handling component ID: bWF2ZW4tcmVsZWFzZXM6OTNiOWI5ZWI5YTdlY2IwNjQ1OTFjMTc5OTg5ODU4ODM on repository: maven-releases Format: maven2
+DEBUG 21-08-04 13:50:59 548: Handling component ID: bWF2ZW4tcmVsZWFzZXM6NzFhZmVhNTQwZTIzZGRlNWIyZDg0ZjdmYTgwOTkxMzc on repository: maven-releases Format: maven2
+DEBUG 21-08-04 13:50:59 548: Handling component ID: bWF2ZW4tcmVsZWFzZXM6NzFhZmVhNTQwZTIzZGRlNWVkN2Y0Zjc2YTdiZDdmM2Q on repository: maven-releases Format: maven2
+INFO 21-08-04 13:50:59 548: Downloading plexus-utils-1.4.5.jar component from maven-releases
+DEBUG 21-08-04 13:50:59 548: Calling Nexus URL: http://18.118.119.71:8081/repository/maven-releases/org/codehaus/plexus/plexus-utils/1.4.5/plexus-utils-1.4.5.jar
+DEBUG 21-08-04 13:50:59 548: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 13:51:00 548: http://18.118.119.71:8081 "GET /repository/maven-releases/org/codehaus/plexus/plexus-utils/1.4.5/plexus-utils-1.4.5.jar HTTP/1.1" 200 205043
+DEBUG 21-08-04 13:51:00 548: Download URL: http://18.118.119.71:8081/repository/maven-releases/org/codehaus/plexus/plexus-utils/1.4.5/plexus-utils-1.4.5.jar
+INFO 21-08-04 13:51:00 548: Component plexus-utils-1.4.5.jar has successfully downloaded
+INFO 21-08-04 13:53:06 12320:  -- > 
+INFO 21-08-04 13:53:06 12320: Repository: docker-hosted
+INFO 21-08-04 13:53:06 12320: Validate artifact list
+DEBUG 21-08-04 13:53:06 12320: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 13:53:06 12320: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=docker-hosted HTTP/1.1" 200 1487
+INFO 21-08-04 13:53:06 12320: Retrieving artifacts...
+DEBUG 21-08-04 13:53:08 16376: Handling component ID: ZG9ja2VyLWhvc3RlZDo5M2I5YjllYjlhN2VjYjA2ZWZiZThjYjY5MDEyZDc5Mw on repository: docker-hosted Format: docker
+DEBUG 21-08-04 13:53:08 16376: Getting manifest file from: http://18.118.119.71:8081/repository/docker-hosted/v2/mysql/manifests/alpine_tag1
+DEBUG 21-08-04 13:53:08 16376: Calling Nexus URL: http://18.118.119.71:8081/repository/docker-hosted/v2/mysql/manifests/alpine_tag1
+DEBUG 21-08-04 13:53:08 16376: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 13:53:09 16376: http://18.118.119.71:8081 "GET /repository/docker-hosted/v2/mysql/manifests/alpine_tag1 HTTP/1.1" 200 2012
+DEBUG 21-08-04 13:53:09 16376: Returned value: {'schemaVersion': 1, 'name': 'mysql', 'tag': 'alpine_tag1', 'architecture': 'amd64', 'fsLayers': [{'blobSum': 'sha256:a3ed95caeb02ffe68cdd9fd84406680ae93d633cb16422d00e8a7c22955b46d4'}, {'blobSum': 'sha256:5843afab387455b37944e709ee8c78d7520df80f8d01cf7f861aae63beeddb6b'}], 'history': [{'v1Compatibility': '{"created":"2021-06-15T22:19:37.842991933Z","docker_version":"19.03.12","architecture":"amd64","config":{"Hostname":"","Domainname":"","User":"","AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"],"Cmd":["/bin/sh"],"Image":"sha256:adc3ec15388a285a57a75278249afca8cef6e9542d280f2b9d52cee06ac55899","Volumes":null,"WorkingDir":"","Entrypoint":null,"OnBuild":null,"Labels":null},"container":"8a1f6c9b61cbbf8d570f0f63099b6649bf6b65e1632bf797727e201801cc21e2","os":"linux","container_config":{"Hostname":"8a1f6c9b61cb","Domainname":"","User":"","AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"],"Cmd":["/bin/sh","-c","#(nop) ","CMD [\\"/bin/sh\\"]"],"Image":"sha256:adc3ec15388a285a57a75278249afca8cef6e9542d280f2b9d52cee06ac55899","Volumes":null,"WorkingDir":"","Entrypoint":null,"OnBuild":null,"Labels":{}},"id":"e0c98c37073a7854c9bc52a873c1edcd7edcea15a1884fd87440663863e79404","parent":"9efabeb27b1a27ce2265be976ddc6727b4ceffec3997d95b4669f3e32e8e8c17"}'}, {'v1Compatibility': '{"id":"9efabeb27b1a27ce2265be976ddc6727b4ceffec3997d95b4669f3e32e8e8c17","created":"2021-06-15T22:19:37.639998211Z","Cmd":{"container_config":"/bin/sh -c #(nop) ADD file:f278386b0cef68136129f5f58c52445590a417b624d62bca158d4dc926c340df in / "}}'}]}
+DEBUG 21-08-04 13:53:09 16376: Calling Nexus URL: http://18.118.119.71:8081/service/rest/beta/repositories
+DEBUG 21-08-04 13:53:09 16376: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 13:53:09 16376: http://18.118.119.71:8081 "GET /service/rest/beta/repositories HTTP/1.1" 200 3947
+DEBUG 21-08-04 13:53:09 16376: Returned value: [{'name': 'nuget-group', 'format': 'nuget', 'url': 'http://18.118.119.71:8081/repository/nuget-group', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': True}, 'group': {'memberNames': ['nuget-hosted', 'nuget.org-proxy']}, 'type': 'group'}, {'name': 'maven-snapshots', 'url': 'http://18.118.119.71:8081/repository/maven-snapshots', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': False, 'writePolicy': 'ALLOW'}, 'cleanup': None, 'maven': {'versionPolicy': 'SNAPSHOT', 'layoutPolicy': 'STRICT'}, 'format': 'maven2', 'type': 'hosted'}, {'name': 'maven-central', 'url': 'http://18.118.119.71:8081/repository/maven-central', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': False, 'writePolicy': 'ALLOW'}, 'cleanup': None, 'proxy': {'remoteUrl': 'https://repo1.maven.org/maven2/', 'contentMaxAge': -1, 'metadataMaxAge': 1440}, 'negativeCache': {'enabled': True, 'timeToLive': 1440}, 'httpClient': {'blocked': False, 'autoBlock': False, 'connection': {'retries': None, 'userAgentSuffix': None, 'timeout': None, 'enableCircularRedirects': False, 'enableCookies': False}, 'authentication': None}, 'routingRuleName': None, 'maven': {'versionPolicy': 'RELEASE', 'layoutPolicy': 'PERMISSIVE'}, 'format': 'maven2', 'type': 'proxy'}, {'name': 'nuget.org-proxy', 'url': 'http://18.118.119.71:8081/repository/nuget.org-proxy', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': True, 'writePolicy': 'ALLOW'}, 'cleanup': None, 'proxy': {'remoteUrl': 'https://www.nuget.org/api/v2/', 'contentMaxAge': 1440, 'metadataMaxAge': 1440}, 'negativeCache': {'enabled': True, 'timeToLive': 1440}, 'httpClient': {'blocked': False, 'autoBlock': False, 'connection': {'retries': None, 'userAgentSuffix': None, 'timeout': None, 'enableCircularRedirects': False, 'enableCookies': False}, 'authentication': None}, 'routingRuleName': None, 'nugetProxy': {'queryCacheItemMaxAge': None}, 'format': 'nuget', 'type': 'proxy'}, {'name': 'maven-releases', 'url': 'http://18.118.119.71:8081/repository/maven-releases', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': False, 'writePolicy': 'ALLOW_ONCE'}, 'cleanup': None, 'maven': {'versionPolicy': 'RELEASE', 'layoutPolicy': 'STRICT'}, 'format': 'maven2', 'type': 'hosted'}, {'name': 'docker-hosted', 'url': 'http://18.118.119.71:8081/repository/docker-hosted', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': True, 'writePolicy': 'ALLOW'}, 'cleanup': None, 'docker': {'v1Enabled': False, 'forceBasicAuth': True, 'httpPort': 18442, 'httpsPort': 28442}, 'format': 'docker', 'type': 'hosted'}, {'name': 'nuget-hosted', 'format': 'nuget', 'url': 'http://18.118.119.71:8081/repository/nuget-hosted', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': True, 'writePolicy': 'ALLOW'}, 'cleanup': None, 'type': 'hosted'}, {'name': 'maven-public', 'format': 'maven2', 'url': 'http://18.118.119.71:8081/repository/maven-public', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': True}, 'group': {'memberNames': ['maven-releases', 'maven-snapshots', 'maven-central']}, 'type': 'group'}]
+DEBUG 21-08-04 13:53:09 16376: Repositories found: dict_keys(['nuget-group', 'maven-snapshots', 'maven-central', 'nuget.org-proxy', 'maven-releases', 'docker-hosted', 'nuget-hosted', 'maven-public'])
+DEBUG 21-08-04 13:53:12 16376: Repository data: {'name': 'docker-hosted', 'url': 'http://18.118.119.71:8081/repository/docker-hosted', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': True, 'writePolicy': 'ALLOW'}, 'cleanup': None, 'docker': {'v1Enabled': False, 'forceBasicAuth': True, 'httpPort': 18442, 'httpsPort': 28442}, 'format': 'docker', 'type': 'hosted'}
+DEBUG 21-08-04 13:53:12 16376: Returned docker repo URL: 18.118.119.71:18442
+INFO 21-08-04 13:53:12 16376: Pulling Docker image: 18.118.119.71:18442/mysql:alpine_tag1
+DEBUG 21-08-04 13:53:12 16376: Trying paths: ['C:\\Users\\OzTamari\\.docker\\config.json', 'C:\\Users\\OzTamari\\.dockercfg']
+DEBUG 21-08-04 13:53:12 16376: Found file at path: C:\Users\OzTamari\.docker\config.json
+DEBUG 21-08-04 13:53:12 16376: Found 'auths' section
+DEBUG 21-08-04 13:53:12 16376: Auth data for 18.118.20.105:18442 is absent. Client might be using a credentials store instead.
+DEBUG 21-08-04 13:53:12 16376: Auth data for 18.118.20.105:18444 is absent. Client might be using a credentials store instead.
+DEBUG 21-08-04 13:53:12 16376: Auth data for 18.118.20.105:28442 is absent. Client might be using a credentials store instead.
+DEBUG 21-08-04 13:53:12 16376: Auth data for 18.118.20.105:28444 is absent. Client might be using a credentials store instead.
+DEBUG 21-08-04 13:53:12 16376: Auth data for 52.14.229.244:18141 is absent. Client might be using a credentials store instead.
+DEBUG 21-08-04 13:53:12 16376: Found 'credsStore' section
+DEBUG 21-08-04 13:53:12 16376: http://localhost:None "GET /version HTTP/1.1" 200 None
+DEBUG 21-08-04 13:53:12 16376: Using credentials store "desktop"
+DEBUG 21-08-04 13:53:12 16376: Looking for auth entry for '18.118.119.71:18442'
+DEBUG 21-08-04 13:53:12 16376: No entry found
+DEBUG 21-08-04 13:53:12 16376: No entry in credstore - fetching from auth dict
+DEBUG 21-08-04 13:53:12 16376: Looking for auth entry for '18.118.119.71:18442'
+DEBUG 21-08-04 13:53:12 16376: No entry found
+DEBUG 21-08-04 13:53:13 16376: http://localhost:None "POST /v1.41/auth HTTP/1.1" 200 None
+DEBUG 21-08-04 13:53:13 16376: Looking for auth config
+DEBUG 21-08-04 13:53:13 16376: Using credentials store "desktop"
+DEBUG 21-08-04 13:53:13 16376: Looking for auth entry for '18.118.119.71:18442'
+DEBUG 21-08-04 13:53:13 16376: No entry found
+DEBUG 21-08-04 13:53:13 16376: No entry in credstore - fetching from auth dict
+DEBUG 21-08-04 13:53:13 16376: Looking for auth entry for '18.118.119.71:18442'
+DEBUG 21-08-04 13:53:13 16376: Found '18.118.119.71:18442'
+DEBUG 21-08-04 13:53:13 16376: Found auth config
+DEBUG 21-08-04 13:53:14 16376: http://localhost:None "POST /v1.41/images/create?tag=alpine_tag1&fromImage=18.118.119.71%3A18442%2Fmysql HTTP/1.1" 200 None
+DEBUG 21-08-04 13:53:14 16376: http://localhost:None "GET /v1.41/images/18.118.119.71:18442/mysql:alpine_tag1/json HTTP/1.1" 200 None
+DEBUG 21-08-04 13:53:14 16376: Image ID: d4ff818577bc successfully pulled
+DEBUG 21-08-04 13:53:14 16376: Handling component ID: ZG9ja2VyLWhvc3RlZDo3MWFmZWE1NDBlMjNkZGU1ZWQ4NGFiZmZjOTkxYTlmOQ on repository: docker-hosted Format: docker
+DEBUG 21-08-04 13:53:14 16376: Getting manifest file from: http://18.118.119.71:8081/repository/docker-hosted/v2/mysql/manifests/mysql_tag2
+DEBUG 21-08-04 13:53:14 16376: Calling Nexus URL: http://18.118.119.71:8081/repository/docker-hosted/v2/mysql/manifests/mysql_tag2
+DEBUG 21-08-04 13:53:14 16376: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 13:53:14 16376: http://18.118.119.71:8081 "GET /repository/docker-hosted/v2/mysql/manifests/mysql_tag2 HTTP/1.1" 200 12400
+DEBUG 21-08-04 13:53:14 16376: Returned value: {'schemaVersion': 1, 'name': 'mysql', 'tag': 'mysql_tag2', 'architecture': 'amd64', 'fsLayers': [{'blobSum': 'sha256:a3ed95caeb02ffe68cdd9fd84406680ae93d633cb16422d00e8a7c22955b46d4'}, {'blobSum': 'sha256:a3ed95caeb02ffe68cdd9fd84406680ae93d633cb16422d00e8a7c22955b46d4'}, {'blobSum': 'sha256:a3ed95caeb02ffe68cdd9fd84406680ae93d633cb16422d00e8a7c22955b46d4'}, {'blobSum': 'sha256:2f40c47d0626e1a6f39b08da49fab43d8e392206a15e9952e3e4e87dcbbbf667'}, {'blobSum': 'sha256:165d1d10a3fa620f7174db4439831e2e36e18f686c1adf80ccba1550dec2041a'}, {'blobSum': 'sha256:71d327c6bb78193040178c6de8220df0d42f890e94efe76f2a8f2921ec9fd0c2'}, {'blobSum': 'sha256:a3ed95caeb02ffe68cdd9fd84406680ae93d633cb16422d00e8a7c22955b46d4'}, {'blobSum': 'sha256:ad042b682e0f0e2ef85b6822e1d40965a0018fb789e155b4f021193df776601a'}, {'blobSum': 'sha256:9ecc8abdb7f584bbbd11e6b16bf632440c4bc64cf9cccac3ee8202fcf17742d7'}, {'blobSum': 'sha256:a3ed95caeb02ffe68cdd9fd84406680ae93d633cb16422d00e8a7c22955b46d4'}, {'blobSum': 'sha256:a3ed95caeb02ffe68cdd9fd84406680ae93d633cb16422d00e8a7c22955b46d4'}, {'blobSum': 'sha256:32ca814c833fbe8adec28e15d739dba772d7259021235b861fb854e8f329fb1c'}, {'blobSum': 'sha256:aa18e05cc46d159c053ebf379685cef648b64d4bb39a4fa76dc7c8a6fadad89a'}, {'blobSum': 'sha256:d0cbe54c88555c61f35df860e431717e56b7198eb3a9fa642d14ea6e94dc6edc'}, {'blobSum': 'sha256:5240460060374bac3b015544387eba2355e7b003da15c162e7166984437c31d7'}, {'blobSum': 'sha256:a3ed95caeb02ffe68cdd9fd84406680ae93d633cb16422d00e8a7c22955b46d4'}, {'blobSum': 'sha256:578fafb77ab871790dd20afa25cea55309e5862a43eb6fdca5f3c1387ab7b833'}, {'blobSum': 'sha256:a462b60610f5b230bfc054037dcc15dfbd114bc91472a819ac5b4049cb7f030c'}, {'blobSum': 'sha256:a3ed95caeb02ffe68cdd9fd84406680ae93d633cb16422d00e8a7c22955b46d4'}, {'blobSum': 'sha256:b4d181a07f8025e00e0cb28f1cc14613da2ce26450b80c54aea537fa93cf3bda'}], 'history': [{'v1Compatibility': '{"created":"2021-06-23T07:11:48.017513581Z","docker_version":"19.03.12","architecture":"amd64","config":{"Hostname":"","Domainname":"","User":"","AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"ExposedPorts":{"3306/tcp":{},"33060/tcp":{}},"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","GOSU_VERSION=1.12","MYSQL_MAJOR=8.0","MYSQL_VERSION=8.0.25-1debian10"],"Cmd":["mysqld"],"Image":"sha256:53c3852cdabcaf371d4a280ac6851c0e5cf8c9bf4431424ada7ce8b80c6c2da6","Volumes":{"/var/lib/mysql":{}},"WorkingDir":"","Entrypoint":["docker-entrypoint.sh"],"OnBuild":null,"Labels":null},"container":"ca3f0287d432401060838047742b1e910517dab003a68810f0b4d2a75ec4bf49","os":"linux","container_config":{"Hostname":"ca3f0287d432","Domainname":"","User":"","AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"ExposedPorts":{"3306/tcp":{},"33060/tcp":{}},"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","GOSU_VERSION=1.12","MYSQL_MAJOR=8.0","MYSQL_VERSION=8.0.25-1debian10"],"Cmd":["/bin/sh","-c","#(nop) ","CMD [\\"mysqld\\"]"],"Image":"sha256:53c3852cdabcaf371d4a280ac6851c0e5cf8c9bf4431424ada7ce8b80c6c2da6","Volumes":{"/var/lib/mysql":{}},"WorkingDir":"","Entrypoint":["docker-entrypoint.sh"],"OnBuild":null,"Labels":{}},"id":"9917175858de7c245f1e85ab16e95da8da19fdc052b7a89d88905da7130b525a","parent":"4fbaca1ccb3d14864188569763f1b94717c3d40e1e40fdbf4c65bd24e26e0147"}'}, {'v1Compatibility': '{"id":"4fbaca1ccb3d14864188569763f1b94717c3d40e1e40fdbf4c65bd24e26e0147","created":"2021-06-23T07:11:47.795634283Z","Cmd":{"container_config":"/bin/sh -c #(nop)  EXPOSE 3306 33060"},"parent":"6882d4c1c9c124eb14287fbe00d243973a959a3ff38bb914a9965619b9254ae0","throwaway":true}'}, {'v1Compatibility': '{"id":"6882d4c1c9c124eb14287fbe00d243973a959a3ff38bb914a9965619b9254ae0","created":"2021-06-23T07:11:47.60431286Z","Cmd":{"container_config":"/bin/sh -c #(nop)  ENTRYPOINT [\\"docker-entrypoint.sh\\"]"},"parent":"fd9207e7e8e41e06e1a8306f1f18a112eff3c6a662b6587704f05bbe138717e0","throwaway":true}'}, {'v1Compatibility': '{"id":"fd9207e7e8e41e06e1a8306f1f18a112eff3c6a662b6587704f05bbe138717e0","created":"2021-06-23T07:11:47.407549607Z","Cmd":{"container_config":"/bin/sh -c ln -s usr/local/bin/docker-entrypoint.sh /entrypoint.sh # backwards compat"},"parent":"db6d6653c5ee8b2e5839b2565b199f724bd667426ecdc13c15b1566cb713553d"}'}, {'v1Compatibility': '{"id":"db6d6653c5ee8b2e5839b2565b199f724bd667426ecdc13c15b1566cb713553d","created":"2021-06-23T07:11:46.414837447Z","Cmd":{"container_config":"/bin/sh -c #(nop) COPY file:345a22fe55d3e6783a17075612415413487e7dba27fbf1000a67c7870364b739 in /usr/local/bin/ "},"parent":"639c99ec65444016ee89c79865ceb9fbd7ec3d2ddcd1cc52989a49500a058389"}'}, {'v1Compatibility': '{"id":"639c99ec65444016ee89c79865ceb9fbd7ec3d2ddcd1cc52989a49500a058389","created":"2021-06-23T07:11:46.207917447Z","Cmd":{"container_config":"/bin/sh -c #(nop) COPY dir:2e040acc386ebd23b8571951a51e6cb93647df091bc26159b8c757ef82b3fcda in /etc/mysql/ "},"parent":"a0d12a14e298b0699b31603ef048f6dca4b1fded566b089d7627b7b2dc5da4e3"}'}, {'v1Compatibility': '{"id":"a0d12a14e298b0699b31603ef048f6dca4b1fded566b089d7627b7b2dc5da4e3","created":"2021-06-23T07:11:45.98912097Z","Cmd":{"container_config":"/bin/sh -c #(nop)  VOLUME [/var/lib/mysql]"},"parent":"03500aba8dd97f6cd648fd387d7a90fe549bb5cd3953d024316529a02672c268","throwaway":true}'}, {'v1Compatibility': '{"id":"03500aba8dd97f6cd648fd387d7a90fe549bb5cd3953d024316529a02672c268","created":"2021-06-23T07:11:45.093581319Z","Cmd":{"container_config":"/bin/sh -c { \\t\\techo mysql-community-server mysql-community-server/data-dir select \'\'; \\t\\techo mysql-community-server mysql-community-server/root-pass password \'\'; \\t\\techo mysql-community-server mysql-community-server/re-root-pass password \'\'; \\t\\techo mysql-community-server mysql-community-server/remove-test-db select false; \\t} | debconf-set-selections \\t&& apt-get update \\t&& apt-get install -y \\t\\tmysql-community-client=\\"${MYSQL_VERSION}\\" \\t\\tmysql-community-server-core=\\"${MYSQL_VERSION}\\" \\t&& rm -rf /var/lib/apt/lists/* \\t&& rm -rf /var/lib/mysql && mkdir -p /var/lib/mysql /var/run/mysqld \\t&& chown -R mysql:mysql /var/lib/mysql /var/run/mysqld \\t&& chmod 1777 /var/run/mysqld /var/lib/mysql"},"parent":"14b8f4ddfa6d6f35f9f27564091c5ae97e66bdb5380d96c21e38408678f4e112"}'}, {'v1Compatibility': '{"id":"14b8f4ddfa6d6f35f9f27564091c5ae97e66bdb5380d96c21e38408678f4e112","created":"2021-06-23T07:11:24.95063233Z","Cmd":{"container_config":"/bin/sh -c echo \'deb http://repo.mysql.com/apt/debian/ buster mysql-8.0\' > /etc/apt/sources.list.d/mysql.list"},"parent":"c3d451b7d6d7d1c69aef9fa8e381cdfa001cb14e64052248638c1f28b60050d2"}'}, {'v1Compatibility': '{"id":"c3d451b7d6d7d1c69aef9fa8e381cdfa001cb14e64052248638c1f28b60050d2","created":"2021-06-23T07:11:23.111795942Z","Cmd":{"container_config":"/bin/sh -c #(nop)  ENV MYSQL_VERSION=8.0.25-1debian10"},"parent":"34fcd64c5d8b1f84c5a3424a8ebdd91bcbf35124c60e2512f2bdde0167eb9d00","throwaway":true}'}, {'v1Compatibility': '{"id":"34fcd64c5d8b1f84c5a3424a8ebdd91bcbf35124c60e2512f2bdde0167eb9d00","created":"2021-06-23T07:11:22.805086851Z","Cmd":{"container_config":"/bin/sh -c #(nop)  ENV MYSQL_MAJOR=8.0"},"parent":"1943d241d22a6c94ede919bfea988449b8713d87d2ae0fb754d3454968d8b51d","throwaway":true}'}, {'v1Compatibility': '{"id":"1943d241d22a6c94ede919bfea988449b8713d87d2ae0fb754d3454968d8b51d","created":"2021-06-23T07:11:22.487564627Z","Cmd":{"container_config":"/bin/sh -c set -ex; \\tkey=\'A4A9406876FCBD3C456770C88C718D3B5072E1F5\'; \\texport GNUPGHOME=\\"$(mktemp -d)\\"; \\tgpg --batch --keyserver ha.pool.sks-keyservers.net --recv-keys \\"$key\\"; \\tgpg --batch --export \\"$key\\" > /etc/apt/trusted.gpg.d/mysql.gpg; \\tgpgconf --kill all; \\trm -rf \\"$GNUPGHOME\\"; \\tapt-key list > /dev/null"},"parent":"dc643e6738c9cb3885be39c5153ab470eed19ffd78f1b3612e21df5a6d51835d"}'}, {'v1Compatibility': '{"id":"dc643e6738c9cb3885be39c5153ab470eed19ffd78f1b3612e21df5a6d51835d","created":"2021-06-23T07:11:18.147877794Z","Cmd":{"container_config":"/bin/sh -c apt-get update && apt-get install -y --no-install-recommends \\t\\tpwgen \\t\\topenssl \\t\\tperl \\t\\txz-utils \\t&& rm -rf /var/lib/apt/lists/*"},"parent":"dc0c3301d58196d3d6b0d3a988eae1fd281940701b3af654ae1f607da3c5c57f"}'}, {'v1Compatibility': '{"id":"dc0c3301d58196d3d6b0d3a988eae1fd281940701b3af654ae1f607da3c5c57f","created":"2021-06-23T07:11:07.773439724Z","Cmd":{"container_config":"/bin/sh -c mkdir /docker-entrypoint-initdb.d"},"parent":"925968450ce86b51a6f17bb7bb4bbbcbe591b42dc252297c1e0fca15c2f9e992"}'}, {'v1Compatibility': '{"id":"925968450ce86b51a6f17bb7bb4bbbcbe591b42dc252297c1e0fca15c2f9e992","created":"2021-06-23T07:11:06.160624679Z","Cmd":{"container_config":"/bin/sh -c set -eux; \\tsavedAptMark=\\"$(apt-mark showmanual)\\"; \\tapt-get update; \\tapt-get install -y --no-install-recommends ca-certificates wget; \\trm -rf /var/lib/apt/lists/*; \\tdpkgArch=\\"$(dpkg --print-architecture | awk -F- \'{ print $NF }\')\\"; \\twget -O /usr/local/bin/gosu \\"https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$dpkgArch\\"; \\twget -O /usr/local/bin/gosu.asc \\"https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$dpkgArch.asc\\"; \\texport GNUPGHOME=\\"$(mktemp -d)\\"; \\tgpg --batch --keyserver hkps://keys.openpgp.org --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4; \\tgpg --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu; \\tgpgconf --kill all; \\trm -rf \\"$GNUPGHOME\\" /usr/local/bin/gosu.asc; \\tapt-mark auto \'.*\' > /dev/null; \\t[ -z \\"$savedAptMark\\" ] || apt-mark manual $savedAptMark > /dev/null; \\tapt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \\tchmod +x /usr/local/bin/gosu; \\tgosu --version; \\tgosu nobody true"},"parent":"049f056e7711a0885eef3b90d14865cde92f5a8eb25d06f942677d8ec5fd2c03"}'}, {'v1Compatibility': '{"id":"049f056e7711a0885eef3b90d14865cde92f5a8eb25d06f942677d8ec5fd2c03","created":"2021-06-23T07:10:47.553142365Z","Cmd":{"container_config":"/bin/sh -c #(nop)  ENV GOSU_VERSION=1.12"},"parent":"616e36364a2c5b04a81ccfd773bb7a16ebcd30db7bd763dc9d15a89886e7943c","throwaway":true}'}, {'v1Compatibility': '{"id":"616e36364a2c5b04a81ccfd773bb7a16ebcd30db7bd763dc9d15a89886e7943c","created":"2021-06-23T07:10:47.214177509Z","Cmd":{"container_config":"/bin/sh -c apt-get update && apt-get install -y --no-install-recommends gnupg dirmngr && rm -rf /var/lib/apt/lists/*"},"parent":"60de9cde4ab09362c924dea1d7b2fd6ffd062095669c8d08a8b854a49c309067"}'}, {'v1Compatibility': '{"id":"60de9cde4ab09362c924dea1d7b2fd6ffd062095669c8d08a8b854a49c309067","created":"2021-06-23T07:10:38.056755022Z","Cmd":{"container_config":"/bin/sh -c groupadd -r mysql && useradd -r -g mysql mysql"},"parent":"12a8ff680cdd23d5466f2ab35c54181d6ad43ae0b3ac615f1e308f249b221a14"}'}, {'v1Compatibility': '{"id":"12a8ff680cdd23d5466f2ab35c54181d6ad43ae0b3ac615f1e308f249b221a14","created":"2021-06-23T00:20:40.842961608Z","Cmd":{"container_config":"/bin/sh -c #(nop)  CMD [\\"bash\\"]"},"parent":"90e0a82d8ca56f5fa8d75ee5def8923d2c6f2b547a544958d7e71fc487f858b1","throwaway":true}'}, {'v1Compatibility': '{"id":"90e0a82d8ca56f5fa8d75ee5def8923d2c6f2b547a544958d7e71fc487f858b1","created":"2021-06-23T00:20:40.386610922Z","Cmd":{"container_config":"/bin/sh -c #(nop) ADD file:4903a19c327468b0e08e4f463cfc162c66b85b4618b5803d71365862f6302e0b in / "}}'}]}
+DEBUG 21-08-04 13:53:14 16376: Calling Nexus URL: http://18.118.119.71:8081/service/rest/beta/repositories
+DEBUG 21-08-04 13:53:14 16376: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 13:53:15 16376: http://18.118.119.71:8081 "GET /service/rest/beta/repositories HTTP/1.1" 200 3947
+DEBUG 21-08-04 13:53:15 16376: Returned value: [{'name': 'nuget-group', 'format': 'nuget', 'url': 'http://18.118.119.71:8081/repository/nuget-group', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': True}, 'group': {'memberNames': ['nuget-hosted', 'nuget.org-proxy']}, 'type': 'group'}, {'name': 'maven-snapshots', 'url': 'http://18.118.119.71:8081/repository/maven-snapshots', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': False, 'writePolicy': 'ALLOW'}, 'cleanup': None, 'maven': {'versionPolicy': 'SNAPSHOT', 'layoutPolicy': 'STRICT'}, 'format': 'maven2', 'type': 'hosted'}, {'name': 'maven-central', 'url': 'http://18.118.119.71:8081/repository/maven-central', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': False, 'writePolicy': 'ALLOW'}, 'cleanup': None, 'proxy': {'remoteUrl': 'https://repo1.maven.org/maven2/', 'contentMaxAge': -1, 'metadataMaxAge': 1440}, 'negativeCache': {'enabled': True, 'timeToLive': 1440}, 'httpClient': {'blocked': False, 'autoBlock': False, 'connection': {'retries': None, 'userAgentSuffix': None, 'timeout': None, 'enableCircularRedirects': False, 'enableCookies': False}, 'authentication': None}, 'routingRuleName': None, 'maven': {'versionPolicy': 'RELEASE', 'layoutPolicy': 'PERMISSIVE'}, 'format': 'maven2', 'type': 'proxy'}, {'name': 'nuget.org-proxy', 'url': 'http://18.118.119.71:8081/repository/nuget.org-proxy', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': True, 'writePolicy': 'ALLOW'}, 'cleanup': None, 'proxy': {'remoteUrl': 'https://www.nuget.org/api/v2/', 'contentMaxAge': 1440, 'metadataMaxAge': 1440}, 'negativeCache': {'enabled': True, 'timeToLive': 1440}, 'httpClient': {'blocked': False, 'autoBlock': False, 'connection': {'retries': None, 'userAgentSuffix': None, 'timeout': None, 'enableCircularRedirects': False, 'enableCookies': False}, 'authentication': None}, 'routingRuleName': None, 'nugetProxy': {'queryCacheItemMaxAge': None}, 'format': 'nuget', 'type': 'proxy'}, {'name': 'maven-releases', 'url': 'http://18.118.119.71:8081/repository/maven-releases', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': False, 'writePolicy': 'ALLOW_ONCE'}, 'cleanup': None, 'maven': {'versionPolicy': 'RELEASE', 'layoutPolicy': 'STRICT'}, 'format': 'maven2', 'type': 'hosted'}, {'name': 'docker-hosted', 'url': 'http://18.118.119.71:8081/repository/docker-hosted', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': True, 'writePolicy': 'ALLOW'}, 'cleanup': None, 'docker': {'v1Enabled': False, 'forceBasicAuth': True, 'httpPort': 18442, 'httpsPort': 28442}, 'format': 'docker', 'type': 'hosted'}, {'name': 'nuget-hosted', 'format': 'nuget', 'url': 'http://18.118.119.71:8081/repository/nuget-hosted', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': True, 'writePolicy': 'ALLOW'}, 'cleanup': None, 'type': 'hosted'}, {'name': 'maven-public', 'format': 'maven2', 'url': 'http://18.118.119.71:8081/repository/maven-public', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': True}, 'group': {'memberNames': ['maven-releases', 'maven-snapshots', 'maven-central']}, 'type': 'group'}]
+DEBUG 21-08-04 13:53:15 16376: Repositories found: dict_keys(['nuget-group', 'maven-snapshots', 'maven-central', 'nuget.org-proxy', 'maven-releases', 'docker-hosted', 'nuget-hosted', 'maven-public'])
+DEBUG 21-08-04 13:53:20 16376: Repository data: {'name': 'docker-hosted', 'url': 'http://18.118.119.71:8081/repository/docker-hosted', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': True, 'writePolicy': 'ALLOW'}, 'cleanup': None, 'docker': {'v1Enabled': False, 'forceBasicAuth': True, 'httpPort': 18442, 'httpsPort': 28442}, 'format': 'docker', 'type': 'hosted'}
+DEBUG 21-08-04 13:53:20 16376: Returned docker repo URL: 18.118.119.71:18442
+INFO 21-08-04 13:53:20 16376: Pulling Docker image: 18.118.119.71:18442/mysql:mysql_tag2
+DEBUG 21-08-04 13:53:20 16376: Trying paths: ['C:\\Users\\OzTamari\\.docker\\config.json', 'C:\\Users\\OzTamari\\.dockercfg']
+DEBUG 21-08-04 13:53:20 16376: Found file at path: C:\Users\OzTamari\.docker\config.json
+DEBUG 21-08-04 13:53:20 16376: Found 'auths' section
+DEBUG 21-08-04 13:53:20 16376: Auth data for 18.118.20.105:18442 is absent. Client might be using a credentials store instead.
+DEBUG 21-08-04 13:53:20 16376: Auth data for 18.118.20.105:18444 is absent. Client might be using a credentials store instead.
+DEBUG 21-08-04 13:53:20 16376: Auth data for 18.118.20.105:28442 is absent. Client might be using a credentials store instead.
+DEBUG 21-08-04 13:53:20 16376: Auth data for 18.118.20.105:28444 is absent. Client might be using a credentials store instead.
+DEBUG 21-08-04 13:53:20 16376: Auth data for 52.14.229.244:18141 is absent. Client might be using a credentials store instead.
+DEBUG 21-08-04 13:53:20 16376: Found 'credsStore' section
+DEBUG 21-08-04 13:53:20 16376: http://localhost:None "GET /version HTTP/1.1" 200 None
+DEBUG 21-08-04 13:53:20 16376: Using credentials store "desktop"
+DEBUG 21-08-04 13:53:20 16376: Looking for auth entry for '18.118.119.71:18442'
+DEBUG 21-08-04 13:53:20 16376: No entry found
+DEBUG 21-08-04 13:53:20 16376: No entry in credstore - fetching from auth dict
+DEBUG 21-08-04 13:53:20 16376: Looking for auth entry for '18.118.119.71:18442'
+DEBUG 21-08-04 13:53:20 16376: No entry found
+DEBUG 21-08-04 13:53:21 16376: http://localhost:None "POST /v1.41/auth HTTP/1.1" 200 None
+DEBUG 21-08-04 13:53:21 16376: Looking for auth config
+DEBUG 21-08-04 13:53:21 16376: Using credentials store "desktop"
+DEBUG 21-08-04 13:53:21 16376: Looking for auth entry for '18.118.119.71:18442'
+DEBUG 21-08-04 13:53:21 16376: No entry found
+DEBUG 21-08-04 13:53:21 16376: No entry in credstore - fetching from auth dict
+DEBUG 21-08-04 13:53:21 16376: Looking for auth entry for '18.118.119.71:18442'
+DEBUG 21-08-04 13:53:21 16376: Found '18.118.119.71:18442'
+DEBUG 21-08-04 13:53:21 16376: Found auth config
+DEBUG 21-08-04 13:53:22 16376: http://localhost:None "POST /v1.41/images/create?tag=mysql_tag2&fromImage=18.118.119.71%3A18442%2Fmysql HTTP/1.1" 200 None
+DEBUG 21-08-04 13:53:22 16376: http://localhost:None "GET /v1.41/images/18.118.119.71:18442/mysql:mysql_tag2/json HTTP/1.1" 200 None
+DEBUG 21-08-04 13:53:22 16376: Image ID: 5c62e459e087 successfully pulled
+INFO 21-08-04 13:53:22 12320: Found 2 Docker images
+INFO 21-08-04 13:53:39 12320:  -- > 
+INFO 21-08-04 13:53:39 12320: Repository: nuget-hosted
+INFO 21-08-04 13:53:39 12320: Validate artifact list
+DEBUG 21-08-04 13:53:39 12320: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 13:53:39 12320: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=nuget-hosted HTTP/1.1" 200 49
+INFO 21-08-04 13:53:39 12320: No artifacts found in nuget-hosted
+INFO 21-08-04 13:53:39 12320:  -- > 
+INFO 21-08-04 13:53:39 12320: Repository: maven-public
+INFO 21-08-04 13:53:39 12320: Validate artifact list
+DEBUG 21-08-04 13:53:39 12320: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 13:53:40 12320: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=maven-public HTTP/1.1" 200 5511
+INFO 21-08-04 13:53:40 12320: Retrieving artifacts...
+DEBUG 21-08-04 13:53:42 8940: Handling component ID: bWF2ZW4tcHVibGljOjkzYjliOWViOWE3ZWNiMDY0NTkxYzE3OTk4OTg1ODgz on repository: maven-public Format: maven2
+DEBUG 21-08-04 13:53:42 8940: Handling component ID: bWF2ZW4tcHVibGljOjcxYWZlYTU0MGUyM2RkZTViMmQ4NGY3ZmE4MDk5MTM3 on repository: maven-public Format: maven2
+DEBUG 21-08-04 13:53:42 8940: Handling component ID: bWF2ZW4tcHVibGljOjcxYWZlYTU0MGUyM2RkZTVlZDdmNGY3NmE3YmQ3ZjNk on repository: maven-public Format: maven2
+INFO 21-08-04 13:53:42 8940: Downloading plexus-utils-1.4.5.jar component from maven-public
+DEBUG 21-08-04 13:53:42 8940: Calling Nexus URL: http://18.118.119.71:8081/repository/maven-public/org/codehaus/plexus/plexus-utils/1.4.5/plexus-utils-1.4.5.jar
+DEBUG 21-08-04 13:53:42 8940: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 13:53:43 8940: http://18.118.119.71:8081 "GET /repository/maven-public/org/codehaus/plexus/plexus-utils/1.4.5/plexus-utils-1.4.5.jar HTTP/1.1" 200 205043
+DEBUG 21-08-04 13:53:43 8940: Download URL: http://18.118.119.71:8081/repository/maven-public/org/codehaus/plexus/plexus-utils/1.4.5/plexus-utils-1.4.5.jar
+INFO 21-08-04 13:53:43 8940: Component plexus-utils-1.4.5.jar has successfully downloaded
+INFO 21-08-04 13:53:44 12320:  -- > 
+INFO 21-08-04 13:53:44 12320: Starting WhiteSource scan
+DEBUG 21-08-04 13:56:39 23368: Using configuration file: ../config/params_3_23.config
+DEBUG 21-08-04 13:56:39 23368: Converting user and password to basic string
+INFO 21-08-04 13:56:39 23368: Starting
+INFO 21-08-04 13:56:39 23368: Getting region parameters
+INFO 21-08-04 13:56:39 23368: Validating Nexus credentials
+INFO 21-08-04 13:56:39 23368: Nexus credentials validated
+INFO 21-08-04 13:56:39 23368: Validating WhiteSource User Key, API Key and URL
+INFO 21-08-04 13:56:39 23368: WhiteSource User Key, API Key and URL validated
+INFO 21-08-04 13:56:39 23368: Verifying agent parameters
+INFO 21-08-04 13:56:39 23368: WhiteSource agent download complete
+INFO 21-08-04 13:56:39 23368: Converting user and password to basic string
+INFO 21-08-04 13:56:39 23368: Sending request for retrieving Nexus repository list
+DEBUG 21-08-04 13:56:39 23368: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 13:56:40 23368: http://18.118.119.71:8081 "GET /service/rest/v1/repositories HTTP/1.1" 200 1447
+DEBUG 21-08-04 13:56:40 23368:  Nexus Headers: {'Date': 'Wed, 04 Aug 2021 10:56:41 GMT', 'Server': 'Nexus/3.23.0-03 (OSS)', 'X-Content-Type-Options': 'nosniff', 'Content-Type': 'application/json', 'Content-Length': '1447'}
+INFO 21-08-04 13:56:40 23368: Nexus Version: Nexus/3.23.0-03 (OSS)
+DEBUG 21-08-04 13:56:40 23368: Using repository: /service/rest/beta/repositories
+INFO 21-08-04 13:56:40 23368: No repositories specified, all repositories will be scanned
+INFO 21-08-04 13:56:40 23368: Repository: nuget-group
+INFO 21-08-04 13:56:40 23368: Validate artifact list
+DEBUG 21-08-04 13:56:40 23368: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 13:56:40 23368: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=nuget-group HTTP/1.1" 200 49
+INFO 21-08-04 13:56:40 23368: No artifacts found in nuget-group
+INFO 21-08-04 13:56:40 23368:  -- > 
+INFO 21-08-04 13:56:40 23368: Repository: maven-snapshots
+INFO 21-08-04 13:56:40 23368: Validate artifact list
+DEBUG 21-08-04 13:56:40 23368: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 13:56:40 23368: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=maven-snapshots HTTP/1.1" 200 49
+INFO 21-08-04 13:56:40 23368: No artifacts found in maven-snapshots
+INFO 21-08-04 13:56:40 23368:  -- > 
+INFO 21-08-04 13:56:40 23368: Repository: maven-central
+INFO 21-08-04 13:56:40 23368: Validate artifact list
+DEBUG 21-08-04 13:56:40 23368: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 13:56:41 23368: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=maven-central HTTP/1.1" 200 49
+INFO 21-08-04 13:56:41 23368: No artifacts found in maven-central
+INFO 21-08-04 13:56:41 23368:  -- > 
+INFO 21-08-04 13:56:41 23368: Repository: nuget.org-proxy
+INFO 21-08-04 13:56:41 23368: Validate artifact list
+DEBUG 21-08-04 13:56:41 23368: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 13:56:41 23368: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=nuget.org-proxy HTTP/1.1" 200 49
+INFO 21-08-04 13:56:41 23368: No artifacts found in nuget.org-proxy
+INFO 21-08-04 13:56:41 23368:  -- > 
+INFO 21-08-04 13:56:41 23368: Repository: maven-releases
+INFO 21-08-04 13:56:41 23368: Validate artifact list
+DEBUG 21-08-04 13:56:41 23368: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 13:56:41 23368: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=maven-releases HTTP/1.1" 200 5589
+INFO 21-08-04 13:56:41 23368: Retrieving artifacts...
+DEBUG 21-08-04 13:56:43 5100: Handling component ID: bWF2ZW4tcmVsZWFzZXM6OTNiOWI5ZWI5YTdlY2IwNjQ1OTFjMTc5OTg5ODU4ODM on repository: maven-releases Format: maven2
+DEBUG 21-08-04 13:56:43 5100: Handling component ID: bWF2ZW4tcmVsZWFzZXM6NzFhZmVhNTQwZTIzZGRlNWIyZDg0ZjdmYTgwOTkxMzc on repository: maven-releases Format: maven2
+DEBUG 21-08-04 13:56:43 5100: Handling component ID: bWF2ZW4tcmVsZWFzZXM6NzFhZmVhNTQwZTIzZGRlNWVkN2Y0Zjc2YTdiZDdmM2Q on repository: maven-releases Format: maven2
+INFO 21-08-04 13:56:43 5100: Downloading plexus-utils-1.4.5.jar component from maven-releases
+DEBUG 21-08-04 13:56:43 5100: Calling Nexus URL: http://18.118.119.71:8081/repository/maven-releases/org/codehaus/plexus/plexus-utils/1.4.5/plexus-utils-1.4.5.jar
+DEBUG 21-08-04 13:56:43 5100: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 13:56:44 5100: http://18.118.119.71:8081 "GET /repository/maven-releases/org/codehaus/plexus/plexus-utils/1.4.5/plexus-utils-1.4.5.jar HTTP/1.1" 200 205043
+DEBUG 21-08-04 13:56:44 5100: Download URL: http://18.118.119.71:8081/repository/maven-releases/org/codehaus/plexus/plexus-utils/1.4.5/plexus-utils-1.4.5.jar
+INFO 21-08-04 13:56:44 5100: Component plexus-utils-1.4.5.jar has successfully downloaded
+INFO 21-08-04 13:56:44 23368:  -- > 
+INFO 21-08-04 13:56:44 23368: Repository: docker-hosted
+INFO 21-08-04 13:56:44 23368: Validate artifact list
+DEBUG 21-08-04 13:56:44 23368: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 13:56:45 23368: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=docker-hosted HTTP/1.1" 200 1487
+INFO 21-08-04 13:56:45 23368: Retrieving artifacts...
+DEBUG 21-08-04 13:56:47 12236: Handling component ID: ZG9ja2VyLWhvc3RlZDo5M2I5YjllYjlhN2VjYjA2ZWZiZThjYjY5MDEyZDc5Mw on repository: docker-hosted Format: docker
+DEBUG 21-08-04 13:56:47 12236: Getting manifest file from: http://18.118.119.71:8081/repository/docker-hosted/v2/mysql/manifests/alpine_tag1
+DEBUG 21-08-04 13:56:47 12236: Calling Nexus URL: http://18.118.119.71:8081/repository/docker-hosted/v2/mysql/manifests/alpine_tag1
+DEBUG 21-08-04 13:56:47 12236: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 13:56:47 12236: http://18.118.119.71:8081 "GET /repository/docker-hosted/v2/mysql/manifests/alpine_tag1 HTTP/1.1" 200 2012
+DEBUG 21-08-04 13:56:47 12236: Returned value: {'schemaVersion': 1, 'name': 'mysql', 'tag': 'alpine_tag1', 'architecture': 'amd64', 'fsLayers': [{'blobSum': 'sha256:a3ed95caeb02ffe68cdd9fd84406680ae93d633cb16422d00e8a7c22955b46d4'}, {'blobSum': 'sha256:5843afab387455b37944e709ee8c78d7520df80f8d01cf7f861aae63beeddb6b'}], 'history': [{'v1Compatibility': '{"created":"2021-06-15T22:19:37.842991933Z","docker_version":"19.03.12","architecture":"amd64","config":{"Hostname":"","Domainname":"","User":"","AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"],"Cmd":["/bin/sh"],"Image":"sha256:adc3ec15388a285a57a75278249afca8cef6e9542d280f2b9d52cee06ac55899","Volumes":null,"WorkingDir":"","Entrypoint":null,"OnBuild":null,"Labels":null},"container":"8a1f6c9b61cbbf8d570f0f63099b6649bf6b65e1632bf797727e201801cc21e2","os":"linux","container_config":{"Hostname":"8a1f6c9b61cb","Domainname":"","User":"","AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"],"Cmd":["/bin/sh","-c","#(nop) ","CMD [\\"/bin/sh\\"]"],"Image":"sha256:adc3ec15388a285a57a75278249afca8cef6e9542d280f2b9d52cee06ac55899","Volumes":null,"WorkingDir":"","Entrypoint":null,"OnBuild":null,"Labels":{}},"id":"e0c98c37073a7854c9bc52a873c1edcd7edcea15a1884fd87440663863e79404","parent":"9efabeb27b1a27ce2265be976ddc6727b4ceffec3997d95b4669f3e32e8e8c17"}'}, {'v1Compatibility': '{"id":"9efabeb27b1a27ce2265be976ddc6727b4ceffec3997d95b4669f3e32e8e8c17","created":"2021-06-15T22:19:37.639998211Z","Cmd":{"container_config":"/bin/sh -c #(nop) ADD file:f278386b0cef68136129f5f58c52445590a417b624d62bca158d4dc926c340df in / "}}'}]}
+DEBUG 21-08-04 13:56:47 12236: Calling Nexus URL: http://18.118.119.71:8081/service/rest/beta/repositories
+DEBUG 21-08-04 13:56:47 12236: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 13:56:48 12236: http://18.118.119.71:8081 "GET /service/rest/beta/repositories HTTP/1.1" 200 3947
+DEBUG 21-08-04 13:56:48 12236: Returned value: [{'name': 'nuget-group', 'format': 'nuget', 'url': 'http://18.118.119.71:8081/repository/nuget-group', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': True}, 'group': {'memberNames': ['nuget-hosted', 'nuget.org-proxy']}, 'type': 'group'}, {'name': 'maven-snapshots', 'url': 'http://18.118.119.71:8081/repository/maven-snapshots', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': False, 'writePolicy': 'ALLOW'}, 'cleanup': None, 'maven': {'versionPolicy': 'SNAPSHOT', 'layoutPolicy': 'STRICT'}, 'format': 'maven2', 'type': 'hosted'}, {'name': 'maven-central', 'url': 'http://18.118.119.71:8081/repository/maven-central', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': False, 'writePolicy': 'ALLOW'}, 'cleanup': None, 'proxy': {'remoteUrl': 'https://repo1.maven.org/maven2/', 'contentMaxAge': -1, 'metadataMaxAge': 1440}, 'negativeCache': {'enabled': True, 'timeToLive': 1440}, 'httpClient': {'blocked': False, 'autoBlock': False, 'connection': {'retries': None, 'userAgentSuffix': None, 'timeout': None, 'enableCircularRedirects': False, 'enableCookies': False}, 'authentication': None}, 'routingRuleName': None, 'maven': {'versionPolicy': 'RELEASE', 'layoutPolicy': 'PERMISSIVE'}, 'format': 'maven2', 'type': 'proxy'}, {'name': 'nuget.org-proxy', 'url': 'http://18.118.119.71:8081/repository/nuget.org-proxy', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': True, 'writePolicy': 'ALLOW'}, 'cleanup': None, 'proxy': {'remoteUrl': 'https://www.nuget.org/api/v2/', 'contentMaxAge': 1440, 'metadataMaxAge': 1440}, 'negativeCache': {'enabled': True, 'timeToLive': 1440}, 'httpClient': {'blocked': False, 'autoBlock': False, 'connection': {'retries': None, 'userAgentSuffix': None, 'timeout': None, 'enableCircularRedirects': False, 'enableCookies': False}, 'authentication': None}, 'routingRuleName': None, 'nugetProxy': {'queryCacheItemMaxAge': None}, 'format': 'nuget', 'type': 'proxy'}, {'name': 'maven-releases', 'url': 'http://18.118.119.71:8081/repository/maven-releases', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': False, 'writePolicy': 'ALLOW_ONCE'}, 'cleanup': None, 'maven': {'versionPolicy': 'RELEASE', 'layoutPolicy': 'STRICT'}, 'format': 'maven2', 'type': 'hosted'}, {'name': 'docker-hosted', 'url': 'http://18.118.119.71:8081/repository/docker-hosted', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': True, 'writePolicy': 'ALLOW'}, 'cleanup': None, 'docker': {'v1Enabled': False, 'forceBasicAuth': True, 'httpPort': 18442, 'httpsPort': 28442}, 'format': 'docker', 'type': 'hosted'}, {'name': 'nuget-hosted', 'format': 'nuget', 'url': 'http://18.118.119.71:8081/repository/nuget-hosted', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': True, 'writePolicy': 'ALLOW'}, 'cleanup': None, 'type': 'hosted'}, {'name': 'maven-public', 'format': 'maven2', 'url': 'http://18.118.119.71:8081/repository/maven-public', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': True}, 'group': {'memberNames': ['maven-releases', 'maven-snapshots', 'maven-central']}, 'type': 'group'}]
+DEBUG 21-08-04 13:56:48 12236: Repositories found: dict_keys(['nuget-group', 'maven-snapshots', 'maven-central', 'nuget.org-proxy', 'maven-releases', 'docker-hosted', 'nuget-hosted', 'maven-public'])
+DEBUG 21-08-04 14:54:50 12012: Using configuration file: ../config/params_3_23.config
+DEBUG 21-08-04 14:54:50 12012: Converting user and password to basic string
+INFO 21-08-04 14:54:50 12012: Starting
+INFO 21-08-04 14:54:50 12012: Getting region parameters
+INFO 21-08-04 14:54:50 12012: Validating Nexus credentials
+INFO 21-08-04 14:54:50 12012: Nexus credentials validated
+INFO 21-08-04 14:54:50 12012: Validating WhiteSource User Key, API Key and URL
+INFO 21-08-04 14:54:50 12012: WhiteSource User Key, API Key and URL validated
+INFO 21-08-04 14:54:50 12012: Verifying agent parameters
+INFO 21-08-04 14:54:50 12012: WhiteSource agent download complete
+INFO 21-08-04 14:54:50 12012: Converting user and password to basic string
+INFO 21-08-04 14:54:50 12012: Sending request for retrieving Nexus repository list
+DEBUG 21-08-04 14:54:50 12012: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 14:54:50 12012: http://18.118.119.71:8081 "GET /service/rest/v1/repositories HTTP/1.1" 200 1447
+DEBUG 21-08-04 14:54:50 12012:  Nexus Headers: {'Date': 'Wed, 04 Aug 2021 11:54:51 GMT', 'Server': 'Nexus/3.23.0-03 (OSS)', 'X-Content-Type-Options': 'nosniff', 'Content-Type': 'application/json', 'Content-Length': '1447'}
+INFO 21-08-04 14:54:50 12012: Nexus Version: Nexus/3.23.0-03 (OSS)
+DEBUG 21-08-04 14:54:50 12012: Using repository: /service/rest/beta/repositories
+INFO 21-08-04 14:54:50 12012: No repositories specified, all repositories will be scanned
+INFO 21-08-04 14:54:50 12012: Repository: nuget-group
+INFO 21-08-04 14:54:50 12012: Validate artifact list
+DEBUG 21-08-04 14:54:50 12012: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 14:54:50 12012: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=nuget-group HTTP/1.1" 200 49
+INFO 21-08-04 14:54:50 12012: No artifacts found in nuget-group
+INFO 21-08-04 14:54:50 12012:  -- > 
+INFO 21-08-04 14:54:50 12012: Repository: maven-snapshots
+INFO 21-08-04 14:54:50 12012: Validate artifact list
+DEBUG 21-08-04 14:54:50 12012: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 14:54:51 12012: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=maven-snapshots HTTP/1.1" 200 49
+INFO 21-08-04 14:54:51 12012: No artifacts found in maven-snapshots
+INFO 21-08-04 14:54:51 12012:  -- > 
+INFO 21-08-04 14:54:51 12012: Repository: maven-central
+INFO 21-08-04 14:54:51 12012: Validate artifact list
+DEBUG 21-08-04 14:54:51 12012: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 14:54:51 12012: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=maven-central HTTP/1.1" 200 49
+INFO 21-08-04 14:54:51 12012: No artifacts found in maven-central
+INFO 21-08-04 14:54:51 12012:  -- > 
+INFO 21-08-04 14:54:51 12012: Repository: nuget.org-proxy
+INFO 21-08-04 14:54:51 12012: Validate artifact list
+DEBUG 21-08-04 14:54:51 12012: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 14:54:51 12012: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=nuget.org-proxy HTTP/1.1" 200 49
+INFO 21-08-04 14:54:51 12012: No artifacts found in nuget.org-proxy
+INFO 21-08-04 14:54:51 12012:  -- > 
+INFO 21-08-04 14:54:51 12012: Repository: maven-releases
+INFO 21-08-04 14:54:51 12012: Validate artifact list
+DEBUG 21-08-04 14:54:51 12012: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 14:54:52 12012: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=maven-releases HTTP/1.1" 200 5589
+INFO 21-08-04 14:54:52 12012: Retrieving artifacts...
+DEBUG 21-08-04 14:54:52 22868: Handling component ID: bWF2ZW4tcmVsZWFzZXM6OTNiOWI5ZWI5YTdlY2IwNjQ1OTFjMTc5OTg5ODU4ODM on repository: maven-releases Format: maven2
+DEBUG 21-08-04 14:54:52 22868: Handling component ID: bWF2ZW4tcmVsZWFzZXM6NzFhZmVhNTQwZTIzZGRlNWIyZDg0ZjdmYTgwOTkxMzc on repository: maven-releases Format: maven2
+DEBUG 21-08-04 14:54:52 22868: Handling component ID: bWF2ZW4tcmVsZWFzZXM6NzFhZmVhNTQwZTIzZGRlNWVkN2Y0Zjc2YTdiZDdmM2Q on repository: maven-releases Format: maven2
+INFO 21-08-04 14:54:52 22868: Downloading plexus-utils-1.4.5.jar component from maven-releases
+DEBUG 21-08-04 14:54:52 22868: Calling Nexus URL: http://18.118.119.71:8081/repository/maven-releases/org/codehaus/plexus/plexus-utils/1.4.5/plexus-utils-1.4.5.jar
+DEBUG 21-08-04 14:54:52 22868: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 14:54:53 22868: http://18.118.119.71:8081 "GET /repository/maven-releases/org/codehaus/plexus/plexus-utils/1.4.5/plexus-utils-1.4.5.jar HTTP/1.1" 200 205043
+DEBUG 21-08-04 14:54:53 22868: Download URL: http://18.118.119.71:8081/repository/maven-releases/org/codehaus/plexus/plexus-utils/1.4.5/plexus-utils-1.4.5.jar
+INFO 21-08-04 14:54:53 22868: Component plexus-utils-1.4.5.jar has successfully downloaded
+INFO 21-08-04 14:54:53 12012:  -- > 
+INFO 21-08-04 14:54:53 12012: Repository: docker-hosted
+INFO 21-08-04 14:54:53 12012: Validate artifact list
+DEBUG 21-08-04 14:54:53 12012: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 14:54:54 12012: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=docker-hosted HTTP/1.1" 200 1487
+INFO 21-08-04 14:54:54 12012: Retrieving artifacts...
+DEBUG 21-08-04 14:54:55 25528: Handling component ID: ZG9ja2VyLWhvc3RlZDo5M2I5YjllYjlhN2VjYjA2ZWZiZThjYjY5MDEyZDc5Mw on repository: docker-hosted Format: docker
+DEBUG 21-08-04 14:54:55 25528: Getting manifest file from: http://18.118.119.71:8081/repository/docker-hosted/v2/mysql/manifests/alpine_tag1
+DEBUG 21-08-04 14:54:55 25528: Calling Nexus URL: http://18.118.119.71:8081/repository/docker-hosted/v2/mysql/manifests/alpine_tag1
+DEBUG 21-08-04 14:54:55 25528: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 14:54:55 25528: http://18.118.119.71:8081 "GET /repository/docker-hosted/v2/mysql/manifests/alpine_tag1 HTTP/1.1" 200 2012
+DEBUG 21-08-04 14:54:55 25528: Returned value: {'schemaVersion': 1, 'name': 'mysql', 'tag': 'alpine_tag1', 'architecture': 'amd64', 'fsLayers': [{'blobSum': 'sha256:a3ed95caeb02ffe68cdd9fd84406680ae93d633cb16422d00e8a7c22955b46d4'}, {'blobSum': 'sha256:5843afab387455b37944e709ee8c78d7520df80f8d01cf7f861aae63beeddb6b'}], 'history': [{'v1Compatibility': '{"created":"2021-06-15T22:19:37.842991933Z","docker_version":"19.03.12","architecture":"amd64","config":{"Hostname":"","Domainname":"","User":"","AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"],"Cmd":["/bin/sh"],"Image":"sha256:adc3ec15388a285a57a75278249afca8cef6e9542d280f2b9d52cee06ac55899","Volumes":null,"WorkingDir":"","Entrypoint":null,"OnBuild":null,"Labels":null},"container":"8a1f6c9b61cbbf8d570f0f63099b6649bf6b65e1632bf797727e201801cc21e2","os":"linux","container_config":{"Hostname":"8a1f6c9b61cb","Domainname":"","User":"","AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"],"Cmd":["/bin/sh","-c","#(nop) ","CMD [\\"/bin/sh\\"]"],"Image":"sha256:adc3ec15388a285a57a75278249afca8cef6e9542d280f2b9d52cee06ac55899","Volumes":null,"WorkingDir":"","Entrypoint":null,"OnBuild":null,"Labels":{}},"id":"e0c98c37073a7854c9bc52a873c1edcd7edcea15a1884fd87440663863e79404","parent":"9efabeb27b1a27ce2265be976ddc6727b4ceffec3997d95b4669f3e32e8e8c17"}'}, {'v1Compatibility': '{"id":"9efabeb27b1a27ce2265be976ddc6727b4ceffec3997d95b4669f3e32e8e8c17","created":"2021-06-15T22:19:37.639998211Z","Cmd":{"container_config":"/bin/sh -c #(nop) ADD file:f278386b0cef68136129f5f58c52445590a417b624d62bca158d4dc926c340df in / "}}'}]}
+DEBUG 21-08-04 14:54:55 25528: manifest: {'schemaVersion': 1, 'name': 'mysql', 'tag': 'alpine_tag1', 'architecture': 'amd64', 'fsLayers': [{'blobSum': 'sha256:a3ed95caeb02ffe68cdd9fd84406680ae93d633cb16422d00e8a7c22955b46d4'}, {'blobSum': 'sha256:5843afab387455b37944e709ee8c78d7520df80f8d01cf7f861aae63beeddb6b'}], 'history': [{'v1Compatibility': '{"created":"2021-06-15T22:19:37.842991933Z","docker_version":"19.03.12","architecture":"amd64","config":{"Hostname":"","Domainname":"","User":"","AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"],"Cmd":["/bin/sh"],"Image":"sha256:adc3ec15388a285a57a75278249afca8cef6e9542d280f2b9d52cee06ac55899","Volumes":null,"WorkingDir":"","Entrypoint":null,"OnBuild":null,"Labels":null},"container":"8a1f6c9b61cbbf8d570f0f63099b6649bf6b65e1632bf797727e201801cc21e2","os":"linux","container_config":{"Hostname":"8a1f6c9b61cb","Domainname":"","User":"","AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"],"Cmd":["/bin/sh","-c","#(nop) ","CMD [\\"/bin/sh\\"]"],"Image":"sha256:adc3ec15388a285a57a75278249afca8cef6e9542d280f2b9d52cee06ac55899","Volumes":null,"WorkingDir":"","Entrypoint":null,"OnBuild":null,"Labels":{}},"id":"e0c98c37073a7854c9bc52a873c1edcd7edcea15a1884fd87440663863e79404","parent":"9efabeb27b1a27ce2265be976ddc6727b4ceffec3997d95b4669f3e32e8e8c17"}'}, {'v1Compatibility': '{"id":"9efabeb27b1a27ce2265be976ddc6727b4ceffec3997d95b4669f3e32e8e8c17","created":"2021-06-15T22:19:37.639998211Z","Cmd":{"container_config":"/bin/sh -c #(nop) ADD file:f278386b0cef68136129f5f58c52445590a417b624d62bca158d4dc926c340df in / "}}'}]}
+DEBUG 21-08-04 14:54:55 25528: Calling Nexus URL: http://18.118.119.71:8081/service/rest/beta/repositories
+DEBUG 21-08-04 14:54:55 25528: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 14:54:55 25528: http://18.118.119.71:8081 "GET /service/rest/beta/repositories HTTP/1.1" 200 3947
+DEBUG 21-08-04 14:54:55 25528: Returned value: [{'name': 'nuget-group', 'format': 'nuget', 'url': 'http://18.118.119.71:8081/repository/nuget-group', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': True}, 'group': {'memberNames': ['nuget-hosted', 'nuget.org-proxy']}, 'type': 'group'}, {'name': 'maven-snapshots', 'url': 'http://18.118.119.71:8081/repository/maven-snapshots', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': False, 'writePolicy': 'ALLOW'}, 'cleanup': None, 'maven': {'versionPolicy': 'SNAPSHOT', 'layoutPolicy': 'STRICT'}, 'format': 'maven2', 'type': 'hosted'}, {'name': 'maven-central', 'url': 'http://18.118.119.71:8081/repository/maven-central', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': False, 'writePolicy': 'ALLOW'}, 'cleanup': None, 'proxy': {'remoteUrl': 'https://repo1.maven.org/maven2/', 'contentMaxAge': -1, 'metadataMaxAge': 1440}, 'negativeCache': {'enabled': True, 'timeToLive': 1440}, 'httpClient': {'blocked': False, 'autoBlock': False, 'connection': {'retries': None, 'userAgentSuffix': None, 'timeout': None, 'enableCircularRedirects': False, 'enableCookies': False}, 'authentication': None}, 'routingRuleName': None, 'maven': {'versionPolicy': 'RELEASE', 'layoutPolicy': 'PERMISSIVE'}, 'format': 'maven2', 'type': 'proxy'}, {'name': 'nuget.org-proxy', 'url': 'http://18.118.119.71:8081/repository/nuget.org-proxy', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': True, 'writePolicy': 'ALLOW'}, 'cleanup': None, 'proxy': {'remoteUrl': 'https://www.nuget.org/api/v2/', 'contentMaxAge': 1440, 'metadataMaxAge': 1440}, 'negativeCache': {'enabled': True, 'timeToLive': 1440}, 'httpClient': {'blocked': False, 'autoBlock': False, 'connection': {'retries': None, 'userAgentSuffix': None, 'timeout': None, 'enableCircularRedirects': False, 'enableCookies': False}, 'authentication': None}, 'routingRuleName': None, 'nugetProxy': {'queryCacheItemMaxAge': None}, 'format': 'nuget', 'type': 'proxy'}, {'name': 'maven-releases', 'url': 'http://18.118.119.71:8081/repository/maven-releases', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': False, 'writePolicy': 'ALLOW_ONCE'}, 'cleanup': None, 'maven': {'versionPolicy': 'RELEASE', 'layoutPolicy': 'STRICT'}, 'format': 'maven2', 'type': 'hosted'}, {'name': 'docker-hosted', 'url': 'http://18.118.119.71:8081/repository/docker-hosted', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': True, 'writePolicy': 'ALLOW'}, 'cleanup': None, 'docker': {'v1Enabled': False, 'forceBasicAuth': True, 'httpPort': 18442, 'httpsPort': 28442}, 'format': 'docker', 'type': 'hosted'}, {'name': 'nuget-hosted', 'format': 'nuget', 'url': 'http://18.118.119.71:8081/repository/nuget-hosted', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': True, 'writePolicy': 'ALLOW'}, 'cleanup': None, 'type': 'hosted'}, {'name': 'maven-public', 'format': 'maven2', 'url': 'http://18.118.119.71:8081/repository/maven-public', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': True}, 'group': {'memberNames': ['maven-releases', 'maven-snapshots', 'maven-central']}, 'type': 'group'}]
+DEBUG 21-08-04 14:54:55 25528: Repositories found: dict_keys(['nuget-group', 'maven-snapshots', 'maven-central', 'nuget.org-proxy', 'maven-releases', 'docker-hosted', 'nuget-hosted', 'maven-public'])
+DEBUG 21-08-04 14:54:56 25528: Repository data: {'name': 'docker-hosted', 'url': 'http://18.118.119.71:8081/repository/docker-hosted', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': True, 'writePolicy': 'ALLOW'}, 'cleanup': None, 'docker': {'v1Enabled': False, 'forceBasicAuth': True, 'httpPort': 18442, 'httpsPort': 28442}, 'format': 'docker', 'type': 'hosted'}
+DEBUG 21-08-04 14:54:56 25528: Returned docker repo URL: 18.118.119.71:18442
+INFO 21-08-04 14:54:56 25528: Pulling Docker image: 18.118.119.71:18442/mysql:alpine_tag1
+DEBUG 21-08-04 14:54:56 25528: Trying paths: ['C:\\Users\\OzTamari\\.docker\\config.json', 'C:\\Users\\OzTamari\\.dockercfg']
+DEBUG 21-08-04 14:54:56 25528: Found file at path: C:\Users\OzTamari\.docker\config.json
+DEBUG 21-08-04 14:54:56 25528: Found 'auths' section
+DEBUG 21-08-04 14:54:56 25528: Auth data for 18.118.20.105:18442 is absent. Client might be using a credentials store instead.
+DEBUG 21-08-04 14:54:56 25528: Auth data for 18.118.20.105:18444 is absent. Client might be using a credentials store instead.
+DEBUG 21-08-04 14:54:56 25528: Auth data for 18.118.20.105:28442 is absent. Client might be using a credentials store instead.
+DEBUG 21-08-04 14:54:56 25528: Auth data for 18.118.20.105:28444 is absent. Client might be using a credentials store instead.
+DEBUG 21-08-04 14:54:56 25528: Auth data for 52.14.229.244:18141 is absent. Client might be using a credentials store instead.
+DEBUG 21-08-04 14:54:56 25528: Auth data for 52.14.229.244:18143 is absent. Client might be using a credentials store instead.
+DEBUG 21-08-04 14:54:56 25528: Found 'credsStore' section
+DEBUG 21-08-04 14:54:56 25528: http://localhost:None "GET /version HTTP/1.1" 200 None
+DEBUG 21-08-04 14:54:56 25528: Using credentials store "desktop"
+DEBUG 21-08-04 14:54:56 25528: Looking for auth entry for '18.118.119.71:18442'
+DEBUG 21-08-04 14:54:56 25528: No entry found
+DEBUG 21-08-04 14:54:56 25528: No entry in credstore - fetching from auth dict
+DEBUG 21-08-04 14:54:56 25528: Looking for auth entry for '18.118.119.71:18442'
+DEBUG 21-08-04 14:54:56 25528: No entry found
+DEBUG 21-08-04 14:54:57 25528: http://localhost:None "POST /v1.41/auth HTTP/1.1" 200 None
+DEBUG 21-08-04 14:54:57 25528: Looking for auth config
+DEBUG 21-08-04 14:54:57 25528: Using credentials store "desktop"
+DEBUG 21-08-04 14:54:57 25528: Looking for auth entry for '18.118.119.71:18442'
+DEBUG 21-08-04 14:54:57 25528: No entry found
+DEBUG 21-08-04 14:54:57 25528: No entry in credstore - fetching from auth dict
+DEBUG 21-08-04 14:54:57 25528: Looking for auth entry for '18.118.119.71:18442'
+DEBUG 21-08-04 14:54:57 25528: Found '18.118.119.71:18442'
+DEBUG 21-08-04 14:54:57 25528: Found auth config
+DEBUG 21-08-04 14:54:58 25528: http://localhost:None "POST /v1.41/images/create?tag=alpine_tag1&fromImage=18.118.119.71%3A18442%2Fmysql HTTP/1.1" 200 None
+DEBUG 21-08-04 14:54:58 25528: http://localhost:None "GET /v1.41/images/18.118.119.71:18442/mysql:alpine_tag1/json HTTP/1.1" 200 None
+DEBUG 21-08-04 14:54:58 25528: Image ID: d4ff818577bc successfully pulled
+DEBUG 21-08-04 14:54:58 25528: Handling component ID: ZG9ja2VyLWhvc3RlZDo3MWFmZWE1NDBlMjNkZGU1ZWQ4NGFiZmZjOTkxYTlmOQ on repository: docker-hosted Format: docker
+DEBUG 21-08-04 14:54:58 25528: Getting manifest file from: http://18.118.119.71:8081/repository/docker-hosted/v2/mysql/manifests/mysql_tag2
+DEBUG 21-08-04 14:54:58 25528: Calling Nexus URL: http://18.118.119.71:8081/repository/docker-hosted/v2/mysql/manifests/mysql_tag2
+DEBUG 21-08-04 14:54:58 25528: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 14:54:58 25528: http://18.118.119.71:8081 "GET /repository/docker-hosted/v2/mysql/manifests/mysql_tag2 HTTP/1.1" 200 12400
+DEBUG 21-08-04 14:54:58 25528: Returned value: {'schemaVersion': 1, 'name': 'mysql', 'tag': 'mysql_tag2', 'architecture': 'amd64', 'fsLayers': [{'blobSum': 'sha256:a3ed95caeb02ffe68cdd9fd84406680ae93d633cb16422d00e8a7c22955b46d4'}, {'blobSum': 'sha256:a3ed95caeb02ffe68cdd9fd84406680ae93d633cb16422d00e8a7c22955b46d4'}, {'blobSum': 'sha256:a3ed95caeb02ffe68cdd9fd84406680ae93d633cb16422d00e8a7c22955b46d4'}, {'blobSum': 'sha256:2f40c47d0626e1a6f39b08da49fab43d8e392206a15e9952e3e4e87dcbbbf667'}, {'blobSum': 'sha256:165d1d10a3fa620f7174db4439831e2e36e18f686c1adf80ccba1550dec2041a'}, {'blobSum': 'sha256:71d327c6bb78193040178c6de8220df0d42f890e94efe76f2a8f2921ec9fd0c2'}, {'blobSum': 'sha256:a3ed95caeb02ffe68cdd9fd84406680ae93d633cb16422d00e8a7c22955b46d4'}, {'blobSum': 'sha256:ad042b682e0f0e2ef85b6822e1d40965a0018fb789e155b4f021193df776601a'}, {'blobSum': 'sha256:9ecc8abdb7f584bbbd11e6b16bf632440c4bc64cf9cccac3ee8202fcf17742d7'}, {'blobSum': 'sha256:a3ed95caeb02ffe68cdd9fd84406680ae93d633cb16422d00e8a7c22955b46d4'}, {'blobSum': 'sha256:a3ed95caeb02ffe68cdd9fd84406680ae93d633cb16422d00e8a7c22955b46d4'}, {'blobSum': 'sha256:32ca814c833fbe8adec28e15d739dba772d7259021235b861fb854e8f329fb1c'}, {'blobSum': 'sha256:aa18e05cc46d159c053ebf379685cef648b64d4bb39a4fa76dc7c8a6fadad89a'}, {'blobSum': 'sha256:d0cbe54c88555c61f35df860e431717e56b7198eb3a9fa642d14ea6e94dc6edc'}, {'blobSum': 'sha256:5240460060374bac3b015544387eba2355e7b003da15c162e7166984437c31d7'}, {'blobSum': 'sha256:a3ed95caeb02ffe68cdd9fd84406680ae93d633cb16422d00e8a7c22955b46d4'}, {'blobSum': 'sha256:578fafb77ab871790dd20afa25cea55309e5862a43eb6fdca5f3c1387ab7b833'}, {'blobSum': 'sha256:a462b60610f5b230bfc054037dcc15dfbd114bc91472a819ac5b4049cb7f030c'}, {'blobSum': 'sha256:a3ed95caeb02ffe68cdd9fd84406680ae93d633cb16422d00e8a7c22955b46d4'}, {'blobSum': 'sha256:b4d181a07f8025e00e0cb28f1cc14613da2ce26450b80c54aea537fa93cf3bda'}], 'history': [{'v1Compatibility': '{"created":"2021-06-23T07:11:48.017513581Z","docker_version":"19.03.12","architecture":"amd64","config":{"Hostname":"","Domainname":"","User":"","AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"ExposedPorts":{"3306/tcp":{},"33060/tcp":{}},"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","GOSU_VERSION=1.12","MYSQL_MAJOR=8.0","MYSQL_VERSION=8.0.25-1debian10"],"Cmd":["mysqld"],"Image":"sha256:53c3852cdabcaf371d4a280ac6851c0e5cf8c9bf4431424ada7ce8b80c6c2da6","Volumes":{"/var/lib/mysql":{}},"WorkingDir":"","Entrypoint":["docker-entrypoint.sh"],"OnBuild":null,"Labels":null},"container":"ca3f0287d432401060838047742b1e910517dab003a68810f0b4d2a75ec4bf49","os":"linux","container_config":{"Hostname":"ca3f0287d432","Domainname":"","User":"","AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"ExposedPorts":{"3306/tcp":{},"33060/tcp":{}},"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","GOSU_VERSION=1.12","MYSQL_MAJOR=8.0","MYSQL_VERSION=8.0.25-1debian10"],"Cmd":["/bin/sh","-c","#(nop) ","CMD [\\"mysqld\\"]"],"Image":"sha256:53c3852cdabcaf371d4a280ac6851c0e5cf8c9bf4431424ada7ce8b80c6c2da6","Volumes":{"/var/lib/mysql":{}},"WorkingDir":"","Entrypoint":["docker-entrypoint.sh"],"OnBuild":null,"Labels":{}},"id":"9917175858de7c245f1e85ab16e95da8da19fdc052b7a89d88905da7130b525a","parent":"4fbaca1ccb3d14864188569763f1b94717c3d40e1e40fdbf4c65bd24e26e0147"}'}, {'v1Compatibility': '{"id":"4fbaca1ccb3d14864188569763f1b94717c3d40e1e40fdbf4c65bd24e26e0147","created":"2021-06-23T07:11:47.795634283Z","Cmd":{"container_config":"/bin/sh -c #(nop)  EXPOSE 3306 33060"},"parent":"6882d4c1c9c124eb14287fbe00d243973a959a3ff38bb914a9965619b9254ae0","throwaway":true}'}, {'v1Compatibility': '{"id":"6882d4c1c9c124eb14287fbe00d243973a959a3ff38bb914a9965619b9254ae0","created":"2021-06-23T07:11:47.60431286Z","Cmd":{"container_config":"/bin/sh -c #(nop)  ENTRYPOINT [\\"docker-entrypoint.sh\\"]"},"parent":"fd9207e7e8e41e06e1a8306f1f18a112eff3c6a662b6587704f05bbe138717e0","throwaway":true}'}, {'v1Compatibility': '{"id":"fd9207e7e8e41e06e1a8306f1f18a112eff3c6a662b6587704f05bbe138717e0","created":"2021-06-23T07:11:47.407549607Z","Cmd":{"container_config":"/bin/sh -c ln -s usr/local/bin/docker-entrypoint.sh /entrypoint.sh # backwards compat"},"parent":"db6d6653c5ee8b2e5839b2565b199f724bd667426ecdc13c15b1566cb713553d"}'}, {'v1Compatibility': '{"id":"db6d6653c5ee8b2e5839b2565b199f724bd667426ecdc13c15b1566cb713553d","created":"2021-06-23T07:11:46.414837447Z","Cmd":{"container_config":"/bin/sh -c #(nop) COPY file:345a22fe55d3e6783a17075612415413487e7dba27fbf1000a67c7870364b739 in /usr/local/bin/ "},"parent":"639c99ec65444016ee89c79865ceb9fbd7ec3d2ddcd1cc52989a49500a058389"}'}, {'v1Compatibility': '{"id":"639c99ec65444016ee89c79865ceb9fbd7ec3d2ddcd1cc52989a49500a058389","created":"2021-06-23T07:11:46.207917447Z","Cmd":{"container_config":"/bin/sh -c #(nop) COPY dir:2e040acc386ebd23b8571951a51e6cb93647df091bc26159b8c757ef82b3fcda in /etc/mysql/ "},"parent":"a0d12a14e298b0699b31603ef048f6dca4b1fded566b089d7627b7b2dc5da4e3"}'}, {'v1Compatibility': '{"id":"a0d12a14e298b0699b31603ef048f6dca4b1fded566b089d7627b7b2dc5da4e3","created":"2021-06-23T07:11:45.98912097Z","Cmd":{"container_config":"/bin/sh -c #(nop)  VOLUME [/var/lib/mysql]"},"parent":"03500aba8dd97f6cd648fd387d7a90fe549bb5cd3953d024316529a02672c268","throwaway":true}'}, {'v1Compatibility': '{"id":"03500aba8dd97f6cd648fd387d7a90fe549bb5cd3953d024316529a02672c268","created":"2021-06-23T07:11:45.093581319Z","Cmd":{"container_config":"/bin/sh -c { \\t\\techo mysql-community-server mysql-community-server/data-dir select \'\'; \\t\\techo mysql-community-server mysql-community-server/root-pass password \'\'; \\t\\techo mysql-community-server mysql-community-server/re-root-pass password \'\'; \\t\\techo mysql-community-server mysql-community-server/remove-test-db select false; \\t} | debconf-set-selections \\t&& apt-get update \\t&& apt-get install -y \\t\\tmysql-community-client=\\"${MYSQL_VERSION}\\" \\t\\tmysql-community-server-core=\\"${MYSQL_VERSION}\\" \\t&& rm -rf /var/lib/apt/lists/* \\t&& rm -rf /var/lib/mysql && mkdir -p /var/lib/mysql /var/run/mysqld \\t&& chown -R mysql:mysql /var/lib/mysql /var/run/mysqld \\t&& chmod 1777 /var/run/mysqld /var/lib/mysql"},"parent":"14b8f4ddfa6d6f35f9f27564091c5ae97e66bdb5380d96c21e38408678f4e112"}'}, {'v1Compatibility': '{"id":"14b8f4ddfa6d6f35f9f27564091c5ae97e66bdb5380d96c21e38408678f4e112","created":"2021-06-23T07:11:24.95063233Z","Cmd":{"container_config":"/bin/sh -c echo \'deb http://repo.mysql.com/apt/debian/ buster mysql-8.0\' > /etc/apt/sources.list.d/mysql.list"},"parent":"c3d451b7d6d7d1c69aef9fa8e381cdfa001cb14e64052248638c1f28b60050d2"}'}, {'v1Compatibility': '{"id":"c3d451b7d6d7d1c69aef9fa8e381cdfa001cb14e64052248638c1f28b60050d2","created":"2021-06-23T07:11:23.111795942Z","Cmd":{"container_config":"/bin/sh -c #(nop)  ENV MYSQL_VERSION=8.0.25-1debian10"},"parent":"34fcd64c5d8b1f84c5a3424a8ebdd91bcbf35124c60e2512f2bdde0167eb9d00","throwaway":true}'}, {'v1Compatibility': '{"id":"34fcd64c5d8b1f84c5a3424a8ebdd91bcbf35124c60e2512f2bdde0167eb9d00","created":"2021-06-23T07:11:22.805086851Z","Cmd":{"container_config":"/bin/sh -c #(nop)  ENV MYSQL_MAJOR=8.0"},"parent":"1943d241d22a6c94ede919bfea988449b8713d87d2ae0fb754d3454968d8b51d","throwaway":true}'}, {'v1Compatibility': '{"id":"1943d241d22a6c94ede919bfea988449b8713d87d2ae0fb754d3454968d8b51d","created":"2021-06-23T07:11:22.487564627Z","Cmd":{"container_config":"/bin/sh -c set -ex; \\tkey=\'A4A9406876FCBD3C456770C88C718D3B5072E1F5\'; \\texport GNUPGHOME=\\"$(mktemp -d)\\"; \\tgpg --batch --keyserver ha.pool.sks-keyservers.net --recv-keys \\"$key\\"; \\tgpg --batch --export \\"$key\\" > /etc/apt/trusted.gpg.d/mysql.gpg; \\tgpgconf --kill all; \\trm -rf \\"$GNUPGHOME\\"; \\tapt-key list > /dev/null"},"parent":"dc643e6738c9cb3885be39c5153ab470eed19ffd78f1b3612e21df5a6d51835d"}'}, {'v1Compatibility': '{"id":"dc643e6738c9cb3885be39c5153ab470eed19ffd78f1b3612e21df5a6d51835d","created":"2021-06-23T07:11:18.147877794Z","Cmd":{"container_config":"/bin/sh -c apt-get update && apt-get install -y --no-install-recommends \\t\\tpwgen \\t\\topenssl \\t\\tperl \\t\\txz-utils \\t&& rm -rf /var/lib/apt/lists/*"},"parent":"dc0c3301d58196d3d6b0d3a988eae1fd281940701b3af654ae1f607da3c5c57f"}'}, {'v1Compatibility': '{"id":"dc0c3301d58196d3d6b0d3a988eae1fd281940701b3af654ae1f607da3c5c57f","created":"2021-06-23T07:11:07.773439724Z","Cmd":{"container_config":"/bin/sh -c mkdir /docker-entrypoint-initdb.d"},"parent":"925968450ce86b51a6f17bb7bb4bbbcbe591b42dc252297c1e0fca15c2f9e992"}'}, {'v1Compatibility': '{"id":"925968450ce86b51a6f17bb7bb4bbbcbe591b42dc252297c1e0fca15c2f9e992","created":"2021-06-23T07:11:06.160624679Z","Cmd":{"container_config":"/bin/sh -c set -eux; \\tsavedAptMark=\\"$(apt-mark showmanual)\\"; \\tapt-get update; \\tapt-get install -y --no-install-recommends ca-certificates wget; \\trm -rf /var/lib/apt/lists/*; \\tdpkgArch=\\"$(dpkg --print-architecture | awk -F- \'{ print $NF }\')\\"; \\twget -O /usr/local/bin/gosu \\"https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$dpkgArch\\"; \\twget -O /usr/local/bin/gosu.asc \\"https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$dpkgArch.asc\\"; \\texport GNUPGHOME=\\"$(mktemp -d)\\"; \\tgpg --batch --keyserver hkps://keys.openpgp.org --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4; \\tgpg --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu; \\tgpgconf --kill all; \\trm -rf \\"$GNUPGHOME\\" /usr/local/bin/gosu.asc; \\tapt-mark auto \'.*\' > /dev/null; \\t[ -z \\"$savedAptMark\\" ] || apt-mark manual $savedAptMark > /dev/null; \\tapt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \\tchmod +x /usr/local/bin/gosu; \\tgosu --version; \\tgosu nobody true"},"parent":"049f056e7711a0885eef3b90d14865cde92f5a8eb25d06f942677d8ec5fd2c03"}'}, {'v1Compatibility': '{"id":"049f056e7711a0885eef3b90d14865cde92f5a8eb25d06f942677d8ec5fd2c03","created":"2021-06-23T07:10:47.553142365Z","Cmd":{"container_config":"/bin/sh -c #(nop)  ENV GOSU_VERSION=1.12"},"parent":"616e36364a2c5b04a81ccfd773bb7a16ebcd30db7bd763dc9d15a89886e7943c","throwaway":true}'}, {'v1Compatibility': '{"id":"616e36364a2c5b04a81ccfd773bb7a16ebcd30db7bd763dc9d15a89886e7943c","created":"2021-06-23T07:10:47.214177509Z","Cmd":{"container_config":"/bin/sh -c apt-get update && apt-get install -y --no-install-recommends gnupg dirmngr && rm -rf /var/lib/apt/lists/*"},"parent":"60de9cde4ab09362c924dea1d7b2fd6ffd062095669c8d08a8b854a49c309067"}'}, {'v1Compatibility': '{"id":"60de9cde4ab09362c924dea1d7b2fd6ffd062095669c8d08a8b854a49c309067","created":"2021-06-23T07:10:38.056755022Z","Cmd":{"container_config":"/bin/sh -c groupadd -r mysql && useradd -r -g mysql mysql"},"parent":"12a8ff680cdd23d5466f2ab35c54181d6ad43ae0b3ac615f1e308f249b221a14"}'}, {'v1Compatibility': '{"id":"12a8ff680cdd23d5466f2ab35c54181d6ad43ae0b3ac615f1e308f249b221a14","created":"2021-06-23T00:20:40.842961608Z","Cmd":{"container_config":"/bin/sh -c #(nop)  CMD [\\"bash\\"]"},"parent":"90e0a82d8ca56f5fa8d75ee5def8923d2c6f2b547a544958d7e71fc487f858b1","throwaway":true}'}, {'v1Compatibility': '{"id":"90e0a82d8ca56f5fa8d75ee5def8923d2c6f2b547a544958d7e71fc487f858b1","created":"2021-06-23T00:20:40.386610922Z","Cmd":{"container_config":"/bin/sh -c #(nop) ADD file:4903a19c327468b0e08e4f463cfc162c66b85b4618b5803d71365862f6302e0b in / "}}'}]}
+DEBUG 21-08-04 14:54:58 25528: manifest: {'schemaVersion': 1, 'name': 'mysql', 'tag': 'mysql_tag2', 'architecture': 'amd64', 'fsLayers': [{'blobSum': 'sha256:a3ed95caeb02ffe68cdd9fd84406680ae93d633cb16422d00e8a7c22955b46d4'}, {'blobSum': 'sha256:a3ed95caeb02ffe68cdd9fd84406680ae93d633cb16422d00e8a7c22955b46d4'}, {'blobSum': 'sha256:a3ed95caeb02ffe68cdd9fd84406680ae93d633cb16422d00e8a7c22955b46d4'}, {'blobSum': 'sha256:2f40c47d0626e1a6f39b08da49fab43d8e392206a15e9952e3e4e87dcbbbf667'}, {'blobSum': 'sha256:165d1d10a3fa620f7174db4439831e2e36e18f686c1adf80ccba1550dec2041a'}, {'blobSum': 'sha256:71d327c6bb78193040178c6de8220df0d42f890e94efe76f2a8f2921ec9fd0c2'}, {'blobSum': 'sha256:a3ed95caeb02ffe68cdd9fd84406680ae93d633cb16422d00e8a7c22955b46d4'}, {'blobSum': 'sha256:ad042b682e0f0e2ef85b6822e1d40965a0018fb789e155b4f021193df776601a'}, {'blobSum': 'sha256:9ecc8abdb7f584bbbd11e6b16bf632440c4bc64cf9cccac3ee8202fcf17742d7'}, {'blobSum': 'sha256:a3ed95caeb02ffe68cdd9fd84406680ae93d633cb16422d00e8a7c22955b46d4'}, {'blobSum': 'sha256:a3ed95caeb02ffe68cdd9fd84406680ae93d633cb16422d00e8a7c22955b46d4'}, {'blobSum': 'sha256:32ca814c833fbe8adec28e15d739dba772d7259021235b861fb854e8f329fb1c'}, {'blobSum': 'sha256:aa18e05cc46d159c053ebf379685cef648b64d4bb39a4fa76dc7c8a6fadad89a'}, {'blobSum': 'sha256:d0cbe54c88555c61f35df860e431717e56b7198eb3a9fa642d14ea6e94dc6edc'}, {'blobSum': 'sha256:5240460060374bac3b015544387eba2355e7b003da15c162e7166984437c31d7'}, {'blobSum': 'sha256:a3ed95caeb02ffe68cdd9fd84406680ae93d633cb16422d00e8a7c22955b46d4'}, {'blobSum': 'sha256:578fafb77ab871790dd20afa25cea55309e5862a43eb6fdca5f3c1387ab7b833'}, {'blobSum': 'sha256:a462b60610f5b230bfc054037dcc15dfbd114bc91472a819ac5b4049cb7f030c'}, {'blobSum': 'sha256:a3ed95caeb02ffe68cdd9fd84406680ae93d633cb16422d00e8a7c22955b46d4'}, {'blobSum': 'sha256:b4d181a07f8025e00e0cb28f1cc14613da2ce26450b80c54aea537fa93cf3bda'}], 'history': [{'v1Compatibility': '{"created":"2021-06-23T07:11:48.017513581Z","docker_version":"19.03.12","architecture":"amd64","config":{"Hostname":"","Domainname":"","User":"","AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"ExposedPorts":{"3306/tcp":{},"33060/tcp":{}},"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","GOSU_VERSION=1.12","MYSQL_MAJOR=8.0","MYSQL_VERSION=8.0.25-1debian10"],"Cmd":["mysqld"],"Image":"sha256:53c3852cdabcaf371d4a280ac6851c0e5cf8c9bf4431424ada7ce8b80c6c2da6","Volumes":{"/var/lib/mysql":{}},"WorkingDir":"","Entrypoint":["docker-entrypoint.sh"],"OnBuild":null,"Labels":null},"container":"ca3f0287d432401060838047742b1e910517dab003a68810f0b4d2a75ec4bf49","os":"linux","container_config":{"Hostname":"ca3f0287d432","Domainname":"","User":"","AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"ExposedPorts":{"3306/tcp":{},"33060/tcp":{}},"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","GOSU_VERSION=1.12","MYSQL_MAJOR=8.0","MYSQL_VERSION=8.0.25-1debian10"],"Cmd":["/bin/sh","-c","#(nop) ","CMD [\\"mysqld\\"]"],"Image":"sha256:53c3852cdabcaf371d4a280ac6851c0e5cf8c9bf4431424ada7ce8b80c6c2da6","Volumes":{"/var/lib/mysql":{}},"WorkingDir":"","Entrypoint":["docker-entrypoint.sh"],"OnBuild":null,"Labels":{}},"id":"9917175858de7c245f1e85ab16e95da8da19fdc052b7a89d88905da7130b525a","parent":"4fbaca1ccb3d14864188569763f1b94717c3d40e1e40fdbf4c65bd24e26e0147"}'}, {'v1Compatibility': '{"id":"4fbaca1ccb3d14864188569763f1b94717c3d40e1e40fdbf4c65bd24e26e0147","created":"2021-06-23T07:11:47.795634283Z","Cmd":{"container_config":"/bin/sh -c #(nop)  EXPOSE 3306 33060"},"parent":"6882d4c1c9c124eb14287fbe00d243973a959a3ff38bb914a9965619b9254ae0","throwaway":true}'}, {'v1Compatibility': '{"id":"6882d4c1c9c124eb14287fbe00d243973a959a3ff38bb914a9965619b9254ae0","created":"2021-06-23T07:11:47.60431286Z","Cmd":{"container_config":"/bin/sh -c #(nop)  ENTRYPOINT [\\"docker-entrypoint.sh\\"]"},"parent":"fd9207e7e8e41e06e1a8306f1f18a112eff3c6a662b6587704f05bbe138717e0","throwaway":true}'}, {'v1Compatibility': '{"id":"fd9207e7e8e41e06e1a8306f1f18a112eff3c6a662b6587704f05bbe138717e0","created":"2021-06-23T07:11:47.407549607Z","Cmd":{"container_config":"/bin/sh -c ln -s usr/local/bin/docker-entrypoint.sh /entrypoint.sh # backwards compat"},"parent":"db6d6653c5ee8b2e5839b2565b199f724bd667426ecdc13c15b1566cb713553d"}'}, {'v1Compatibility': '{"id":"db6d6653c5ee8b2e5839b2565b199f724bd667426ecdc13c15b1566cb713553d","created":"2021-06-23T07:11:46.414837447Z","Cmd":{"container_config":"/bin/sh -c #(nop) COPY file:345a22fe55d3e6783a17075612415413487e7dba27fbf1000a67c7870364b739 in /usr/local/bin/ "},"parent":"639c99ec65444016ee89c79865ceb9fbd7ec3d2ddcd1cc52989a49500a058389"}'}, {'v1Compatibility': '{"id":"639c99ec65444016ee89c79865ceb9fbd7ec3d2ddcd1cc52989a49500a058389","created":"2021-06-23T07:11:46.207917447Z","Cmd":{"container_config":"/bin/sh -c #(nop) COPY dir:2e040acc386ebd23b8571951a51e6cb93647df091bc26159b8c757ef82b3fcda in /etc/mysql/ "},"parent":"a0d12a14e298b0699b31603ef048f6dca4b1fded566b089d7627b7b2dc5da4e3"}'}, {'v1Compatibility': '{"id":"a0d12a14e298b0699b31603ef048f6dca4b1fded566b089d7627b7b2dc5da4e3","created":"2021-06-23T07:11:45.98912097Z","Cmd":{"container_config":"/bin/sh -c #(nop)  VOLUME [/var/lib/mysql]"},"parent":"03500aba8dd97f6cd648fd387d7a90fe549bb5cd3953d024316529a02672c268","throwaway":true}'}, {'v1Compatibility': '{"id":"03500aba8dd97f6cd648fd387d7a90fe549bb5cd3953d024316529a02672c268","created":"2021-06-23T07:11:45.093581319Z","Cmd":{"container_config":"/bin/sh -c { \\t\\techo mysql-community-server mysql-community-server/data-dir select \'\'; \\t\\techo mysql-community-server mysql-community-server/root-pass password \'\'; \\t\\techo mysql-community-server mysql-community-server/re-root-pass password \'\'; \\t\\techo mysql-community-server mysql-community-server/remove-test-db select false; \\t} | debconf-set-selections \\t&& apt-get update \\t&& apt-get install -y \\t\\tmysql-community-client=\\"${MYSQL_VERSION}\\" \\t\\tmysql-community-server-core=\\"${MYSQL_VERSION}\\" \\t&& rm -rf /var/lib/apt/lists/* \\t&& rm -rf /var/lib/mysql && mkdir -p /var/lib/mysql /var/run/mysqld \\t&& chown -R mysql:mysql /var/lib/mysql /var/run/mysqld \\t&& chmod 1777 /var/run/mysqld /var/lib/mysql"},"parent":"14b8f4ddfa6d6f35f9f27564091c5ae97e66bdb5380d96c21e38408678f4e112"}'}, {'v1Compatibility': '{"id":"14b8f4ddfa6d6f35f9f27564091c5ae97e66bdb5380d96c21e38408678f4e112","created":"2021-06-23T07:11:24.95063233Z","Cmd":{"container_config":"/bin/sh -c echo \'deb http://repo.mysql.com/apt/debian/ buster mysql-8.0\' > /etc/apt/sources.list.d/mysql.list"},"parent":"c3d451b7d6d7d1c69aef9fa8e381cdfa001cb14e64052248638c1f28b60050d2"}'}, {'v1Compatibility': '{"id":"c3d451b7d6d7d1c69aef9fa8e381cdfa001cb14e64052248638c1f28b60050d2","created":"2021-06-23T07:11:23.111795942Z","Cmd":{"container_config":"/bin/sh -c #(nop)  ENV MYSQL_VERSION=8.0.25-1debian10"},"parent":"34fcd64c5d8b1f84c5a3424a8ebdd91bcbf35124c60e2512f2bdde0167eb9d00","throwaway":true}'}, {'v1Compatibility': '{"id":"34fcd64c5d8b1f84c5a3424a8ebdd91bcbf35124c60e2512f2bdde0167eb9d00","created":"2021-06-23T07:11:22.805086851Z","Cmd":{"container_config":"/bin/sh -c #(nop)  ENV MYSQL_MAJOR=8.0"},"parent":"1943d241d22a6c94ede919bfea988449b8713d87d2ae0fb754d3454968d8b51d","throwaway":true}'}, {'v1Compatibility': '{"id":"1943d241d22a6c94ede919bfea988449b8713d87d2ae0fb754d3454968d8b51d","created":"2021-06-23T07:11:22.487564627Z","Cmd":{"container_config":"/bin/sh -c set -ex; \\tkey=\'A4A9406876FCBD3C456770C88C718D3B5072E1F5\'; \\texport GNUPGHOME=\\"$(mktemp -d)\\"; \\tgpg --batch --keyserver ha.pool.sks-keyservers.net --recv-keys \\"$key\\"; \\tgpg --batch --export \\"$key\\" > /etc/apt/trusted.gpg.d/mysql.gpg; \\tgpgconf --kill all; \\trm -rf \\"$GNUPGHOME\\"; \\tapt-key list > /dev/null"},"parent":"dc643e6738c9cb3885be39c5153ab470eed19ffd78f1b3612e21df5a6d51835d"}'}, {'v1Compatibility': '{"id":"dc643e6738c9cb3885be39c5153ab470eed19ffd78f1b3612e21df5a6d51835d","created":"2021-06-23T07:11:18.147877794Z","Cmd":{"container_config":"/bin/sh -c apt-get update && apt-get install -y --no-install-recommends \\t\\tpwgen \\t\\topenssl \\t\\tperl \\t\\txz-utils \\t&& rm -rf /var/lib/apt/lists/*"},"parent":"dc0c3301d58196d3d6b0d3a988eae1fd281940701b3af654ae1f607da3c5c57f"}'}, {'v1Compatibility': '{"id":"dc0c3301d58196d3d6b0d3a988eae1fd281940701b3af654ae1f607da3c5c57f","created":"2021-06-23T07:11:07.773439724Z","Cmd":{"container_config":"/bin/sh -c mkdir /docker-entrypoint-initdb.d"},"parent":"925968450ce86b51a6f17bb7bb4bbbcbe591b42dc252297c1e0fca15c2f9e992"}'}, {'v1Compatibility': '{"id":"925968450ce86b51a6f17bb7bb4bbbcbe591b42dc252297c1e0fca15c2f9e992","created":"2021-06-23T07:11:06.160624679Z","Cmd":{"container_config":"/bin/sh -c set -eux; \\tsavedAptMark=\\"$(apt-mark showmanual)\\"; \\tapt-get update; \\tapt-get install -y --no-install-recommends ca-certificates wget; \\trm -rf /var/lib/apt/lists/*; \\tdpkgArch=\\"$(dpkg --print-architecture | awk -F- \'{ print $NF }\')\\"; \\twget -O /usr/local/bin/gosu \\"https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$dpkgArch\\"; \\twget -O /usr/local/bin/gosu.asc \\"https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$dpkgArch.asc\\"; \\texport GNUPGHOME=\\"$(mktemp -d)\\"; \\tgpg --batch --keyserver hkps://keys.openpgp.org --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4; \\tgpg --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu; \\tgpgconf --kill all; \\trm -rf \\"$GNUPGHOME\\" /usr/local/bin/gosu.asc; \\tapt-mark auto \'.*\' > /dev/null; \\t[ -z \\"$savedAptMark\\" ] || apt-mark manual $savedAptMark > /dev/null; \\tapt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \\tchmod +x /usr/local/bin/gosu; \\tgosu --version; \\tgosu nobody true"},"parent":"049f056e7711a0885eef3b90d14865cde92f5a8eb25d06f942677d8ec5fd2c03"}'}, {'v1Compatibility': '{"id":"049f056e7711a0885eef3b90d14865cde92f5a8eb25d06f942677d8ec5fd2c03","created":"2021-06-23T07:10:47.553142365Z","Cmd":{"container_config":"/bin/sh -c #(nop)  ENV GOSU_VERSION=1.12"},"parent":"616e36364a2c5b04a81ccfd773bb7a16ebcd30db7bd763dc9d15a89886e7943c","throwaway":true}'}, {'v1Compatibility': '{"id":"616e36364a2c5b04a81ccfd773bb7a16ebcd30db7bd763dc9d15a89886e7943c","created":"2021-06-23T07:10:47.214177509Z","Cmd":{"container_config":"/bin/sh -c apt-get update && apt-get install -y --no-install-recommends gnupg dirmngr && rm -rf /var/lib/apt/lists/*"},"parent":"60de9cde4ab09362c924dea1d7b2fd6ffd062095669c8d08a8b854a49c309067"}'}, {'v1Compatibility': '{"id":"60de9cde4ab09362c924dea1d7b2fd6ffd062095669c8d08a8b854a49c309067","created":"2021-06-23T07:10:38.056755022Z","Cmd":{"container_config":"/bin/sh -c groupadd -r mysql && useradd -r -g mysql mysql"},"parent":"12a8ff680cdd23d5466f2ab35c54181d6ad43ae0b3ac615f1e308f249b221a14"}'}, {'v1Compatibility': '{"id":"12a8ff680cdd23d5466f2ab35c54181d6ad43ae0b3ac615f1e308f249b221a14","created":"2021-06-23T00:20:40.842961608Z","Cmd":{"container_config":"/bin/sh -c #(nop)  CMD [\\"bash\\"]"},"parent":"90e0a82d8ca56f5fa8d75ee5def8923d2c6f2b547a544958d7e71fc487f858b1","throwaway":true}'}, {'v1Compatibility': '{"id":"90e0a82d8ca56f5fa8d75ee5def8923d2c6f2b547a544958d7e71fc487f858b1","created":"2021-06-23T00:20:40.386610922Z","Cmd":{"container_config":"/bin/sh -c #(nop) ADD file:4903a19c327468b0e08e4f463cfc162c66b85b4618b5803d71365862f6302e0b in / "}}'}]}
+DEBUG 21-08-04 14:54:58 25528: Calling Nexus URL: http://18.118.119.71:8081/service/rest/beta/repositories
+DEBUG 21-08-04 14:54:58 25528: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 14:54:59 25528: http://18.118.119.71:8081 "GET /service/rest/beta/repositories HTTP/1.1" 200 3947
+DEBUG 21-08-04 14:54:59 25528: Returned value: [{'name': 'nuget-group', 'format': 'nuget', 'url': 'http://18.118.119.71:8081/repository/nuget-group', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': True}, 'group': {'memberNames': ['nuget-hosted', 'nuget.org-proxy']}, 'type': 'group'}, {'name': 'maven-snapshots', 'url': 'http://18.118.119.71:8081/repository/maven-snapshots', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': False, 'writePolicy': 'ALLOW'}, 'cleanup': None, 'maven': {'versionPolicy': 'SNAPSHOT', 'layoutPolicy': 'STRICT'}, 'format': 'maven2', 'type': 'hosted'}, {'name': 'maven-central', 'url': 'http://18.118.119.71:8081/repository/maven-central', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': False, 'writePolicy': 'ALLOW'}, 'cleanup': None, 'proxy': {'remoteUrl': 'https://repo1.maven.org/maven2/', 'contentMaxAge': -1, 'metadataMaxAge': 1440}, 'negativeCache': {'enabled': True, 'timeToLive': 1440}, 'httpClient': {'blocked': False, 'autoBlock': False, 'connection': {'retries': None, 'userAgentSuffix': None, 'timeout': None, 'enableCircularRedirects': False, 'enableCookies': False}, 'authentication': None}, 'routingRuleName': None, 'maven': {'versionPolicy': 'RELEASE', 'layoutPolicy': 'PERMISSIVE'}, 'format': 'maven2', 'type': 'proxy'}, {'name': 'nuget.org-proxy', 'url': 'http://18.118.119.71:8081/repository/nuget.org-proxy', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': True, 'writePolicy': 'ALLOW'}, 'cleanup': None, 'proxy': {'remoteUrl': 'https://www.nuget.org/api/v2/', 'contentMaxAge': 1440, 'metadataMaxAge': 1440}, 'negativeCache': {'enabled': True, 'timeToLive': 1440}, 'httpClient': {'blocked': False, 'autoBlock': False, 'connection': {'retries': None, 'userAgentSuffix': None, 'timeout': None, 'enableCircularRedirects': False, 'enableCookies': False}, 'authentication': None}, 'routingRuleName': None, 'nugetProxy': {'queryCacheItemMaxAge': None}, 'format': 'nuget', 'type': 'proxy'}, {'name': 'maven-releases', 'url': 'http://18.118.119.71:8081/repository/maven-releases', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': False, 'writePolicy': 'ALLOW_ONCE'}, 'cleanup': None, 'maven': {'versionPolicy': 'RELEASE', 'layoutPolicy': 'STRICT'}, 'format': 'maven2', 'type': 'hosted'}, {'name': 'docker-hosted', 'url': 'http://18.118.119.71:8081/repository/docker-hosted', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': True, 'writePolicy': 'ALLOW'}, 'cleanup': None, 'docker': {'v1Enabled': False, 'forceBasicAuth': True, 'httpPort': 18442, 'httpsPort': 28442}, 'format': 'docker', 'type': 'hosted'}, {'name': 'nuget-hosted', 'format': 'nuget', 'url': 'http://18.118.119.71:8081/repository/nuget-hosted', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': True, 'writePolicy': 'ALLOW'}, 'cleanup': None, 'type': 'hosted'}, {'name': 'maven-public', 'format': 'maven2', 'url': 'http://18.118.119.71:8081/repository/maven-public', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': True}, 'group': {'memberNames': ['maven-releases', 'maven-snapshots', 'maven-central']}, 'type': 'group'}]
+DEBUG 21-08-04 14:54:59 25528: Repositories found: dict_keys(['nuget-group', 'maven-snapshots', 'maven-central', 'nuget.org-proxy', 'maven-releases', 'docker-hosted', 'nuget-hosted', 'maven-public'])
+DEBUG 21-08-04 14:54:59 25528: Repository data: {'name': 'docker-hosted', 'url': 'http://18.118.119.71:8081/repository/docker-hosted', 'online': True, 'storage': {'blobStoreName': 'default', 'strictContentTypeValidation': True, 'writePolicy': 'ALLOW'}, 'cleanup': None, 'docker': {'v1Enabled': False, 'forceBasicAuth': True, 'httpPort': 18442, 'httpsPort': 28442}, 'format': 'docker', 'type': 'hosted'}
+DEBUG 21-08-04 14:54:59 25528: Returned docker repo URL: 18.118.119.71:18442
+INFO 21-08-04 14:54:59 25528: Pulling Docker image: 18.118.119.71:18442/mysql:mysql_tag2
+DEBUG 21-08-04 14:54:59 25528: Trying paths: ['C:\\Users\\OzTamari\\.docker\\config.json', 'C:\\Users\\OzTamari\\.dockercfg']
+DEBUG 21-08-04 14:54:59 25528: Found file at path: C:\Users\OzTamari\.docker\config.json
+DEBUG 21-08-04 14:54:59 25528: Found 'auths' section
+DEBUG 21-08-04 14:54:59 25528: Auth data for 18.118.20.105:18442 is absent. Client might be using a credentials store instead.
+DEBUG 21-08-04 14:54:59 25528: Auth data for 18.118.20.105:18444 is absent. Client might be using a credentials store instead.
+DEBUG 21-08-04 14:54:59 25528: Auth data for 18.118.20.105:28442 is absent. Client might be using a credentials store instead.
+DEBUG 21-08-04 14:54:59 25528: Auth data for 18.118.20.105:28444 is absent. Client might be using a credentials store instead.
+DEBUG 21-08-04 14:54:59 25528: Auth data for 52.14.229.244:18141 is absent. Client might be using a credentials store instead.
+DEBUG 21-08-04 14:54:59 25528: Auth data for 52.14.229.244:18143 is absent. Client might be using a credentials store instead.
+DEBUG 21-08-04 14:54:59 25528: Found 'credsStore' section
+DEBUG 21-08-04 14:54:59 25528: http://localhost:None "GET /version HTTP/1.1" 200 None
+DEBUG 21-08-04 14:54:59 25528: Using credentials store "desktop"
+DEBUG 21-08-04 14:54:59 25528: Looking for auth entry for '18.118.119.71:18442'
+DEBUG 21-08-04 14:54:59 25528: No entry found
+DEBUG 21-08-04 14:54:59 25528: No entry in credstore - fetching from auth dict
+DEBUG 21-08-04 14:54:59 25528: Looking for auth entry for '18.118.119.71:18442'
+DEBUG 21-08-04 14:54:59 25528: No entry found
+DEBUG 21-08-04 14:55:00 25528: http://localhost:None "POST /v1.41/auth HTTP/1.1" 200 None
+DEBUG 21-08-04 14:55:00 25528: Looking for auth config
+DEBUG 21-08-04 14:55:00 25528: Using credentials store "desktop"
+DEBUG 21-08-04 14:55:00 25528: Looking for auth entry for '18.118.119.71:18442'
+DEBUG 21-08-04 14:55:00 25528: No entry found
+DEBUG 21-08-04 14:55:00 25528: No entry in credstore - fetching from auth dict
+DEBUG 21-08-04 14:55:00 25528: Looking for auth entry for '18.118.119.71:18442'
+DEBUG 21-08-04 14:55:00 25528: Found '18.118.119.71:18442'
+DEBUG 21-08-04 14:55:00 25528: Found auth config
+DEBUG 21-08-04 14:55:01 25528: http://localhost:None "POST /v1.41/images/create?tag=mysql_tag2&fromImage=18.118.119.71%3A18442%2Fmysql HTTP/1.1" 200 None
+DEBUG 21-08-04 14:55:01 25528: http://localhost:None "GET /v1.41/images/18.118.119.71:18442/mysql:mysql_tag2/json HTTP/1.1" 200 None
+DEBUG 21-08-04 14:55:01 25528: Image ID: 5c62e459e087 successfully pulled
+INFO 21-08-04 14:55:01 12012: Found 2 Docker images
+INFO 21-08-04 14:55:01 12012:  -- > 
+INFO 21-08-04 14:55:01 12012: Repository: nuget-hosted
+INFO 21-08-04 14:55:01 12012: Validate artifact list
+DEBUG 21-08-04 14:55:01 12012: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 14:55:01 12012: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=nuget-hosted HTTP/1.1" 200 49
+INFO 21-08-04 14:55:01 12012: No artifacts found in nuget-hosted
+INFO 21-08-04 14:55:01 12012:  -- > 
+INFO 21-08-04 14:55:01 12012: Repository: maven-public
+INFO 21-08-04 14:55:01 12012: Validate artifact list
+DEBUG 21-08-04 14:55:01 12012: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 14:55:01 12012: http://18.118.119.71:8081 "GET /service/rest/v1/components?repository=maven-public HTTP/1.1" 200 5511
+INFO 21-08-04 14:55:01 12012: Retrieving artifacts...
+DEBUG 21-08-04 14:55:02 23020: Handling component ID: bWF2ZW4tcHVibGljOjkzYjliOWViOWE3ZWNiMDY0NTkxYzE3OTk4OTg1ODgz on repository: maven-public Format: maven2
+DEBUG 21-08-04 14:55:02 23020: Handling component ID: bWF2ZW4tcHVibGljOjcxYWZlYTU0MGUyM2RkZTViMmQ4NGY3ZmE4MDk5MTM3 on repository: maven-public Format: maven2
+DEBUG 21-08-04 14:55:02 23020: Handling component ID: bWF2ZW4tcHVibGljOjcxYWZlYTU0MGUyM2RkZTVlZDdmNGY3NmE3YmQ3ZjNk on repository: maven-public Format: maven2
+INFO 21-08-04 14:55:02 23020: Downloading plexus-utils-1.4.5.jar component from maven-public
+DEBUG 21-08-04 14:55:02 23020: Calling Nexus URL: http://18.118.119.71:8081/repository/maven-public/org/codehaus/plexus/plexus-utils/1.4.5/plexus-utils-1.4.5.jar
+DEBUG 21-08-04 14:55:02 23020: Starting new HTTP connection (1): 18.118.119.71:8081
+DEBUG 21-08-04 14:55:02 23020: http://18.118.119.71:8081 "GET /repository/maven-public/org/codehaus/plexus/plexus-utils/1.4.5/plexus-utils-1.4.5.jar HTTP/1.1" 200 205043
+DEBUG 21-08-04 14:55:03 23020: Download URL: http://18.118.119.71:8081/repository/maven-public/org/codehaus/plexus/plexus-utils/1.4.5/plexus-utils-1.4.5.jar
+INFO 21-08-04 14:55:03 23020: Component plexus-utils-1.4.5.jar has successfully downloaded
+INFO 21-08-04 14:55:03 12012:  -- > 
+INFO 21-08-04 14:55:03 12012: Starting WhiteSource scan
