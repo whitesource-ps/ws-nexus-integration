@@ -42,6 +42,7 @@ SUPPORTED_FORMATS = {'maven2', 'npm', 'pypi', 'rubygems', 'nuget', 'raw', 'docke
 DOCKER_TIMEOUT = 600
 VER_3_26 = ["3", "26"]
 LOG_LEVEL = logging.DEBUG if os.environ.get("DEBUG") else logging.INFO
+UA_OFFLINE_MODE = 'true' if os.environ.get("DEBUG") else 'false'
 
 config = None
 
@@ -84,7 +85,7 @@ class Configuration:
                                             'WS_INCLUDES': '**/*.*',
                                             'WS_CHECKPOLICIES': self.policies,
                                             'WS_FORCECHECKALLDEPENDENCIES': self.policies,
-                                            'WS_OFFLINE': 'false'}}
+                                            'WS_OFFLINE': UA_OFFLINE_MODE}}
         self.nexus_ip = self.nexus_base_url.split('//')[1].split(':')[0]
 
         # Validation authentication details
@@ -446,6 +447,7 @@ def handle_docker_repo(component: dict, conf) -> str:
         return r_url
 
     dl_url = component['assets'][0]["downloadUrl"]
+    logging.debug(f"Component repository: {component['repository']}")
     logging.debug(f"Getting manifest file from: {dl_url}")
     manifest_resp = requests.get(dl_url, headers=conf.headers)
     manifest = json.loads(manifest_resp.text)
