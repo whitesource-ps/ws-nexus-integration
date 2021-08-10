@@ -1,21 +1,21 @@
 #!/usr/bin/env python3
 import base64
-from distutils.dir_util import copy_tree, remove_tree
 import glob
 import json
 import logging
-import pathlib
-import shutil
-import sys
-import subprocess
 import os
+import pathlib
+import re
+import shutil
+import subprocess
+import sys
 from configparser import ConfigParser
+from distutils.dir_util import copy_tree, remove_tree
 from multiprocessing import Pool, Manager
 from typing import Union
 from urllib.parse import urlparse
 
 import requests
-import re
 
 # constants
 BASIC_AUTH_DELIMITER = ':'
@@ -62,6 +62,7 @@ class Configuration:
         conf.read(conf_file)
         # Nexus Settings
         self.nexus_base_url = conf.get('Nexus Settings', 'NexusBaseUrl', fallback='http://localhost:8081').strip('/')
+        self.nexus_alt_docker_registry_address = conf.get('Nexus Settings', 'NexusAltDockerRegistryAddress', fallback=None)
         self.nexus_auth_token = conf.get('Nexus Settings', 'NexusAuthToken')
         self.nexus_user = conf.get('Nexus Settings', 'NexusUser')
         self.nexus_password = conf.get('Nexus Settings', 'NexusPassword')
@@ -401,7 +402,7 @@ def download_components_from_repositories(selected_repositories, nexus_api_url_c
                 docker_images.add(docker_images_q.get(block=True, timeout=0.05))
 
             if docker_images:
-                logging.info(f"Found {len(docker_images)} Docker images")
+                logging.info(f"Found total {len(docker_images)} docker images")
                 config.ws_env_var['WS_DOCKER_SCANIMAGES'] = 'True'
                 config.ws_env_var['WS_DOCKER_INCLUDES'] = ",".join(docker_images)
             logging.info(' -- > ')
@@ -436,10 +437,11 @@ def handle_docker_repo(component: dict, conf) -> str:
         :rtype: dict
         """
         repos_list = call_nexus_api(conf.nexus_base_url + conf.resources_url, c.headers)
+        logging.debug(f"found {len(repos_list)} repositories")
         repo_dict = {}
         for r in repos_list:
             repo_dict[r['name']] = r
-        logging.debug(f"Repositories found: {repo_dict.keys()}")
+        logging.debug(f"Repositories found: {repo_dict}")
 
         return repo_dict
 
@@ -472,9 +474,16 @@ def handle_docker_repo(component: dict, conf) -> str:
 
     import docker
     repo = repos[component['repository']]
-    if repo:
+    ret = None
+
+    if conf.nexus_alt_docker_registry_address:
+        docker_repo_url = conf.nexus_alt_docker_registry_address
+        logging.info(f"Using user-defined docker registry URL: {docker_repo_url}")
+    elif repo:
         logging.debug(f"Repository data: {repo}")
         docker_repo_url = get_docker_repo_url(repo)
+
+    if docker_repo_url:
         image_name = f"{docker_repo_url}/{manifest['name']}:{manifest['tag']}"
         logging.info(f"Pulling Docker image: {image_name}")
         try:
