@@ -44,6 +44,9 @@ for the installation and the execution (`pip3` and `python3` respectively)
 -------------------------------------------------------------------------------------------------------------------
 | Nexus Settings       | InteractiveMode   | When set to True, a list of repository names will be displayed and   |
 |                      |                   | you will be prompted to select the ones you wish to scan             |
+-------------------------------------------------------------------------------------------------------------------
+| Nexus Settings       | NexusAltDocker    | Allow specifying sepcific registry URL (host:port) to download docker|
+|                      | RegistryAddress   | images (i.e when registry is under NAT due to Nexus K8S deployment)  |
 ===================================================================================================================
 | WhiteSource Settings | WSApiKey          | WhiteSource API Key. Can be found under the 'Integrate' tab in your  |
 |                      |                   | WhiteSource organization.                                            |
