@@ -1,7 +1,7 @@
-![Logo](https://whitesource-resources.s3.amazonaws.com/ws-sig-images/Whitesource_Logo_178x44.png)  
+![Logo](https://whitesource-resources.s3.amazonaws.com/ws-sig-images/Whitesource_Logo_178x44.png)
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-yellowgreen.svg)](https://opensource.org/licenses/Apache-2.0)
-[![GitHub release](https://img.shields.io/github/v/release/whitesource-ps/whitesource-nexus-integration)](https://github.com/whitesource-ps/whitesource-nexus-integration/releases/latest) 
+[![GitHub release](https://img.shields.io/github/v/release/whitesource-ps/whitesource-nexus-integration)](https://github.com/whitesource-ps/whitesource-nexus-integration/releases/latest)
 [![WS Nexus Integration Build and Publish](https://github.com/whitesource-ps/whitesource-nexus-integration/actions/workflows/ci.yml/badge.svg)](https://github.com/whitesource-ps/whitesource-nexus-integration/actions/workflows/ci.yml)
 [![Python 3.6](https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Blue_Python_3.6%2B_Shield_Badge.svg/86px-Blue_Python_3.6%2B_Shield_Badge.svg.png)](https://www.python.org/downloads/release/python-360/)
 
@@ -12,7 +12,7 @@ Supported formats: `maven2`, `npm`, `pypi`, `rubygems`, `nuget`, `docker` and `r
 
 ### Prerequisites
 - Nexus Repository Manager 3.x (any edition)
-- Java VM > 8 
+- Java VM > 8
 - Docker
 - Python 3.5 or above
 
@@ -44,6 +44,9 @@ for the installation and the execution (`pip3` and `python3` respectively)
 -------------------------------------------------------------------------------------------------------------------
 | Nexus Settings       | InteractiveMode   | When set to True, a list of repository names will be displayed and   |
 |                      |                   | you will be prompted to select the ones you wish to scan             |
+-------------------------------------------------------------------------------------------------------------------
+| Nexus Settings       | NexusAltDocker    | Allow specifying sepcific registry URL (host:port) to download docker|
+|                      | RegistryAddress   | images (i.e when registry is under NAT due to Nexus K8S deployment)  |
 ===================================================================================================================
 | WhiteSource Settings | WSApiKey          | WhiteSource API Key. Can be found under the 'Integrate' tab in your  |
 |                      |                   | WhiteSource organization.                                            |
