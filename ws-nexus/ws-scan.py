@@ -467,6 +467,7 @@ def handle_docker_repo(component: dict, conf) -> str:
     logging.debug(f"Component repository: {component['repository']}")
     logging.debug(f"Getting manifest file from: {dl_url}")
     manifest = call_nexus_api(dl_url, conf.headers)
+    logging.debug(f"manifest: {manifest}")
     repos = get_repos_as_dict(conf)
 
     import docker
