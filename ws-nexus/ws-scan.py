@@ -42,14 +42,13 @@ APP_EU_URL = 'https://app-eu.whitesourcesoftware.com/agent'
 SUPPORTED_FORMATS = {'maven2', 'npm', 'pypi', 'rubygems', 'nuget', 'raw', 'docker'}
 DOCKER_TIMEOUT = 600
 VER_3_26 = ["3", "26"]
-LOG_LEVEL = logging.DEBUG if os.environ.get("DEBUG") else logging.INFO
-UA_OFFLINE_MODE = 'true' if os.environ.get("DEBUG") else 'false'
+UA_OFFLINE_MODE = 'true' if os.environ.get("OFFLINE") else 'false'
 
 config = None
 
 if not os.path.exists(LOG_DIR):
     os.mkdir(LOG_DIR)
-logging.basicConfig(level=LOG_LEVEL,
+logging.basicConfig(level=logging.DEBUG if os.environ.get("DEBUG") else logging.INFO,
                     handlers=[logging.StreamHandler(stream=sys.stdout), logging.FileHandler(LOG_FILE_WITH_PATH)],
                     format='%(levelname)s %(asctime)s %(process)s: %(message)s',
                     datefmt='%y-%m-%d %H:%M:%S')
@@ -416,7 +415,7 @@ def call_nexus_api(url: str, headers: dict) -> Union[dict, bytes]:
         logging.exception(f"Received Error on endpoint: {url}")
     try:
         ret = json.loads(resp.text)
-        logging.debug(f"Returned value: {ret}")
+        # logging.debug(f"Returned value: {ret}")
     except json.decoder.JSONDecodeError:
         ret = resp.content
 
@@ -441,7 +440,6 @@ def handle_docker_repo(component: dict, conf) -> str:
         repo_dict = {}
         for r in repos_list:
             repo_dict[r['name']] = r
-        logging.debug(f"Repositories found: {repo_dict}")
 
         return repo_dict
 
@@ -469,11 +467,11 @@ def handle_docker_repo(component: dict, conf) -> str:
     logging.debug(f"Component repository: {component['repository']}")
     logging.debug(f"Getting manifest file from: {dl_url}")
     manifest = call_nexus_api(dl_url, conf.headers)
-    logging.debug(f"manifest: {manifest}")
     repos = get_repos_as_dict(conf)
 
     import docker
-    repo = repos[component['repository']]
+    repo = repos.get(component['repository'])
+
     ret = None
 
     if conf.nexus_alt_docker_registry_address:

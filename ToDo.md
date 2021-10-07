@@ -1,3 +1,3 @@
 # To Do List
 - creating default config file if not exist
-- Add Nexus Version, metadata reading...
+- Move to a Docker image
