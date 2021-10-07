@@ -37,5 +37,20 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           allowUpdates: true
           artifacts: "*.zip"
-
+      - name: confluence-markdown-sync
+        uses: cupcakearmy/confluence-markdown-sync@v1     
+        with: 
+          from: README.md
+          to: 2313290408
+          cloud: whitesource
+          user: ${{ secrets.CONFLUENCE_USER }}
+          token: ${{ secrets.CONFLUENCE_TOKEN }}
+      - name: confluence-markdown-sync
+        uses: cupcakearmy/confluence-markdown-sync@v1     
+        with: 
+          from: README.md
+          to: 1782579576
+          cloud: whitesource
+          user: ${{ secrets.CONFLUENCE_USER }}
+          token: ${{ secrets.CONFLUENCE_TOKEN }}          
 
