@@ -42,7 +42,8 @@ APP_EU_URL = 'https://app-eu.whitesourcesoftware.com/agent'
 SUPPORTED_FORMATS = {'maven2', 'npm', 'pypi', 'rubygems', 'nuget', 'raw', 'docker'}
 DOCKER_TIMEOUT = 600
 VER_3_26 = ["3", "26"]
-UA_OFFLINE_MODE = 'true' if os.environ.get("DEBUG") else 'false'
+TOOL_DETAILS = f"ps-nexus-integration-{PACKAGE_VERSION}"
+UA_OFFLINE_MODE = 'true' if os.environ.get("OFFLINE") else 'false'
 
 config = None
 
@@ -88,7 +89,9 @@ class Configuration:
                                             'WS_INCLUDES': '**/*.*',
                                             'WS_CHECKPOLICIES': self.policies,
                                             'WS_FORCECHECKALLDEPENDENCIES': self.policies,
-                                            'WS_OFFLINE': UA_OFFLINE_MODE}}
+                                            'WS_OFFLINE': UA_OFFLINE_MODE,
+                                            'WS_SCANCOMMENT': TOOL_DETAILS}
+                           }
         self.nexus_ip = self.nexus_base_url.split('//')[1].split(':')[0]
 
         # Validation authentication details
@@ -96,7 +99,7 @@ class Configuration:
             logging.debug('Converting user and password to basic string')
             self.nexus_auth_token = convert_to_basic_string(self.nexus_user, self.nexus_password)
         elif self.nexus_auth_token:
-            logging.debug(f"Using configure Nexus token: {self.nexus_auth_token}")
+            logging.debug(f"Using configured Nexus token: {self.nexus_auth_token}")
         else:
             logging.error("Missing Nexus authentication. Configure username and password or Token")
             return
@@ -467,7 +470,6 @@ def handle_docker_repo(component: dict, conf) -> str:
     logging.debug(f"Component repository: {component['repository']}")
     logging.debug(f"Getting manifest file from: {dl_url}")
     manifest = call_nexus_api(dl_url, conf.headers)
-    logging.debug(f"manifest: {manifest}")
     repos = get_repos_as_dict(conf)
 
     import docker
