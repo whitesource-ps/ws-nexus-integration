@@ -14,13 +14,11 @@ from distutils.dir_util import copy_tree, remove_tree
 from multiprocessing import Pool, Manager
 from typing import Union
 from urllib.parse import urlparse
-
+from ws_nexus_integration._version import __version__, __tool_name__
 import requests
 
 # constants
 BASIC_AUTH_DELIMITER = ':'
-PACKAGE_NAME = 'wss-4-nexus'
-PACKAGE_VERSION = '2.2.0'
 LOG_DIR = 'logs'
 SCAN_DIR = '_wstemp'
 LOG_FILE_WITH_PATH = LOG_DIR + '/wss-scan.log'
@@ -42,7 +40,6 @@ APP_EU_URL = 'https://app-eu.whitesourcesoftware.com/agent'
 SUPPORTED_FORMATS = {'maven2', 'npm', 'pypi', 'rubygems', 'nuget', 'raw', 'docker'}
 DOCKER_TIMEOUT = 600
 VER_3_26 = ["3", "26"]
-TOOL_DETAILS = f"ps-nexus-integration-{PACKAGE_VERSION}"
 UA_OFFLINE_MODE = 'true' if os.environ.get("OFFLINE") else 'false'
 
 config = None
@@ -90,7 +87,7 @@ class Configuration:
                                             'WS_CHECKPOLICIES': self.policies,
                                             'WS_FORCECHECKALLDEPENDENCIES': self.policies,
                                             'WS_OFFLINE': UA_OFFLINE_MODE,
-                                            'WS_SCANCOMMENT': TOOL_DETAILS}
+                                            'WS_SCANCOMMENT': (f"ps-{__tool_name__.replace('_','-')}", __version__)}
                            }
         self.nexus_ip = self.nexus_base_url.split('//')[1].split(':')[0]
 
@@ -407,6 +404,10 @@ def download_components_from_repositories(selected_repositories, nexus_api_url_c
                 logging.info(f"Found total {len(docker_images)} docker images")
                 config.ws_env_var['WS_DOCKER_SCANIMAGES'] = 'True'
                 config.ws_env_var['WS_DOCKER_INCLUDES'] = ",".join(docker_images)
+                config.ws_env_var['WS_PROJECTPERFOLDER'] = 'False'
+                config.ws_env_var['WS_SCANPACKAGEMANAGER'] = 'True'
+                config.ws_env_var['WS_RESOLVEALLDEPENDENCIES'] = 'False'
+
             logging.info(' -- > ')
 
 

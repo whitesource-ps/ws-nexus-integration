@@ -1,5 +1,2 @@
-###### Requirements without Version Specifiers ######
 requests==2.26.0
 wget~=3.2
-docker[docker]~=5.0.0
-six[docker]~=1.16.0

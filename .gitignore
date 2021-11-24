@@ -24,3 +24,10 @@ local-env.*
 /ws-nexus/whitesource/
 /ws-nexus/ua/
 /ws-nexus/logs/
+/dist/
+/nexus_integration.egg-info/
+/build/
+/logs/
+/ws_nexus_integration.egg-info/
+/ws_nexus_integration/logs/
+/ws_nexus_integration/ua/
