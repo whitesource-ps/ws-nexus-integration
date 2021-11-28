@@ -27,7 +27,6 @@ jobs:
               echo "RELEASE=true" >> $GITHUB_ENV
             fi
           fi
-          echo "RELEASE_ZIP=$TOOL_NAME-$VERSION.zip" >> $GITHUB_ENV
       - uses: actions/checkout@v2
       - uses: UnicornGlobal/trufflehog-actions-scan@master
         with:
