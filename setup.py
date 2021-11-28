@@ -1,17 +1,19 @@
 import setuptools
 from ws_nexus_integration._version import __version__, __description__, __tool_name__
 
+ws_name = f"ws_{__tool_name__}"
+
 setuptools.setup(
-    name=f"ws_{__tool_name__}",
+    name=ws_name,
     entry_points={
         'console_scripts': [
-            f'{__tool_name__}=ws_{__tool_name__}.{__tool_name__}:main'
+            f'{ws_name}={ws_name}.{__tool_name__}:main'
         ]},
     version=__version__,
     author="WhiteSource Professional Services",
     author_email="ps@whitesourcesoftware.com",
     description=__description__,
-    url=f"https://github.com/whitesource-ps/ws-{__tool_name__.replace('_', '-')}",
+    url=f"https://github.com/whitesource-ps/{ws_name.replace('_', '-')}",
     license='LICENSE',
     packages=setuptools.find_packages(),
     python_requires='>=3.7',

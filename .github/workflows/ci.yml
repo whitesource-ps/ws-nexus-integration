@@ -11,7 +11,7 @@ jobs:
   build-and-publish:
     runs-on: ubuntu-latest
     env:
-      TOOL_NAME: nexus-integration
+      TOOL_NAME: nexus_integration
     strategy:
       matrix:
         python-version: [3.7, 3.8, 3.9]
@@ -79,7 +79,7 @@ jobs:
         with:
           files: requirements.txt LICENSE README.md CLA.md config/ ${{ env.TOOL_DIR }}/
           recursive: true
-          dest: ws-nexus.zip
+          dest: ws_${{ TOOL_NAME }}.zip
       - name: Create Release
         if: startsWith(github.ref, 'refs/tags/v')
         uses: ncipollo/release-action@v1
