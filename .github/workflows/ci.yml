@@ -27,7 +27,7 @@ jobs:
               echo "RELEASE=true" >> $GITHUB_ENV
             fi
           fi
-          echo RELEASE_ZIP=$TOOL_NAME-$VERSION.zip" >> $GITHUB_ENV
+          echo "RELEASE_ZIP=$TOOL_NAME-$VERSION.zip" >> $GITHUB_ENV
       - uses: actions/checkout@v2
       - uses: UnicornGlobal/trufflehog-actions-scan@master
         with:
@@ -79,7 +79,7 @@ jobs:
         with:
           files: requirements.txt LICENSE README.md CLA.md config/ ${{ env.TOOL_DIR }}/
           recursive: true
-          dest: ${{ RELEASE_ZIP }}
+          dest: ${{ env.TOOL_NAME }}.zip
       - name: Create Release
         if: startsWith(github.ref, 'refs/tags/v')
         uses: ncipollo/release-action@v1
