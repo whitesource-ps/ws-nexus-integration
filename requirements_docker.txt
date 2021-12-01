@@ -1,2 +1,0 @@
-docker[docker]~=5.0.0
-six[docker]~=1.16.0

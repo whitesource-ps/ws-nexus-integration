@@ -1,38 +1,25 @@
 #!/usr/bin/env python3
 import base64
-import glob
 import json
 import logging
 import os
-import pathlib
 import re
-import shutil
 import subprocess
 import sys
 from configparser import ConfigParser
-from distutils.dir_util import copy_tree, remove_tree
 from multiprocessing import Pool, Manager
 from typing import Union
 from urllib.parse import urlparse
 from ws_nexus_integration._version import __version__, __tool_name__
 import requests
 
+
 # constants
-BASIC_AUTH_DELIMITER = ':'
-LOG_DIR = 'logs'
-SCAN_DIR = '_wstemp'
-LOG_FILE_WITH_PATH = LOG_DIR + '/wss-scan.log'
 UA_NAME = 'wss-unified-agent'
 UA_JAR_NAME = UA_NAME + '.jar'
 UA_CONFIG_NAME = UA_NAME + '.config'
-WS_LOG_DIR = 'whitesource'
-UA_DIR = 'ua'
 URL_UA_JAR = 'https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar'
 URL_UA_CONFIG = "https://unified-agent.s3.amazonaws.com/wss-unified-agent.config"
-ERROR = 'error'
-SUCCESS = 'SUCCESS'
-FAILED = 'FAILED'
-JAR_EXTENSION = 'jar'
 SAAS_URL = 'https://saas.whitesourcesoftware.com/agent'
 SAAS_EU_URL = 'https://saas-eu.whitesourcesoftware.com/agent'
 APP_URL = 'https://app.whitesourcesoftware.com/agent'
@@ -44,40 +31,81 @@ UA_OFFLINE_MODE = 'true' if os.environ.get("OFFLINE") else 'false'
 
 config = None
 
-if not os.path.exists(LOG_DIR):
-    os.mkdir(LOG_DIR)
-logging.basicConfig(level=logging.DEBUG if os.environ.get("DEBUG") else logging.INFO,
-                    handlers=[logging.StreamHandler(stream=sys.stdout), logging.FileHandler(LOG_FILE_WITH_PATH)],
-                    format='%(levelname)s %(asctime)s %(process)s: %(message)s',
-                    datefmt='%y-%m-%d %H:%M:%S')
+logger = logging.getLogger(__name__)
+logger.setLevel(level=logging.DEBUG if os.environ.get("DEBUG") else logging.INFO)
+sysout_handler = logging.StreamHandler(stream=sys.stdout)
+sysout_handler.setFormatter(logging.Formatter(fmt='%(levelname)s %(asctime)s %(process)s: %(message)s',
+                                              datefmt='%y-%m-%d %H:%M:%S'))
+logger.addHandler(sysout_handler)
 
 
 class Configuration:
-    def __init__(self, conf_file):
+    def __init__(self, conf_file) -> str:
+        def convert_to_basic_string(user_name: str, password:str):
+            """
+            Encode username and password per RFC 7617
+            :param user_name:
+            :param password:
+            :return:
+            """
+            auth_string_plain = f"{user_name}:{password}"
+            basic_bytes = base64.b64encode(bytes(auth_string_plain, "utf-8"))
+            basic_string = str(basic_bytes)[2:-1]
+
+            return basic_string
+
+        def get_nexus_auth_token(nexus_user: str, nexus_password: str) -> str:
+            nexus_auth_token = conf.get('Nexus Settings', 'NexusAuthToken')
+            if nexus_auth_token:
+                logger.debug(f"Using Nexus authentication token")
+            else:
+                logger.debug('Converting user and password to basic string')
+                try:
+                    nexus_auth_token = convert_to_basic_string(nexus_user, nexus_password)
+                except KeyError:
+                    logger.error("Nexus username or password are missing from the configuration file")
+                    sys.exit(1)
+
+            return nexus_auth_token
+
+        def generate_dirs():
+            for k, v in self.__dict__.items():
+                if k.endswith("_dir") and not os.path.exists(v):
+                    logger.debug(f"Directory {v} does not exist and will be created")
+                    os.mkdir(v)
+
         conf = ConfigParser()
         conf.optionxform = str
         conf.read(conf_file)
         # Nexus Settings
         self.nexus_base_url = conf.get('Nexus Settings', 'NexusBaseUrl', fallback='http://localhost:8081').strip('/')
         self.nexus_alt_docker_registry_address = conf.get('Nexus Settings', 'NexusAltDockerRegistryAddress', fallback=None)
-        self.nexus_auth_token = conf.get('Nexus Settings', 'NexusAuthToken')
-        self.nexus_user = conf.get('Nexus Settings', 'NexusUser')
-        self.nexus_password = conf.get('Nexus Settings', 'NexusPassword')
+        self.nexus_user = conf['Nexus Settings']['NexusUser']
+        self.nexus_password = conf['Nexus Settings']['NexusPassword']
+        self.nexus_auth_token = get_nexus_auth_token(self.nexus_user, self.nexus_password)
         self.nexus_config_input_repositories = conf.get('Nexus Settings', 'NexusRepositories')
+        self.nexus_ip = self.nexus_base_url.split('//')[1].split(':')[0]
+        self.headers = {'Authorization': f'Basic {self.nexus_auth_token}',
+                        'accept': 'application/json'}
         # WhiteSource Settings
-        self.user_key = conf.get('WhiteSource Settings', 'WSUserKey')
-        self.api_key = conf.get('WhiteSource Settings', 'WSApiKey')
+        self.user_key = conf['WhiteSource Settings']['WSUserKey']
+        self.api_key = conf['WhiteSource Settings']['WSApiKey']
         self.product_name = conf.get('WhiteSource Settings', 'WSProductName', fallback='Nexus')
-        # self.ua_dir = conf.get('WhiteSource Settings', 'UADir')
         self.check_policies = conf.getboolean('WhiteSource Settings', 'WSCheckPolicies', fallback=False)
         self.policies = 'true' if self.check_policies else 'false'
-        self.ws_url = conf.get('WhiteSource Settings', 'WSUrl')
+        self.ws_url = conf.get('WhiteSource Settings', 'WSUrl', fallback=SAAS_URL)
         if not self.ws_url.endswith('/agent'):
             self.ws_url = self.ws_url + '/agent'
         # General Settings
         self.interactive_mode = conf.getboolean('General Settings', 'InteractiveMode', fallback=False)
         self.threads_number = conf.getint('General Settings', 'ThreadCount', fallback=5)
-
+        ws_name = f"ws-{__tool_name__.replace('_', '-')}"
+        self.base_dir = conf.get('General Settings', 'WorkDir', fallback=f"c:/tmp/ws-{ws_name}" if sys.platform == "win32" else f"/tmp/{ws_name}")
+        self.log_dir = os.path.join(self.base_dir, 'logs')
+        self.scan_dir = os.path.join(self.base_dir, '_wstemp')
+        self.log_file_with_path = os.path.join(self.log_dir, f"{ws_name}.log")
+        self.ws_log_dir = os.path.join(self.base_dir, 'whitesource')
+        self.ua_dir = os.path.join(self.base_dir, 'ua')
         self.ws_env_var = {**os.environ, **{'WS_USERKEY': self.user_key,
                                             'WS_APIKEY': self.api_key,
                                             'WS_PROJECTPERFOLDER': 'true',
@@ -87,83 +115,11 @@ class Configuration:
                                             'WS_CHECKPOLICIES': self.policies,
                                             'WS_FORCECHECKALLDEPENDENCIES': self.policies,
                                             'WS_OFFLINE': UA_OFFLINE_MODE,
-                                            'WS_SCANCOMMENT': (f"ps-{__tool_name__.replace('_','-')}", __version__)}
+                                            'WS_SCANCOMMENT': f"agent:ps-{__tool_name__.replace('_','-')};agentVersion:{__version__}"}
                            }
-        self.nexus_ip = self.nexus_base_url.split('//')[1].split(':')[0]
-
-        # Validation authentication details
-        if self.nexus_user and self.nexus_password:
-            logging.debug('Converting user and password to basic string')
-            self.nexus_auth_token = convert_to_basic_string(self.nexus_user, self.nexus_password)
-        elif self.nexus_auth_token:
-            logging.debug(f"Using configured Nexus token: {self.nexus_auth_token}")
-        else:
-            logging.error("Missing Nexus authentication. Configure username and password or Token")
-            return
-
-        self.headers = {'Authorization': f'Basic {self.nexus_auth_token}',
-                        'accept': 'application/json'}
-
-
-def main():
-    global config
-    print_header('WhiteSource for Nexus')
-
-    conf_file = '../config/params.config'
-    if len(sys.argv) > 1 and os.path.isfile(sys.argv[1]):
-        logging.debug(f"Using configuration file: {sys.argv[1]}")
-        conf_file = sys.argv[1]
-
-    config = Configuration(conf_file)
-    logging.info("Starting")
-
-    nexus_api_url_repos, nexus_api_url_components = define_nexus_parameters()
-
-    validate_nexus_user_pass(config.nexus_user, config.nexus_password, config.nexus_auth_token)
-
-    validate_ws_credentials(config.user_key, config.api_key, config.ws_url)
-
-    config.ua_jar_with_path = download_unified_agent_and_config()
-
-    header, existing_nexus_repository_list = retrieve_nexus_repositories(config.nexus_user, config.nexus_password,
-                                                                         config.nexus_auth_token, nexus_api_url_repos)
-    set_resources_url(config.nexus_version)
-
-    if not config.interactive_mode:
-        nexus_input_repositories = config.nexus_config_input_repositories
-        if not nexus_input_repositories:
-            selected_repositories = existing_nexus_repository_list
-            logging.info('No repositories specified, all repositories will be scanned')
-        else:
-            logging.info('Validate specified repositories')
-            selected_repositories = validate_selected_repositories_from_config(nexus_input_repositories,
-                                                                               existing_nexus_repository_list)
-    else:
-        print_header('Available Repositories')
-        print('Only supported repositories will be available for the WS scan')
-
-        for number, entry in enumerate(existing_nexus_repository_list):
-            print(f'   {number} - {entry}')
-
-        nexus_input_repositories_str = input('Select repositories to scan by entering their numbers '
-                                             '(space delimited list): ')
-        # ToDo - Validate this input - only allow values in range of len(existing_nexus_repository_map)
-        nexus_user_input_repositories = nexus_input_repositories_str.split()
-
-        selected_repositories = validate_selected_repositories(nexus_user_input_repositories,
-                                                               existing_nexus_repository_list)
-
-    download_components_from_repositories(selected_repositories, nexus_api_url_components, header,
-                                          config.threads_number)
-
-    print_header('WhiteSource Scan')
-    exit_code = whitesource_scan()
-
-    move_all_files_in_dir(WS_LOG_DIR, LOG_DIR)
-
-    delete_files(WS_LOG_DIR, SCAN_DIR)
-
-    sys.exit(exit_code)
+        generate_dirs()
+        # file logging
+        logger.addHandler(logging.FileHandler(self.log_file_with_path))
 
 
 def set_resources_url(full_version: str):
@@ -172,27 +128,13 @@ def set_resources_url(full_version: str):
         config.resources_url = "/service/rest/beta/repositories"
     else:
         config.resources_url = "/service/rest/v1/repositorySettings"
-    logging.debug(f"Using repository: {config.resources_url}")
+    logger.debug(f"Using repository: {config.resources_url}")
 
 
 def print_header(hdr_txt: str):
     hdr_txt = ' {0} '.format(hdr_txt)
     hdr = '\n{0}\n{1}\n{0}'.format(('=' * len(hdr_txt)), hdr_txt)
     print(hdr)
-
-
-def creating_folder_and_log_file():
-    """
-    Create empty directories for logs and scan results
-    Directories from previous runs are deleted
-    :return:
-    """
-    if os.path.exists(LOG_DIR):
-        shutil.rmtree(LOG_DIR)
-    os.makedirs(LOG_DIR, exist_ok=True)
-    if os.path.exists(SCAN_DIR):
-        shutil.rmtree(SCAN_DIR)
-    os.makedirs(SCAN_DIR, exist_ok=True)
 
 
 def define_nexus_parameters():
@@ -202,98 +144,40 @@ def define_nexus_parameters():
 
     :return: URLs for repositories and components endpoints
     """
-    logging.info('Getting region parameters')
+    logger.info('Getting region parameters')
     nexus_api_url = config.nexus_base_url + '/service/rest/v1'
     nexus_api_url_repos = nexus_api_url + '/repositories'
     nexus_api_url_components = nexus_api_url + '/components'
 
     return nexus_api_url_repos, nexus_api_url_components
 
-
-def validate_nexus_user_pass(nexus_user, nexus_password, nexus_auth_token):
-    """
-    :param nexus_user:
-    :param nexus_password:
-    :param nexus_auth_token:
-    :return:
-    """
-    logging.info('Validating Nexus credentials')
-
     if (not nexus_auth_token) and (not nexus_user or not nexus_password):
-        logging.error(f'{FAILED} {BASIC_AUTH_DELIMITER} Either NexusAuthToken or both NexusUser and NexusPassword must '
-                      f'be provided. Check params.config and try again.')
-        ws_exit()
+        logger.error("Either NexusAuthToken or both NexusUser and NexusPassword must be provided. Check params.config and try again.")
+        sys.exit(1)
 
-    logging.info('Nexus credentials validated')
-
-
-def validate_ws_credentials(user_key, api_key, ua_url):
-    """
-
-    :param user_key:
-    :param api_key:
-    :param ua_url:
-    :return:
-    """
-    logging.info('Validating WhiteSource User Key, API Key and URL')
-
-    check_if_param_exists(user_key, 'WSUserKey')
-    check_if_param_exists(api_key, 'WSApiKey')
-    check_if_param_exists(ua_url, 'WSUrl')
-
-    logging.info('WhiteSource User Key, API Key and URL validated')
+    logger.info('Nexus credentials validated')
 
 
-def check_if_param_exists(param=str, param_name=str):
-    if not param:
-        logging.error(f'{FAILED} {BASIC_AUTH_DELIMITER} {param_name} '
-                      f'must be provided. Check params.config and try again.')
-        ws_exit()
-
-
-def convert_to_basic_string(user_name, password):
-    """
-    Encode username and password per RFC 7617
-
-    :param user_name:
-    :param password:
-    :return:
-    """
-    auth_string_plain = user_name + BASIC_AUTH_DELIMITER + password
-    basic_bytes = base64.b64encode(bytes(auth_string_plain, "utf-8"))
-    basic_string = str(basic_bytes)[2:-1]
-    return basic_string
-
-
-def retrieve_nexus_repositories(user, password, nexus_auth_token, nexus_api_url_repos):
+def retrieve_nexus_repositories(nexus_api_url_repos):
     """
     Retrieves the list of repositories from Nexus
-
-    :param user:
-    :param password:
-    :param nexus_auth_token:
     :param nexus_api_url_repos:
     :return:
     """
-    if user and password:
-        logging.info('Converting user and password to basic string')
-        nexus_auth_token = convert_to_basic_string(user, password)
-
-    headers = {'Authorization': 'Basic %s' % nexus_auth_token}
-    logging.info('Sending request for retrieving Nexus repository list')
+    logger.info("Sending request for retrieving Nexus repository list")
     try:
-        response_repository_headers = requests.get(nexus_api_url_repos, headers=headers)
+        response_repository_headers = requests.get(nexus_api_url_repos, headers=config.headers)
         json_response_repository_headers = json.loads(response_repository_headers.text)
     except requests.RequestException:
-        logging.info(f'{FAILED} to retrieve Nexus repositories. Verify Nexus URL and credentials and try again.')
-        ws_exit()
+        logger.info("Failed to retrieve Nexus repositories. Verify Nexus URL and credentials and try again.")
+        sys.exit(1)
 
-    logging.debug(f" Nexus Headers: {response_repository_headers.headers}")
+    logger.debug(f" Nexus Headers: {response_repository_headers.headers}")
     config.nexus_version = response_repository_headers.headers.get('Server')
     if config.nexus_version:
-        logging.info(f"Nexus Version: {config.nexus_version}")
+        logger.info(f"Nexus Version: {config.nexus_version}")
     else:
-        logging.warning("Server headers does not contain Nexus version. Assuming >=3.26")
+        logger.warning("Server headers does not contain Nexus version. Assuming >=3.26")
         config.nexus_version = "3.26"
 
     existing_nexus_repository_list = []
@@ -303,9 +187,9 @@ def retrieve_nexus_repositories(user, password, nexus_auth_token, nexus_api_url_
             rep_name = json_repository["name"]
             existing_nexus_repository_list.append(rep_name)
         else:
-            logging.warning(f"Repository: {json_repository['name']} is unsupported format: {repo_format}. Skipping")
+            logger.warning(f"Repository: {json_repository['name']} is unsupported format: {repo_format}. Skipping")
 
-    return headers, existing_nexus_repository_list
+    return existing_nexus_repository_list
 
 
 def validate_selected_repositories(nexus_input_repositories, existing_nexus_repository_list):
@@ -321,11 +205,10 @@ def validate_selected_repositories(nexus_input_repositories, existing_nexus_repo
     except Exception:
         # ToDo - After adding input validation to nexus_user_input_repositories (under main() function),
         #        this validation can be removed
-        logging.error(f'{FAILED} {BASIC_AUTH_DELIMITER} There are no such repositories in your Nexus environment,'
-                      ' please select the number from the list of the existing repositories')
-        ws_exit()
+        logger.error("There are no such repositories in your Nexus environment, please select the number from the list of the existing repositories")
+        sys.exit(1)
 
-    logging.info('Getting region parameters has finished')
+    logger.info('Getting region parameters has finished')
     return selected_repositories
 
 
@@ -341,59 +224,56 @@ def validate_selected_repositories_from_config(nexus_input_repositories, existin
     user_selected_repos_set = set(user_selected_repos_list)
     missing_repos = user_selected_repos_set - existing_nexus_repository_set
     if missing_repos:
-        logging.error(f'Could not find the following repositories: {",".join(missing_repos)}')
-        logging.error(f'{FAILED} {BASIC_AUTH_DELIMITER} Specified repositories not found or their format is not'
-                      f' supported, check params.config and try again.')
-        ws_exit()
+        logger.error(f'Could not find the following repositories: {",".join(missing_repos)}')
+        logger.error("Specified repositories not found or their format is not supported, check params.config and try again")
+        sys.exit(1)
     # ToDo - only ws_exit if ALL specified repos not found, continue scan if some were found.
 
-    logging.info('Getting region parameters has finished')
+    logger.info('Getting region parameters has finished')
     return user_selected_repos_list
 
 
-def download_components_from_repositories(selected_repositories, nexus_api_url_components, header, threads_number):
+def download_components_from_repositories(selected_repositories, nexus_api_url_components, threads_number):
     """
     Download all components from selected repositories and save to folder
 
     :param selected_repositories:
     :param nexus_api_url_components:
-    :param header:
     :param threads_number:
     :return:
     """
     for repo_name in selected_repositories:
-        logging.info(f'Repository: {repo_name}')
+        logger.info(f'Repository: {repo_name}')
 
         repo_comp_url = f'{nexus_api_url_components}?repository={repo_name}'
         continuation_token = "init"
         all_repo_items = []
 
-        logging.info('Validate artifact list')
+        logger.info('Validate artifact list')
         while continuation_token:
             if continuation_token != 'init':
                 cur_repo_comp_url = f'{repo_comp_url}&continuationToken={continuation_token}'
             else:
                 cur_repo_comp_url = repo_comp_url
-            cur_response_repo = requests.get(cur_repo_comp_url, headers=header)
+            cur_response_repo = requests.get(cur_repo_comp_url, headers=config.headers)
             cur_json_response_cur_components = json.loads(cur_response_repo.text)
             for item in cur_json_response_cur_components['items']:
                 all_repo_items.append(item)
             continuation_token = cur_json_response_cur_components['continuationToken']
 
         if not all_repo_items:
-            logging.info(f'No artifacts found in {repo_name}')
-            logging.info(' -- > ')
+            logger.info(f'No artifacts found in {repo_name}')
+            logger.info(' -- > ')
         else:
-            script_path = pathlib.Path(__file__).parent.absolute()
-            cur_dest_folder = f'{script_path}/{SCAN_DIR}/{repo_name}'
+            cur_dest_folder = os.path.join(config.scan_dir, repo_name)
             os.makedirs(cur_dest_folder, exist_ok=True)
 
-            logging.info('Retrieving artifacts...')
+            logger.info('Retrieving artifacts...')
 
             manager = Manager()
             docker_images_q = manager.Queue()
             with Pool(threads_number) as pool:
-                pool.starmap(repo_worker, [(comp, repo_name, cur_dest_folder, header, config, docker_images_q)
+                pool.starmap(repo_worker, [(comp, repo_name, cur_dest_folder, config.headers, config, docker_images_q)
                                            for i, comp in enumerate(all_repo_items)])
             # Updating UA env vars to include Docker images from Nexus
             docker_images = set()
@@ -401,27 +281,30 @@ def download_components_from_repositories(selected_repositories, nexus_api_url_c
                 docker_images.add(docker_images_q.get(block=True, timeout=0.05))
 
             if docker_images:
-                logging.info(f"Found total {len(docker_images)} docker images")
+                logger.info(f"Found total {len(docker_images)} docker images")
                 config.ws_env_var['WS_DOCKER_SCANIMAGES'] = 'True'
                 config.ws_env_var['WS_DOCKER_INCLUDES'] = ",".join(docker_images)
                 config.ws_env_var['WS_PROJECTPERFOLDER'] = 'False'
                 config.ws_env_var['WS_SCANPACKAGEMANAGER'] = 'True'
                 config.ws_env_var['WS_RESOLVEALLDEPENDENCIES'] = 'False'
 
-            logging.info(' -- > ')
+            logger.info(' -- > ')
 
 
 def call_nexus_api(url: str, headers: dict) -> Union[dict, bytes]:
-    logging.debug(f"Calling Nexus URL: {url}")
+    logger.debug(f"Calling Nexus URL: {url}")
+    ret = None
     try:
         resp = requests.get(url, headers=headers)
     except requests.RequestException:
-        logging.exception(f"Received Error on endpoint: {url}")
-    try:
-        ret = json.loads(resp.text)
-        # logging.debug(f"Returned value: {ret}")
-    except json.decoder.JSONDecodeError:
-        ret = resp.content
+        logger.exception(f"Received Error on endpoint: {url}")
+    if resp.status_code != 200:
+        logging.error(f"Error calling API return code {resp.status_code} Error: {resp.reason} ")
+    else:
+        try:
+            ret = json.loads(resp.text)
+        except json.decoder.JSONDecodeError:
+            ret = resp.content
 
     return ret
 
@@ -440,7 +323,7 @@ def handle_docker_repo(component: dict, conf) -> str:
         :rtype: dict
         """
         repos_list = call_nexus_api(conf.nexus_base_url + conf.resources_url, c.headers)
-        logging.debug(f"found {len(repos_list)} repositories")
+        logger.debug(f"found {len(repos_list)} repositories")
         repo_dict = {}
         for r in repos_list:
             repo_dict[r['name']] = r
@@ -461,50 +344,55 @@ def handle_docker_repo(component: dict, conf) -> str:
         elif https_port:
             r_url = f"{parsed_url.hostname}:{https_port}"
         else:
-            logging.error("Unable to get repository port. Using default URL")
+            logger.error("Unable to get repository port. Using default URL")
             r_url = f"{parsed_url.hostname}:{parsed_url.port}"
-        logging.debug(f"Returned docker repo URL: {r_url}")
+        logger.debug(f"Returned docker repo URL: {r_url}")
 
         return r_url
-
+    ret = None
     dl_url = component['assets'][0]["downloadUrl"]
-    logging.debug(f"Component repository: {component['repository']}")
-    logging.debug(f"Getting manifest file from: {dl_url}")
+    logger.debug(f"Component repository: {component['repository']}")
+    logger.debug(f"Getting manifest file from: {dl_url}")
     manifest = call_nexus_api(dl_url, conf.headers)
     repos = get_repos_as_dict(conf)
 
-    import docker
+    try:
+        import docker
+    except ImportError:
+        logger.error("Found Docker repository but Docker package is not installed.")
+        return ret
+
     repo = repos.get(component['repository'])
 
     ret = None
 
     if conf.nexus_alt_docker_registry_address:
         docker_repo_url = conf.nexus_alt_docker_registry_address
-        logging.info(f"Using user-defined docker registry URL: {docker_repo_url}")
+        logger.info(f"Using user-defined docker registry URL: {docker_repo_url}")
     elif repo:
-        logging.debug(f"Repository data: {repo}")
+        logger.debug(f"Repository data: {repo}")
         docker_repo_url = get_docker_repo_url(repo)
 
     if docker_repo_url:
         image_name = f"{docker_repo_url}/{manifest['name']}:{manifest['tag']}"
-        logging.info(f"Pulling Docker image: {image_name}")
+        logger.info(f"Pulling Docker image: {image_name}")
         try:
-            client = docker.from_env(timeout=DOCKER_TIMEOUT)
+            docker_client = docker.from_env(timeout=DOCKER_TIMEOUT)
             # Configuring Nexus user and password are mandatory for non-anonymous Docker repositories
-            client.login(username=conf.nexus_user, password=conf.nexus_password, registry=docker_repo_url)
-            pull_res = client.images.pull(image_name)
+            docker_client.login(username=conf.nexus_user, password=conf.nexus_password, registry=docker_repo_url)
+            pull_res = docker_client.images.pull(image_name)
             image_id = pull_res.id.split(':')[1][0:12]
-            logging.debug(f"Image ID: {image_id} successfully pulled")
+            logger.debug(f"Image ID: {image_id} successfully pulled")
             ret = image_id  # Shorten ID to match docker images IMAGE ID
         except docker.errors.DockerException:
-            logging.exception(f"Error loading image: {image_name}")
+            logger.exception(f"Error loading image: {image_name}")
     else:
-        logging.warning(f"Repository was not found for {component['repository']}. Skipping")
+        logger.warning(f"Repository was not found for {component['repository']}. Skipping")
 
     return ret
 
 
-def repo_worker(comp, repo_name, cur_dest_folder, header, conf, d_images_q):
+def repo_worker(comp, repo_name, cur_dest_folder, headers, conf, d_images_q):
     """
 
     :param d_images_q:
@@ -512,12 +400,12 @@ def repo_worker(comp, repo_name, cur_dest_folder, header, conf, d_images_q):
     :param comp:
     :param repo_name:
     :param cur_dest_folder:
-    :param header:
+    :param headers:
     """
 
     all_components = []
     component_assets = comp['assets']
-    logging.debug(f"Handling component ID: {comp['id']} on repository: {comp['repository']} Format: {comp['format']}")
+    logger.debug(f"Handling component ID: {comp['id']} on repository: {comp['repository']} Format: {comp['format']}")
     if comp['format'] == 'nuget':
         comp_name = '{}.{}.nupkg'.format(comp['name'], comp['version'])
         all_components.append(comp_name)
@@ -525,7 +413,7 @@ def repo_worker(comp, repo_name, cur_dest_folder, header, conf, d_images_q):
         component_assets_size = len(component_assets)
         for asset in range(0, component_assets_size):
             comp_name = component_assets[asset]['path'].rpartition('/')[-1]
-            if comp_name.split(".")[-1] == JAR_EXTENSION:
+            if comp_name.split(".")[-1] == "jar":
                 all_components.append(comp_name)
     elif comp['format'] == 'docker':
         image_id = handle_docker_repo(comp, conf)
@@ -536,28 +424,28 @@ def repo_worker(comp, repo_name, cur_dest_folder, header, conf, d_images_q):
         all_components.append(comp_name)
 
     for comp_name in all_components:
-        comp_worker(repo_name, component_assets, cur_dest_folder, header, comp_name)
+        comp_worker(repo_name, component_assets, cur_dest_folder, headers, comp_name)
 
 
-def comp_worker(repo_name, component_assets, cur_dest_folder, header, comp_name):
+def comp_worker(repo_name, component_assets, cur_dest_folder, headers, comp_name):
     """
 
     :param repo_name:
     :param component_assets:
     :param cur_dest_folder:
-    :param header:
+    :param headers:
     :param comp_name:
     """
-    logging.info(f'Downloading {comp_name} component from {repo_name}')
+    logger.info(f'Downloading {comp_name} component from {repo_name}')
     comp_download_url = component_assets[0]["downloadUrl"]
-    response = call_nexus_api(comp_download_url, header)
-    logging.debug(f"Download URL: {comp_download_url}")
+    response = call_nexus_api(comp_download_url, headers)
+    logger.debug(f"Download URL: {comp_download_url}")
     path = os.path.dirname(f'{cur_dest_folder}/{comp_name}')
     if not os.path.exists(path):
         os.makedirs(path, exist_ok=True)
     with open(f'{cur_dest_folder}/{comp_name}', 'wb') as f:
         f.write(response)
-        logging.info(f'Component {comp_name} has successfully downloaded')
+        logger.info(f'Component {comp_name} has successfully downloaded')
 
 
 def download_unified_agent_and_config():
@@ -565,17 +453,17 @@ def download_unified_agent_and_config():
     Download unified agent and config file if there are not exist in the default or specified folder
     :return:
     """
-    logging.info('Verifying agent parameters')
-    ua_jar_with_path = f'{UA_DIR}/{UA_JAR_NAME}'
-    ua_conf_with_path = f'{UA_DIR}/{UA_CONFIG_NAME}'
+    logger.info('Verifying agent parameters')
+    ua_jar_with_path = f'{config.ua_dir}/{UA_JAR_NAME}'
+    ua_conf_with_path = f'{config.ua_dir}/{UA_CONFIG_NAME}'
 
-    if not os.path.isdir(UA_DIR):
-        logging.info(f'Creating directory "{UA_DIR}"')
-        os.makedirs(UA_DIR, exist_ok=True)
+    if not os.path.isdir(config.ua_dir):
+        logger.info(f'Creating directory "{config.ua_dir}"')
+        os.makedirs(config.ua_dir, exist_ok=True)
 
     if not os.path.isfile(ua_jar_with_path):
-        logging.info('(this may take a few minutes on first run)')
-        logging.info('Downloading WhiteSource agent')
+        logger.info('(this may take a few minutes on first run)')
+        logger.info('Downloading WhiteSource agent')
 
         r = requests.get(URL_UA_JAR)
         with open(ua_jar_with_path, 'wb') as f:
@@ -585,27 +473,15 @@ def download_unified_agent_and_config():
         with open(ua_conf_with_path, 'wb') as f:
             f.write(r.content)
 
-    logging.info('WhiteSource agent download complete')
+    logger.info('WhiteSource agent download complete')
 
     return ua_jar_with_path
 
 
 def whitesource_scan() -> int:
     global config
-    """
-
-    :param product_name:
-    :param user_key:
-    :param api_key:
-    :param ws_url:
-    :param check_policies:
-    :param ua_jar_with_path:
-    :return:
-    """
-
-    logging.info('Starting WhiteSource scan')
-
-    return_code = subprocess.run(['java', '-jar', config.ua_jar_with_path, '-d', SCAN_DIR, '-logLevel', ERROR],
+    logger.info('Starting WhiteSource scan')
+    return_code = subprocess.run(['java', '-jar', config.ua_jar_with_path, '-d', config.scan_dir, '-logLevel', 'ERROR'],
                                  env=config.ws_env_var, stdout=subprocess.DEVNULL).returncode
 
     return_msg = 'SUCCESS'
@@ -626,61 +502,60 @@ def whitesource_scan() -> int:
         else:
             return_msg = 'FAILED'
 
-    logging.info('WhiteSource scan complete')
+    logger.info('WhiteSource scan complete')
+    logger.info(f'Result: {return_msg} ({return_code})')
 
-    logging.info(f'Result: {return_msg} ({return_code})')
     return return_code
 
 
-def move_all_files_in_dir(src_dir, dst_dir):
-    """
+def main():
+    global config
+    print_header('WhiteSource for Nexus')
 
-    :param src_dir:
-    :param dst_dir:
-    :return:
-    """
-    logging.info('Moving logs after the WhiteSource scan has finished')
-    if os.path.isdir(src_dir) and os.path.isdir(dst_dir):
-        for filePath in glob.glob(src_dir):
-            copy_tree(filePath, dst_dir)
-        remove_tree(src_dir)
-        logging.info('Moving logs has successfully finished')
+    conf_file = '../config/params.config'
+    if len(sys.argv) > 1 and os.path.isfile(sys.argv[1]):
+        logger.debug(f"Using configuration file: {sys.argv[1]}")
+        conf_file = sys.argv[1]
+
+    config = Configuration(conf_file)
+    logger.info("Starting")
+
+    nexus_api_url_repos, nexus_api_url_components = define_nexus_parameters()
+    config.ua_jar_with_path = download_unified_agent_and_config()
+    existing_nexus_repository_list = retrieve_nexus_repositories(nexus_api_url_repos)
+    set_resources_url(config.nexus_version)
+
+    if not config.interactive_mode:
+        nexus_input_repositories = config.nexus_config_input_repositories
+        if not nexus_input_repositories:
+            selected_repositories = existing_nexus_repository_list
+            logger.info('No repositories specified, all repositories will be scanned')
+        else:
+            logger.info('Validate specified repositories')
+            selected_repositories = validate_selected_repositories_from_config(nexus_input_repositories,
+                                                                               existing_nexus_repository_list)
     else:
-        logging.info(f'{src_dir} or {dst_dir} are not directories')
-        logging.info('Moving logs after WhiteSource scan has failed')
+        print_header('Available Repositories')
+        print('Only supported repositories will be available for the WS scan')
 
+        for number, entry in enumerate(existing_nexus_repository_list):
+            print(f'   {number} - {entry}')
 
-def delete_files(ws_dir, scan_dir):
-    """
+        nexus_input_repositories_str = input('Select repositories to scan by entering their numbers '
+                                             '(space delimited list): ')
+        # ToDo - Validate this input - only allow values in range of len(existing_nexus_repository_map)
+        nexus_user_input_repositories = nexus_input_repositories_str.split()
 
-    :param ws_dir:
-    :param scan_dir:
-    :return:
-    """
-    logging.info('Start deleting the scan dir')
-    success = True
-    if os.path.isdir(ws_dir):
-        try:
-            os.rmdir(ws_dir)
-        except OSError as e:
-            logging.error(f'Deleting the scan dir has failed: {ws_dir}: {e.strerror}')
-            success = False
-    if os.path.isdir(scan_dir):
-        try:
-            shutil.rmtree(scan_dir)
-        except OSError as e:
-            logging.error(f'Deleting the scan dir has failed: {scan_dir}: {e.strerror}')
-            success = False
-    if success:
-        logging.info('Deleting the scan dir has successfully finished')
-    else:
-        sys.exit(1)
+        selected_repositories = validate_selected_repositories(nexus_user_input_repositories,
+                                                               existing_nexus_repository_list)
 
+    download_components_from_repositories(selected_repositories, nexus_api_url_components, config.threads_number)
 
-def ws_exit():
-    delete_files(WS_LOG_DIR, SCAN_DIR)
-    sys.exit(1)
+    print_header('WhiteSource Scan')
+
+    return whitesource_scan()
 
 
 if __name__ == '__main__':
     main()
+
