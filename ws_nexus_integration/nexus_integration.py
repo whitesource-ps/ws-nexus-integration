@@ -151,12 +151,6 @@ def define_nexus_parameters():
 
     return nexus_api_url_repos, nexus_api_url_components
 
-    if (not nexus_auth_token) and (not nexus_user or not nexus_password):
-        logger.error("Either NexusAuthToken or both NexusUser and NexusPassword must be provided. Check params.config and try again.")
-        sys.exit(1)
-
-    logger.info('Nexus credentials validated')
-
 
 def retrieve_nexus_repositories(nexus_api_url_repos):
     """
