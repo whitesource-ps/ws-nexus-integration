@@ -325,16 +325,16 @@ def handle_docker_repo(component: dict, conf) -> str:
         docker_repo_url = get_docker_repo_url(repo)
 
     if docker_repo_url:
-        image_name = f"{docker_repo_url}/{manifest['name']}:{manifest['tag']}"
+        image_name = f"{docker_repo_url}/{manifest['name']}"
+        image_full_name = f"{image_name}:{manifest['tag']}"
         logging.info(f"Pulling Docker image: {image_name}")
         try:
             docker_client = docker.from_env(timeout=DOCKER_TIMEOUT)
             # Configuring Nexus user and password are mandatory for non-anonymous Docker repositories
             docker_client.login(username=conf.nexus_user, password=conf.nexus_password, registry=docker_repo_url)
-            pull_res = docker_client.images.pull(image_name)
-            image_id = pull_res.id.split(':')[1][0:12]
-            logging.debug(f"Image ID: {image_id} successfully pulled")
-            ret = image_id  # Shorten ID to match docker images IMAGE ID
+            pull_res = docker_client.images.pull(image_full_name)
+            logging.debug(f"Image ID: {image_full_name} successfully pulled")
+            ret = image_name
         except docker.errors.DockerException:
             logging.exception(f"Error loading image: {image_name}")
     else:
