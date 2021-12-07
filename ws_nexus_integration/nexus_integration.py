@@ -85,9 +85,30 @@ class Configuration:
                 c = ConfigParser()
                 c.optionxform = str
                 c.read(conf_file)
-                ret = c
+                return c
+            else:
+                print("""Missing configuration file. Be sure to create params.config file with the following values:\"
+[Nexus Settings]
+NexusBaseUrl=
+NexusAuthToken=
+NexusUser=
+NexusPassword=
+NexusRepositories=
+NexusAltDockerRegistryAddress=
 
-            return ret
+
+[WhiteSource Settings]
+WSUserKey=
+WSApiKey=
+WSProductName=Nexus
+WSCheckPolicies=False
+WSUrl=
+
+[General Settings]
+ThreadCount=1
+WorkDir=
+                    """)
+            exit(-1)
 
         conf = read_conf_file()
         # Nexus Settings
