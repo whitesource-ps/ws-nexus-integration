@@ -13,7 +13,7 @@ from urllib.parse import urlparse, urljoin
 
 from ws_nexus_integration._version import __version__, __tool_name__
 import requests
-from ws_sdk import WSClient
+from ws_sdk import WSClient, ws_constants
 
 SUPPORTED_FORMATS = {'maven2', 'npm', 'pypi', 'rubygems', 'nuget', 'raw', 'docker'}
 DOCKER_TIMEOUT = 600
@@ -75,6 +75,14 @@ class Configuration:
                     logging.debug(f"Directory {v} does not exist and will be created")
                     os.mkdir(v)
 
+        def get_lang_include(inc_l: list) -> list:
+            if inc_l:
+                ret_l = ws_constants.LibMetaData.LangSuffix.DEFAULT
+                for i in inc_l:
+                    ret_l += ws_constants.LibMetaData.LangSuffix.__dict__[i]
+
+                return ret_l
+
         def read_conf_file():
             conf_file = 'params.config'
             if len(sys.argv) > 1:
@@ -103,6 +111,7 @@ WSApiKey=
 WSProductName=Nexus
 WSCheckPolicies=False
 WSUrl=
+WSLang=
 
 [General Settings]
 ThreadCount=1
@@ -139,6 +148,9 @@ JavaBin=
                                 java_bin=java_bin if java_bin else "java",
                                 ua_path=self.base_dir,
                                 tool_details=(__tool_name__.replace('_', '-'), __version__))
+        include_l = conf.get('WhiteSource Settings', 'WSLang').replace(" ", "").split(',')
+        includes = get_lang_include(include_l)
+        self.ws_conn.ua_conf.append_lang_to_scan(includes)
         # General Settings
         self.threads_number = conf.getint('General Settings', 'ThreadCount', fallback=5)
         generate_dirs()
