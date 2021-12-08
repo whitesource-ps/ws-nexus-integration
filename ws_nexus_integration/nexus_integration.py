@@ -127,7 +127,10 @@ JavaBin=
         self.check_policies = conf.getboolean('WhiteSource Settings', 'WSCheckPolicies', fallback=False)
         self.policies = 'true' if self.check_policies else 'false'
         ws_name = f"ws-{__tool_name__.replace('_', '-')}"
-        self.base_dir = conf.get('General Settings', 'WorkDir', fallback=f"c:/tmp/ws-{ws_name}" if sys.platform == "win32" else f"/tmp/{ws_name}")
+        base_dir = conf.get('General Settings', 'WorkDir')
+        if not base_dir:
+            base_dir = f"c:/tmp/ws-{ws_name}" if sys.platform == "win32" else f"/tmp/{ws_name}"
+        self.base_dir = base_dir
         self.scan_dir = os.path.join(self.base_dir, '_wstemp')
         java_bin = conf.get('General Settings', 'JavaBin', fallback="java")
         self.ws_conn = WSClient(user_key=conf['WhiteSource Settings']['WSUserKey'],
