@@ -107,6 +107,7 @@ WSUrl=
 [General Settings]
 ThreadCount=1
 WorkDir=
+JavaBin=
                     """)
             exit(-1)
 
@@ -128,9 +129,11 @@ WorkDir=
         ws_name = f"ws-{__tool_name__.replace('_', '-')}"
         self.base_dir = conf.get('General Settings', 'WorkDir', fallback=f"c:/tmp/ws-{ws_name}" if sys.platform == "win32" else f"/tmp/{ws_name}")
         self.scan_dir = os.path.join(self.base_dir, '_wstemp')
+        java_bin = conf.get('General Settings', 'JavaBin', fallback="java")
         self.ws_conn = WSClient(user_key=conf['WhiteSource Settings']['WSUserKey'],
                                 token=conf['WhiteSource Settings']['WSApiKey'],
                                 url=conf.get('WhiteSource Settings', 'WSUrl'),
+                                java_bin=java_bin if java_bin else "java",
                                 ua_path=self.base_dir,
                                 tool_details=(__tool_name__.replace('_', '-'), __version__))
         # General Settings
@@ -244,18 +247,18 @@ def call_nexus_api(url: str, headers: dict = None, include_resp_headers: bool = 
     ret = None
     try:
         resp = requests.get(url, headers=headers)
+        if resp.status_code != 200:
+            logging.error(f"Error calling API return code {resp.status_code} Error: {resp.reason}")
+        else:
+            try:
+                ret = json.loads(resp.text)
+            except json.decoder.JSONDecodeError:
+                ret = resp.content
+
+        if include_resp_headers:
+            ret = ret, resp.headers
     except requests.RequestException:
         logging.exception(f"Received Error on endpoint: {url}")
-    if resp.status_code != 200:
-        logging.error(f"Error calling API return code {resp.status_code} Error: {resp.reason}")
-    else:
-        try:
-            ret = json.loads(resp.text)
-        except json.decoder.JSONDecodeError:
-            ret = resp.content
-
-    if include_resp_headers:
-        ret = ret, resp.headers
 
     return ret
 
@@ -402,9 +405,9 @@ def execute_scan():
     else:
         config.ws_conn.ua_conf.projectPerFolder = True
         ret = config.ws_conn.scan(scan_dir=config.scan_dir, product_name=config.product_name)
-    logging.debug(f"Unified Agent standard output:\n {ret.stdout.decode('UTF-8')}")
+    logging.debug(f"Unified Agent standard output:\n {ret[1]}")
 
-    return ret
+    return ret[0]
 
 
 def get_repos_to_scan():
@@ -446,9 +449,9 @@ def main():
     selected_repositories = get_repos_to_scan()
     set_nexus_resources_url(config.nexus_version)
     download_components_from_repositories(selected_repositories)
-    ret = execute_scan()
+    return_code = execute_scan()
 
-    return ret.returncode
+    return return_code
 
 
 if __name__ == '__main__':
