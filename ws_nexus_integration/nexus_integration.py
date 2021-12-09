@@ -75,13 +75,13 @@ class Configuration:
                     logging.debug(f"Directory {v} does not exist and will be created")
                     os.mkdir(v)
 
-        def get_lang_include(inc_l: list) -> list:
+        def set_lang_include(includes: str):
+            inc_l = includes.split(',') if len(includes) else None
             if inc_l:
-                ret_l = ws_constants.LibMetaData.LangSuffix.DEFAULT
+                ret_l = []
                 for i in inc_l:
                     ret_l += ws_constants.LibMetaData.LangSuffix.__dict__[i]
-
-                return ret_l
+                self.ws_conn.ua_conf.set_include_suffices_to_scan(ret_l)
 
         def read_conf_file():
             conf_file = 'params.config'
@@ -147,10 +147,9 @@ JavaBin=
                                 url=conf.get('WhiteSource Settings', 'WSUrl'),
                                 java_bin=java_bin if java_bin else "java",
                                 ua_path=self.base_dir,
-                                tool_details=(__tool_name__.replace('_', '-'), __version__))
-        include_l = conf.get('WhiteSource Settings', 'WSLang').replace(" ", "").split(',')
-        includes = get_lang_include(include_l)
-        self.ws_conn.ua_conf.append_lang_to_scan(includes)
+                                tool_details=(f"ps-{__tool_name__.replace('_', '-')}", __version__))
+        set_lang_include(conf.get('WhiteSource Settings', 'WSLang').replace(" ", ""))
+
         # General Settings
         self.threads_number = conf.getint('General Settings', 'ThreadCount', fallback=5)
         generate_dirs()
@@ -196,17 +195,10 @@ def retrieve_nexus_repositories():
 
 
 def validate_selected_repositories(nexus_input_repositories, existing_nexus_repository_list):
-    """
-    Validate selected repositories when running in configMode=False, mostly for testing
-    """
-    try:
-        selected_repositories = [existing_nexus_repository_list[int(n)] for n in nexus_input_repositories]
-    except Exception:
-        # ToDo - After adding input validation to nexus_user_input_repositories (under main() function),
-        #        this validation can be removed
-        logging.error("There are no such repositories in your Nexus environment, please select the number from the list of the existing repositories")
+    selected_repositories = [existing_nexus_repository_list[int(n)] for n in nexus_input_repositories]
+    if not selected_repositories:
+        logging.error("No repositories were found to be scanned")
         sys.exit(1)
-    logging.info('Getting region parameters has finished')
 
     return selected_repositories
 
@@ -415,7 +407,7 @@ def execute_scan():
     config.ws_conn.ua_conf.offline = True if os.environ.get("OFFLINE", "").lower() == "true" else False
 
     if config.is_docker_scan:
-        config.ws_conn.ua_conf.resolveAllDependencies = False
+        config.ws_conn.ua_conf.resolveAllDependencies = True
         ret = config.ws_conn.scan_docker(product_name=config.product_name, docker_images=config.docker_images)
     else:
         config.ws_conn.ua_conf.projectPerFolder = True
