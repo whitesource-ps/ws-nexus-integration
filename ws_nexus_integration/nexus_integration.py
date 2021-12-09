@@ -140,6 +140,7 @@ JavaBin=
         if not base_dir:
             base_dir = f"c:/tmp/ws-{ws_name}" if sys.platform == "win32" else f"/tmp/{ws_name}"
         self.base_dir = base_dir
+        self.is_docker_scan = False
         self.scan_dir = os.path.join(self.base_dir, '_wstemp')
         java_bin = conf.get('General Settings', 'JavaBin', fallback="java")
         self.ws_conn = WSClient(user_key=conf['WhiteSource Settings']['WSUserKey'],
