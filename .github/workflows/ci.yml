@@ -75,7 +75,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           allowUpdates: true
           artifacts: dist/${{ env.TOOL_DIR }}-${{ env.VERSION }}-py3-none-any.whl
-          prerelease: ${{ !env.RELEASE }}
+          prerelease: ${{ env.RELEASE }}
       - name: Publish to Confluence - Public
         if: ${{ env.RELEASE }}
         uses: cupcakearmy/confluence-markdown-sync@v1     
