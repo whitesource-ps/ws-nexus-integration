@@ -56,7 +56,7 @@ class Configuration:
             return basic_string
 
         def get_nexus_auth_token(nexus_user: str, nexus_password: str) -> str:
-            nexus_auth_token = conf.get('Nexus Settings', 'NexusAuthToken')
+            nexus_auth_token = conf.get('Nexus Settings', 'NexusAuthToken', fallback=None)
             if nexus_auth_token:
                 logging.debug(f"Using Nexus authentication token")
             else:
@@ -124,7 +124,7 @@ JavaBin=
         # Nexus Settings
         self.nexus_base_url = conf.get('Nexus Settings', 'NexusBaseUrl', fallback='http://localhost:8081').strip('/')
         self.nexus_alt_docker_registry_address = conf.get('Nexus Settings', 'NexusAltDockerRegistryAddress', fallback=None)
-        self.nexus_user = conf['Nexus Settings']['NexusUser']
+        self.nexus_user = conf.get('Nexus Settings', 'NexusUser', fallback=None)
         self.nexus_password = conf['Nexus Settings']['NexusPassword']
         self.nexus_auth_token = get_nexus_auth_token(self.nexus_user, self.nexus_password)
         self.nexus_repos = conf.get('Nexus Settings', 'NexusRepositories')
