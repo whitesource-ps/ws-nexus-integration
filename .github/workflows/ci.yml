@@ -1,4 +1,4 @@
-name: WS Nexus Integration Build and Publish
+name: CI
 on:
   push:
     branches:
@@ -6,7 +6,7 @@ on:
     tags:
       - '*'
   schedule:
-    - cron: '0 4 * * 6'
+    - cron: '0 4 * * *'
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
@@ -68,22 +68,16 @@ jobs:
           skip_existing: true
           user: __token__
           password: ${{ secrets.PYPI_API_TOKEN }}
-      - name: Zip release
-        uses: papeloto/action-zip@v1
-        with:
-          files: requirements.txt LICENSE README.md CLA.md config/ ${{ env.TOOL_DIR }}/
-          recursive: false
-          dest: ${{ env.TOOL_NAME }}-${{ env.VERSION}}.zip
       - name: Create Release
         if: startsWith(github.ref, 'refs/tags/v')
         uses: ncipollo/release-action@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           allowUpdates: true
-          artifacts: dist/${{ env.TOOL_DIR }}-${{ env.VERSION }}-py3-none-any.whl, ${{ env.TOOL_NAME }}-${{ env.VERSION}}.zip
-          prerelease: ${{ env.RELEASE != true }}
+          artifacts: dist/${{ env.TOOL_DIR }}-${{ env.VERSION }}-py3-none-any.whl
+          prerelease: ${{ !env.RELEASE }}
       - name: Publish to Confluence - Public
-        if: ${{ env.RELEASE == true }}
+        if: ${{ env.RELEASE }}
         uses: cupcakearmy/confluence-markdown-sync@v1     
         with: 
           from: README.md
@@ -92,7 +86,7 @@ jobs:
           user: ${{ secrets.CONFLUENCE_USER }}
           token: ${{ secrets.CONFLUENCE_TOKEN }}
       - name: Publish to Confluence - Internal
-        if: ${{ env.RELEASE == true }}
+        if: ${{ env.RELEASE }}
         uses: cupcakearmy/confluence-markdown-sync@v1     
         with: 
           from: README.md

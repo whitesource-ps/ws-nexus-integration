@@ -22,17 +22,6 @@ Supported formats: `maven2`, `npm`, `pypi`, `rubygems`, `nuget`, `docker` and `r
 2. Download and edit _params.config_ (available on git)
 3. Execute `ws_nexus_integration <path/to/params.config>`
 
-### Install and utilization from GitHub
-1. On the target machine, create a new directory (e.g. ws-nexus) and extract **ws_nexus_integration-<version>.zip** to that directory.
-2. From the command line, navigate to the ws-nexus directory and install the package:  
-   `pip install -r requirements.txt`
-3. In case of Docker repository also execute: `pip install docker`  
-4. Edit the **params.config** file and update the relevant parameters (see the configuration parameters below)
-5. From the command line, execute: `python ws-nexus-integration.py <path/to/params.config>`
-
-**Note:** If more than one version of Python is installed on the target machine, use the appropriate executables
-for the installation and the execution (`pip3` and `python3` respectively)
-
 ### Configuration Parameters
 ```
 ===================================================================================================================
@@ -90,6 +79,3 @@ for the installation and the execution (`pip3` and `python3` respectively)
 | -5   | SERVER_FAILURE     | WhiteSource scan server side error                                |
 =================================================================================================
 ```
-
-### Author
-WhiteSource Software ©
