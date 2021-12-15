@@ -409,6 +409,8 @@ def execute_scan():
 
     if config.is_docker_scan:
         config.ws_conn.ua_conf.resolveAllDependencies = True
+        config.ws_conn.ua_conf.archiveExtractionDepth = ws_constants.UAArchiveFiles.ARCHIVE_EXTRACTION_DEPTH_MAX
+        config.ws_conn.ua_conf.archiveIncludes = ws_constants.UAArchiveFiles.ALL_ARCHIVE_FILES
         ret = config.ws_conn.scan_docker(product_name=config.product_name, docker_images=config.docker_images)
     else:
         config.ws_conn.ua_conf.projectPerFolder = True
