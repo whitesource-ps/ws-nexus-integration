@@ -31,31 +31,31 @@ Supported formats: `maven2`, `npm`, `pypi`, `rubygems`, `nuget`, `docker` and `r
 -------------------------------------------------------------------------------------------------------------------
 | Nexus Settings       | NexusAuthToken    | Nexus auth token (base64 encoded)                                    |
 -------------------------------------------------------------------------------------------------------------------
-| Nexus Settings       | NexusUser         | Nexus username. Required if NexusAuthToken not specified             |
+| Nexus Settings       | NexusUser         | Nexus username. Required if NexusAuthToken is not specified          |
 -------------------------------------------------------------------------------------------------------------------
-| Nexus Settings       | NexusPassword     | Nexus password. Required if NexusAuthToken not specified             |
+| Nexus Settings       | NexusPassword     | Nexus password. Required if NexusAuthToken is not specified          |
 -------------------------------------------------------------------------------------------------------------------
 | Nexus Settings       | InteractiveMode   | When set to True, a list of repository names will be displayed and   |
-|                      |                   | you will be prompted to select the ones you wish to scan             |
+|                      |                   | you will be prompted to select the ones you wish to scan.            |
 -------------------------------------------------------------------------------------------------------------------
 | Nexus Settings       | NexusAltDocker    | Allow specifying sepcific registry URL (host:port) to download docker|
-|                      | RegistryAddress   | images (i.e when registry is under NAT due to Nexus K8S deployment)  |
+|                      | RegistryAddress   | images (i.e, when registry is under NAT due to Nexus K8S deployment).|
 ===================================================================================================================
-| WhiteSource Settings | WSApiKey          | WhiteSource API Key. Can be found under the 'Integrate' tab in your  |
+| WhiteSource Settings | WSApiKey          | WhiteSource API Key, can be found under the 'Integrate' tab in your  |
 |                      |                   | WhiteSource organization.                                            |
 -------------------------------------------------------------------------------------------------------------------
-| WhiteSource Settings | WSProductName     | The WhiteSource product that will aggregate all scanned repositories |
+| WhiteSource Settings | WSProductName     | The WhiteSource product that will aggregate all scanned repositories.|
 -------------------------------------------------------------------------------------------------------------------
-| WhiteSource Settings | WSCheckPolicies   | Whether to enable WhiteSource policy check for scanned repositories  |
+| WhiteSource Settings | WSCheckPolicies   | Whether to enable WhiteSource policy check for scanned repositories. |
 -------------------------------------------------------------------------------------------------------------------
-| WhiteSource Settings | WSUrl             | WhiteSource server URL. Can be found under the 'Integrate' tab in    |
+| WhiteSource Settings | WSUrl             | WhiteSource server URL, can be found under the 'Integrate' tab in    |
 |                      |                   | your WhiteSource organization.                                       |
 ===================================================================================================================
 | General Settings     | NexusRepositories | Comma-separated list of repository names to scan.                    |
-|                      |                   | If empty and InteractiveMode=False, all repositories will be scanned |
+|                      |                   | If empty and InteractiveMode=False, all repositories will be scanned.|
 -------------------------------------------------------------------------------------------------------------------
 | General Settings     | ThreadCount       | Multi-threading speeds up the scan preperation phase, but it depends |
-|                      |                   | on your environment capabilities  (Default: 5)                       |
+|                      |                   | on your environment capabilities (default: 5).                       |
 ===================================================================================================================
 ```
 
@@ -74,7 +74,7 @@ Supported formats: `maven2`, `npm`, `pypi`, `rubygems`, `nuget`, `docker` and `r
 -------------------------------------------------------------------------------------------------
 | -3   | CLIENT_FAILURE     | WhiteSource scan client side error                                |
 -------------------------------------------------------------------------------------------------
-| -4   | CONNECTION_FAILURE | WhiteSource agent was failed to connect to the application server |
+| -4   | CONNECTION_FAILURE | WhiteSource agent failed to connect to the application server.    |
 -------------------------------------------------------------------------------------------------
 | -5   | SERVER_FAILURE     | WhiteSource scan server side error                                |
 =================================================================================================
