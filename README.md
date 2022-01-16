@@ -1,12 +1,12 @@
-![Logo](https://whitesource-resources.s3.amazonaws.com/ws-sig-images/Whitesource_Logo_178x44.png)
-
+[![Logo](https://whitesource-resources.s3.amazonaws.com/ws-sig-images/Whitesource_Logo_178x44.png)](https://www.whitesourcesoftware.com/)
 [![License](https://img.shields.io/badge/License-Apache%202.0-yellowgreen.svg)](https://opensource.org/licenses/Apache-2.0)
 [![GitHub release](https://img.shields.io/github/v/release/whitesource-ps/whitesource-nexus-integration)](https://github.com/whitesource-ps/whitesource-nexus-integration/releases/latest)
 [![WS Nexus Integration Build and Publish](https://github.com/whitesource-ps/whitesource-nexus-integration/actions/workflows/ci.yml/badge.svg)](https://github.com/whitesource-ps/whitesource-nexus-integration/actions/workflows/ci.yml)
 [![Python 3.6](https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Blue_Python_3.6%2B_Shield_Badge.svg/86px-Blue_Python_3.6%2B_Shield_Badge.svg.png)](https://www.python.org/downloads/release/python-360/)
+[![PyPI](https://img.shields.io/pypi/v/ws-nexus-integration?style=plastic)](https://pypi.org/project/ws-nexus-integration/)
 
 # [WhiteSource for Nexus](https://github.com/whitesource-ps/ws-nexus-integration)
-**ws-nexus** is a command line tool for scanning Nexus repositories.  
+**ws-nexus-integration** is a command line tool to scan Nexus repositories.  
 This tool can be deployed either on the Nexus host or on a separate machine that has access to the Nexus instance.
 Supported formats: `maven2`, `npm`, `pypi`, `rubygems`, `nuget`, `docker` and `raw`.
 
@@ -14,20 +14,13 @@ Supported formats: `maven2`, `npm`, `pypi`, `rubygems`, `nuget`, `docker` and `r
 - Nexus Repository Manager 3.x (any edition)
 - Java VM > 8
 - Docker
-- Python 3.5 or above
+- Python 3.7 or above
 
-### Deployment
-1. On the target machine, create a new directory (e.g., ws-nexus) and extract **ws-nexus.zip** to that directory.
-2. From the command line, navigate to the ws-nexus directory and install the package:  
-   `pip install -r requirements.txt`
-3. Edit the **params.config** file and update the relevant parameters (see the configuration parameters below).
-
-### Execution
-From the command line, execute the command:  
-`python ws-scan.py`
-
-**Note:** If more than one version of Python is installed on the target machine, use the appropriate executables
-for the installation and the execution (`pip3` and `python3` respectively).
+## Install and utilization from PyPi (simplest)
+1. Install ws-nexus-integration: `pip install ws-nexus-integration` 
+ * Note: to scan Docker repository on the Nexus execute: `pip install ws-nexus-integration[DOCKER]`
+2. Download and edit _params.config_ (available on git)
+3. Execute `ws_nexus_integration <path/to/params.config>`
 
 ### Configuration Parameters
 ```
@@ -86,6 +79,3 @@ for the installation and the execution (`pip3` and `python3` respectively).
 | -5   | SERVER_FAILURE     | WhiteSource scan server side error                                |
 =================================================================================================
 ```
-
-### Author
-WhiteSource Software ©
