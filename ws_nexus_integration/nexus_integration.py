@@ -38,7 +38,6 @@ class Configuration:
     #     nexus_password: str
     #     nexus_auth_token: str
     #     nexus_repos: str
-    #     nexus_ip: str
     #     headers: dict
 
     def __init__(self) -> str:
@@ -128,7 +127,6 @@ JavaBin=
         self.nexus_password = conf['Nexus Settings']['NexusPassword']
         self.nexus_auth_token = get_nexus_auth_token(self.nexus_user, self.nexus_password)
         self.nexus_repos = conf.get('Nexus Settings', 'NexusRepositories')
-        self.nexus_ip = self.nexus_base_url.split('//')[1].split(':')[0]
         self.headers = {'Authorization': f'Basic {self.nexus_auth_token}',
                         'accept': 'application/json'}
         # WhiteSource Settings
