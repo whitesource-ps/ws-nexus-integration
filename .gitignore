@@ -31,3 +31,4 @@ local-env.*
 /ws_nexus_integration.egg-info/
 /ws_nexus_integration/logs/
 /ws_nexus_integration/ua/
+ws_nexus_integration/__pycache__/

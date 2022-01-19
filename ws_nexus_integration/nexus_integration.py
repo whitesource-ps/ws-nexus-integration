@@ -38,7 +38,6 @@ class Configuration:
     #     nexus_password: str
     #     nexus_auth_token: str
     #     nexus_repos: str
-    #     nexus_ip: str
     #     headers: dict
 
     def __init__(self) -> str:
@@ -127,8 +126,9 @@ JavaBin=
         self.nexus_user = conf.get('Nexus Settings', 'NexusUser', fallback=None)
         self.nexus_password = conf['Nexus Settings']['NexusPassword']
         self.nexus_auth_token = get_nexus_auth_token(self.nexus_user, self.nexus_password)
-        self.nexus_repos = conf.get('Nexus Settings', 'NexusRepositories')
-        self.nexus_ip = self.nexus_base_url.split('//')[1].split(':')[0]
+        nexus_repos = conf.get('Nexus Settings', 'NexusRepositories')
+        if nexus_repos:
+            self.defined_nexus_repo_l = [repo.strip() for repo in nexus_repos.split(',')]
         self.headers = {'Authorization': f'Basic {self.nexus_auth_token}',
                         'accept': 'application/json'}
         # WhiteSource Settings
@@ -165,7 +165,7 @@ def set_nexus_resources_url(full_version: str):
     logging.debug(f"Using repository: {config.resources_url}")
 
 
-def retrieve_nexus_repositories():
+def retrieve_nexus_repositories() -> list:
     def get_nexus_ver(nexus_version):
         if nexus_version:
             logging.info(f"Nexus Version: {nexus_version}")
@@ -218,13 +218,14 @@ def download_components_from_repositories(selected_repos):
             else:
                 cur_repo_comp_url = repo_comp_url
             cur_comp_response = call_nexus_api(cur_repo_comp_url)
-            for item in cur_comp_response['items']:
+            for item in cur_comp_response.get('items'):
                 all_repo_items.append(item)
             continuation_token = cur_comp_response['continuationToken']
 
         if not all_repo_items:
             logging.debug(f'No artifacts found in {repo_name}')
         else:
+            logging.debug(f'Found {len(all_repo_items)} artifacts in {repo_name}')
             cur_dest_folder = os.path.join(config.scan_dir, repo_name)
             os.makedirs(cur_dest_folder, exist_ok=True)
             logging.info('Retrieving artifacts...')
@@ -252,21 +253,20 @@ def call_nexus_api(url: str, headers: dict = None, include_resp_headers: bool = 
     if not url.startswith("http"):
         url = urljoin(config.nexus_base_url, url)
     logging.debug(f"Calling Nexus URL: {url}")
-    ret = None
     try:
         resp = requests.get(url, headers=headers)
-        if resp.status_code != 200:
-            logging.error(f"Error calling API return code {resp.status_code} Error: {resp.reason}")
-        else:
-            try:
-                ret = json.loads(resp.text)
-            except json.decoder.JSONDecodeError:
-                ret = resp.content
-
-        if include_resp_headers:
-            ret = ret, resp.headers
-    except requests.RequestException:
+        resp.raise_for_status()
+    except requests.exceptions.RequestException:
         logging.exception(f"Received Error on endpoint: {url}")
+        raise
+
+    try:
+        ret = json.loads(resp.text)
+    except json.decoder.JSONDecodeError:
+        ret = resp.content
+
+    if include_resp_headers:
+        ret = ret, resp.headers
 
     return ret
 
@@ -311,6 +311,7 @@ def handle_docker_repo(component: dict, conf) -> str:
         logging.debug(f"Returned docker repo URL: {r_url}")
 
         return r_url
+
     ret = None
     dl_url = component['assets'][0]["downloadUrl"]
     logging.debug(f"Component repository: {component['repository']}")
@@ -414,41 +415,30 @@ def execute_scan():
         ret = config.ws_conn.scan_docker(product_name=config.product_name, docker_images=config.docker_images)
     else:
         config.ws_conn.ua_conf.projectPerFolder = True
-        ret = config.ws_conn.scan(scan_dir=config.scan_dir, product_name=config.product_name)
+        ret = config.ws_conn.scan(scan_dir=config.scan_dir,
+                                  product_name=config.product_name)
     logging.debug(f"Unified Agent standard output:\n {ret[1]}")
 
     return ret[0]
 
 
 def get_repos_to_scan():
-    def validate_selected_repos_from_config(nexus_input_repositories, existing_nexus_repository_list):
-        """
-        Validate selected repositories when running in configMode=True (production mode)
-        :param nexus_input_repositories:
-        :param existing_nexus_repository_list:
-        :return:
-        """
-        existing_nexus_repository_set = set(existing_nexus_repository_list)
-        user_selected_repos_list = list(nexus_input_repositories.split(","))
-        user_selected_repos_set = set(user_selected_repos_list)
-        missing_repos = user_selected_repos_set - existing_nexus_repository_set
-        if missing_repos:
-            logging.error(f'Could not find the following repositories: {",".join(missing_repos)}')
-            logging.error(
-                "Specified repositories not found or their format is not supported, check params.config and try again")
-            sys.exit(1)
-
-        logging.info('Getting region parameters has finished')
-
-        return user_selected_repos_list
-
     all_repos = retrieve_nexus_repositories()
-    if config.nexus_repos:
-        logging.info('Validate specified repositories')
-        repos_to_scan = validate_selected_repos_from_config(config.nexus_repos, all_repos)
+    logging.debug(f"The following repositories were found: {all_repos}")
+    repos_to_scan = []
+    if config.defined_nexus_repo_l:
+        for defined_repo in config.defined_nexus_repo_l:
+            if defined_repo in all_repos:
+                repos_to_scan.append(defined_repo)
+                logging.debug(f"Repository: '{defined_repo}' was added to scan")
+            else:
+                logging.error(f"User defined repository: '{defined_repo}' was not found in Nexus and will be skipped")
+        if not repos_to_scan:
+            logging.error("No configured repositories were found in Nexus. Nothing to scan.")
+            exit(-1)
     else:
         repos_to_scan = all_repos
-        logging.info('No specific repositories specified, all repositories will be scanned')
+        logging.info('All repositories will be scanned')
 
     return repos_to_scan
 
