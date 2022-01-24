@@ -48,7 +48,7 @@ Supported formats: `maven2`, `npm`, `pypi`, `rubygems`, `nuget`, `docker` and `r
 -------------------------------------------------------------------------------------------------------------------
 | WhiteSource Settings | WSCheckPolicies   | Whether to enable WhiteSource policy check for scanned repositories. |
 -------------------------------------------------------------------------------------------------------------------
-| WhiteSource Settings | WSLang            | (Optional) allow passing comma seperated list of suffices to be      |
+| WhiteSource Settings | WSLang            | (Optional) allow passing a comma seperated list of suffices to be      |
 |                      |                   | of artifacts to scan in Docker (default: empty).                     |
 -------------------------------------------------------------------------------------------------------------------
 | WhiteSource Settings | WSUrl             | WhiteSource server URL, can be found under the 'Integrate' tab in    |
