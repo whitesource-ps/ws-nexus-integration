@@ -13,7 +13,7 @@ from urllib.parse import urlparse, urljoin
 
 from ws_nexus_integration._version import __version__, __tool_name__
 import requests
-from ws_sdk import WSClient, ws_constants
+from ws_sdk import WS, ws_constants
 
 SUPPORTED_FORMATS = {'maven2', 'npm', 'pypi', 'rubygems', 'nuget', 'raw', 'docker'}
 DOCKER_TIMEOUT = 600
@@ -143,12 +143,12 @@ JavaBin=
         self.is_docker_scan = False
         self.scan_dir = os.path.join(self.base_dir, '_wstemp')
         java_bin = conf.get('General Settings', 'JavaBin', fallback="java")
-        self.ws_conn = WSClient(user_key=conf['WhiteSource Settings']['WSUserKey'],
-                                token=conf['WhiteSource Settings']['WSApiKey'],
-                                url=conf.get('WhiteSource Settings', 'WSUrl'),
-                                java_bin=java_bin if java_bin else "java",
-                                ua_path=self.base_dir,
-                                tool_details=(f"ps-{__tool_name__.replace('_', '-')}", __version__))
+        self.ws_conn = WS(user_key=conf['WhiteSource Settings']['WSUserKey'],
+                          token=conf['WhiteSource Settings']['WSApiKey'],
+                          url=conf.get('WhiteSource Settings', 'WSUrl'),
+                          java_bin=java_bin if java_bin else "java",
+                          ua_path=self.base_dir,
+                          tool_details=(f"ps-{__tool_name__.replace('_', '-')}", __version__))
         set_lang_include(conf.get('WhiteSource Settings', 'WSLang').replace(" ", ""))
 
         # General Settings
@@ -418,6 +418,8 @@ def execute_scan():
         ret = config.ws_conn.scan(scan_dir=config.scan_dir,
                                   product_name=config.product_name)
     logging.debug(f"Unified Agent standard output:\n {ret[1]}")
+
+    app_status = config.ws_conn.get_last_scan_process_status(ret[2])
 
     return ret[0]
 
