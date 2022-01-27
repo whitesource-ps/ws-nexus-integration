@@ -218,7 +218,7 @@ def download_components_from_repositories(selected_repos):
             else:
                 cur_repo_comp_url = repo_comp_url
             cur_comp_response = call_nexus_api(cur_repo_comp_url)
-            if cur_comp_response:
+            if isinstance(cur_comp_response, dict):
                 for item in cur_comp_response.get('items'):
                     all_repo_items.append(item)
                 continuation_token = cur_comp_response['continuationToken']
@@ -265,6 +265,8 @@ def call_nexus_api(url: str, headers: dict = None, include_resp_headers: bool = 
         ret = json.loads(resp.text)
     except json.decoder.JSONDecodeError:
         ret = resp.content
+
+    logging.debug(f"Response return type: {type(ret)}")
 
     if include_resp_headers:
         ret = ret, resp.headers
