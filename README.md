@@ -38,7 +38,7 @@ Supported formats: `maven2`, `npm`, `pypi`, `rubygems`, `nuget`, `docker` and `r
 | Nexus Settings       | InteractiveMode   | When set to True, a list of repository names will be displayed and   |
 |                      |                   | you will be prompted to select the ones you wish to scan.            |
 -------------------------------------------------------------------------------------------------------------------
-| Nexus Settings       | NexusAltDocker    | Allow specifying sepcific registry URL (host:port) to download docker|
+| Nexus Settings       | NexusAltDocker    | Allow specifying specific registry URL (host:port) to download docker|
 |                      | RegistryAddress   | images (i.e, when registry is under NAT due to Nexus K8S deployment).|
 ===================================================================================================================
 | WhiteSource Settings | WSApiKey          | WhiteSource API Key, can be found under the 'Integrate' tab in your  |
@@ -48,8 +48,8 @@ Supported formats: `maven2`, `npm`, `pypi`, `rubygems`, `nuget`, `docker` and `r
 -------------------------------------------------------------------------------------------------------------------
 | WhiteSource Settings | WSCheckPolicies   | Whether to enable WhiteSource policy check for scanned repositories. |
 -------------------------------------------------------------------------------------------------------------------
-| WhiteSource Settings | WSLang            | (Optional) allow passing a comma seperated list of suffices to be      |
-|                      |                   | of artifacts to scan in Docker (default: empty).                     |
+| WhiteSource Settings | WSLang            | (Optional) allow passing a comma seperated list of suffices of       |
+|                      |                   | artifacts to scan in Docker (default: empty).                        |
 -------------------------------------------------------------------------------------------------------------------
 | WhiteSource Settings | WSUrl             | WhiteSource server URL, can be found under the 'Integrate' tab in    |
 |                      |                   | your WhiteSource organization.                                       |
