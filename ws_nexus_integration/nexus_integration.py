@@ -218,9 +218,10 @@ def download_components_from_repositories(selected_repos):
             else:
                 cur_repo_comp_url = repo_comp_url
             cur_comp_response = call_nexus_api(cur_repo_comp_url)
-            for item in cur_comp_response.get('items'):
-                all_repo_items.append(item)
-            continuation_token = cur_comp_response['continuationToken']
+            if cur_comp_response:
+                for item in cur_comp_response.get('items'):
+                    all_repo_items.append(item)
+                continuation_token = cur_comp_response['continuationToken']
 
         if not all_repo_items:
             logging.debug(f'No artifacts found in {repo_name}')
