@@ -264,6 +264,7 @@ def call_nexus_api(url: str, headers: dict = None, include_resp_headers: bool = 
     try:
         ret = json.loads(resp.text)
     except json.decoder.JSONDecodeError:
+        logging.debug("Response is not JSON")
         ret = resp.content
 
     logging.debug(f"Response return type: {type(ret)}")
