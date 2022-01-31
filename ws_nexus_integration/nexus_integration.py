@@ -212,11 +212,12 @@ def get_items_from_repo(repo_name: str) -> List[dict]:
         if continuation_token is not None:
             cur_repo_comp_url += f"&continuationToken={continuation_token}"
         cur_comp_resp = call_nexus_api(cur_repo_comp_url)
+        continuation_token = None
 
         if isinstance(cur_comp_resp, dict):     # TODO: RECONSIDER REMOVING AS THIS SHOULDN'T HAPPEN
             all_repo_items.extend(cur_comp_resp.get('items', []))
+            continuation_token = cur_comp_resp.get('continuationToken')
 
-        continuation_token = cur_comp_resp.get('continuationToken')
         if continuation_token is None:
             break
 
