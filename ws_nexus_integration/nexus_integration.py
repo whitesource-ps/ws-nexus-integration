@@ -216,7 +216,7 @@ def get_items_from_repo(repo_name: str) -> List[dict]:
         if isinstance(cur_comp_resp, dict):     # TODO: RECONSIDER REMOVING AS THIS SHOULDN'T HAPPEN
             all_repo_items.extend(cur_comp_resp.get('items', []))
 
-        continuation_token = cur_comp_resp['continuationToken']
+        continuation_token = cur_comp_resp.get('continuationToken')
         if continuation_token is None:
             break
 
