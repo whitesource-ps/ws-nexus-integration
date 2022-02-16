@@ -35,8 +35,6 @@ Supported formats: `maven2`, `npm`, `pypi`, `rubygems`, `nuget`, `docker` and `r
 -------------------------------------------------------------------------------------------------------------------
 | Nexus Settings       | NexusPassword     | Nexus password. Required if NexusAuthToken is not specified          |
 -------------------------------------------------------------------------------------------------------------------
-| Nexus Settings       | InteractiveMode   | When set to True, a list of repository names will be displayed and   |
-|                      |                   | you will be prompted to select the ones you wish to scan.            |
 -------------------------------------------------------------------------------------------------------------------
 | Nexus Settings       | NexusAltDocker    | Allow specifying specific registry URL (host:port) to download docker|
 |                      | RegistryAddress   | images (i.e, when registry is under NAT due to Nexus K8S deployment).|
@@ -55,7 +53,10 @@ Supported formats: `maven2`, `npm`, `pypi`, `rubygems`, `nuget`, `docker` and `r
 |                      |                   | your WhiteSource organization.                                       |
 ===================================================================================================================
 | General Settings     | NexusRepositories | Comma-separated list of repository names to scan.                    |
-|                      |                   | If empty and InteractiveMode=False, all repositories will be scanned.|
+|                      |                   |                                                                      |
+-------------------------------------------------------------------------------------------------------------------
+| General Settings     | NexusExcludedRepos| Comma-separated list of repository names to excluded from scan.      |
+|                      | itories           |                                                                      |
 -------------------------------------------------------------------------------------------------------------------
 | General Settings     | ThreadCount       | Multi-threading speeds up the scan preperation phase, but it depends |
 |                      |                   | on your environment capabilities (default: 5).                       |

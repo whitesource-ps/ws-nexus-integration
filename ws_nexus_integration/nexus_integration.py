@@ -8,8 +8,10 @@ import sys
 from configparser import ConfigParser
 from distutils.util import strtobool
 from multiprocessing import Pool, Manager
-from typing import Union
+from typing import Union, List
 from urllib.parse import urlparse, urljoin
+
+import ws_sdk.ws_errors
 
 from ws_nexus_integration._version import __version__, __tool_name__
 import requests
@@ -41,13 +43,7 @@ class Configuration:
     #     headers: dict
 
     def __init__(self) -> str:
-        def convert_to_basic_string(user_name: str, password:str):
-            """
-            Encode username and password per RFC 7617
-            :param user_name:
-            :param password:
-            :return:
-            """
+        def convert_to_basic_string(user_name: str, password: str):
             auth_string_plain = f"{user_name}:{password}"
             basic_bytes = base64.b64encode(bytes(auth_string_plain, "utf-8"))
             basic_string = str(basic_bytes)[2:-1]
@@ -101,6 +97,7 @@ NexusAuthToken=
 NexusUser=
 NexusPassword=
 NexusRepositories=
+NexusExcludedRepositories=
 NexusAltDockerRegistryAddress=
 
 
@@ -126,9 +123,14 @@ JavaBin=
         self.nexus_user = conf.get('Nexus Settings', 'NexusUser', fallback=None)
         self.nexus_password = conf['Nexus Settings']['NexusPassword']
         self.nexus_auth_token = get_nexus_auth_token(self.nexus_user, self.nexus_password)
-        nexus_repos = conf.get('Nexus Settings', 'NexusRepositories')
-        if nexus_repos:
-            self.defined_nexus_repo_l = [repo.strip() for repo in nexus_repos.split(',')]
+        self.nexus_repos = conf.get('Nexus Settings', 'NexusRepositories')
+        if self.nexus_repos:
+            self.defined_nexus_repo_l = [repo.strip() for repo in self.nexus_repos.split(',')]
+        self.nexus_exc_repos = conf['Nexus Settings'].get('NexusExcludedRepositories')
+        if self.nexus_exc_repos:
+            self.nexus_exc_repos_l = [repo.strip() for repo in self.nexus_exc_repos.split(',')]
+        else:
+            self.nexus_exc_repos_l = []
         self.headers = {'Authorization': f'Basic {self.nexus_auth_token}',
                         'accept': 'application/json'}
         # WhiteSource Settings
@@ -165,7 +167,7 @@ def set_nexus_resources_url(full_version: str):
     logging.debug(f"Using repository: {config.resources_url}")
 
 
-def retrieve_nexus_repositories() -> list:
+def retrieve_nexus_repositories() -> List[str]:
     def get_nexus_ver(nexus_version):
         if nexus_version:
             logging.info(f"Nexus Version: {nexus_version}")
@@ -175,7 +177,7 @@ def retrieve_nexus_repositories() -> list:
 
         return nexus_version
 
-    def get_valid_repositories(repos):
+    def get_valid_repositories(repos) -> List[str]:
         valid_repos = []
         for repo in repos:
             repo_format = repo.get("format")
@@ -204,23 +206,35 @@ def validate_selected_repositories(nexus_input_repositories, existing_nexus_repo
     return selected_repositories
 
 
+def get_items_from_repo(repo_name: str) -> List[dict]:
+    logging.info(f'Handling repository: {repo_name}')
+    repo_comp_url = f'/service/rest/v1/components?repository={repo_name}'
+
+    all_repo_items = []
+    continuation_token = None
+
+    while True:
+        cur_repo_comp_url = repo_comp_url
+        if continuation_token is not None:
+            cur_repo_comp_url += f"&continuationToken={continuation_token}"
+        cur_comp_resp = call_nexus_api(cur_repo_comp_url)
+        continuation_token = None
+
+        if isinstance(cur_comp_resp, dict):     # TODO: RECONSIDER REMOVING AS THIS SHOULDN'T HAPPEN
+            all_repo_items.extend(cur_comp_resp.get('items', []))
+            continuation_token = cur_comp_resp.get('continuationToken')
+
+        if continuation_token is None:
+            break
+
+    logging.debug(f"Found {len(all_repo_items)} items in repository: '{repo_name}'")
+
+    return all_repo_items
+
+
 def download_components_from_repositories(selected_repos):
     for repo_name in selected_repos:
-        logging.info(f'Repository: {repo_name}')
-        repo_comp_url = f'{config.nexus_base_url}/service/rest/v1/components?repository={repo_name}'
-        continuation_token = "init"
-        all_repo_items = []
-
-        logging.info('Validate artifact list')
-        while continuation_token:
-            if continuation_token != 'init':
-                cur_repo_comp_url = f'{repo_comp_url}&continuationToken={continuation_token}'
-            else:
-                cur_repo_comp_url = repo_comp_url
-            cur_comp_response = call_nexus_api(cur_repo_comp_url)
-            for item in cur_comp_response.get('items'):
-                all_repo_items.append(item)
-            continuation_token = cur_comp_response['continuationToken']
+        all_repo_items = get_items_from_repo(repo_name)
 
         if not all_repo_items:
             logging.debug(f'No artifacts found in {repo_name}')
@@ -246,7 +260,11 @@ def download_components_from_repositories(selected_repos):
                 config.docker_images = docker_images
 
 
-def call_nexus_api(url: str, headers: dict = None, include_resp_headers: bool = False) -> Union[dict, bytes]:
+def call_nexus_api(url: str,
+                   headers: dict = None,
+                   include_resp_headers: bool = False,
+                   method: str = "get",
+                   **kwargs) -> Union[dict, bytes]:
     if headers is None:
         headers = config.headers
 
@@ -254,7 +272,7 @@ def call_nexus_api(url: str, headers: dict = None, include_resp_headers: bool = 
         url = urljoin(config.nexus_base_url, url)
     logging.debug(f"Calling Nexus URL: {url}")
     try:
-        resp = requests.get(url, headers=headers)
+        resp = requests.request(method=method, url=url, headers=headers, **kwargs)
         resp.raise_for_status()
     except requests.exceptions.RequestException:
         logging.exception(f"Received Error on endpoint: {url}")
@@ -263,7 +281,10 @@ def call_nexus_api(url: str, headers: dict = None, include_resp_headers: bool = 
     try:
         ret = json.loads(resp.text)
     except json.decoder.JSONDecodeError:
+        logging.debug("Response is not JSON")
         ret = resp.content
+
+    logging.debug(f"Response return type: {type(ret)}")
 
     if include_resp_headers:
         ret = ret, resp.headers
@@ -402,7 +423,7 @@ def comp_worker(repo_name, component_assets, cur_dest_folder, headers, comp_name
     logging.info(f'Component {comp_name} has successfully downloaded')
 
 
-def execute_scan():
+def execute_scan() -> int:
     config.ws_conn.ua_conf.productName = config.product_name
     config.ws_conn.ua_conf.checkPolicies = strtobool(config.policies)
     config.ws_conn.ua_conf.forceCheckAllDependencies = strtobool(config.policies)
@@ -410,7 +431,7 @@ def execute_scan():
 
     if config.is_docker_scan:
         config.ws_conn.ua_conf.resolveAllDependencies = True
-        config.ws_conn.ua_conf.archiveExtractionDepth = ws_constants.UAArchiveFiles.ARCHIVE_EXTRACTION_DEPTH_MAX
+        config.ws_conn.ua_conf.archiveExtractionDepth = 3
         config.ws_conn.ua_conf.archiveIncludes = ws_constants.UAArchiveFiles.ALL_ARCHIVE_FILES
         ret = config.ws_conn.scan_docker(product_name=config.product_name, docker_images=config.docker_images)
     else:
@@ -418,17 +439,19 @@ def execute_scan():
         ret = config.ws_conn.scan(scan_dir=config.scan_dir,
                                   product_name=config.product_name)
     logging.debug(f"Unified Agent standard output:\n {ret[1]}")
-
-    app_status = config.ws_conn.get_last_scan_process_status(ret[2])
+    try:
+        app_status = config.ws_conn.get_last_scan_process_status(ret[2])
+    except ws_sdk.ws_errors.WsSdkServerInsufficientPermissions:
+        logging.debug("Insufficient permissions to execute call")
 
     return ret[0]
 
 
-def get_repos_to_scan():
+def get_repos_to_scan() -> List[str]:
     all_repos = retrieve_nexus_repositories()
     logging.debug(f"The following repositories were found: {all_repos}")
     repos_to_scan = []
-    if config.defined_nexus_repo_l:
+    if config.nexus_repos:
         for defined_repo in config.defined_nexus_repo_l:
             if defined_repo in all_repos:
                 repos_to_scan.append(defined_repo)
@@ -440,7 +463,12 @@ def get_repos_to_scan():
             exit(-1)
     else:
         repos_to_scan = all_repos
-        logging.info('All repositories will be scanned')
+
+    if config.nexus_exc_repos:
+        logging.info(f"Repositories: {config.nexus_exc_repos_l} are excluded from the scan")
+        repos_to_scan = [repo for repo in repos_to_scan if repo not in config.nexus_exc_repos_l]
+
+    logging.info(f'The following repositories will be scanned: {repos_to_scan}')
 
     return repos_to_scan
 
