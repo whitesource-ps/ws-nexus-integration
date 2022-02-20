@@ -332,16 +332,6 @@ def handle_docker_repo(component: dict, conf) -> str:
 
 
 def repo_worker(comp, repo_name, cur_dest_folder, headers, conf, d_images_q):
-    """
-
-    :param d_images_q:
-    :param conf:
-    :param comp:
-    :param repo_name:
-    :param cur_dest_folder:
-    :param headers:
-    """
-
     all_components = []
     component_assets = comp['assets']
     logger.debug(f"Handling component ID: {comp['id']} on repository: {comp['repository']} Format: {comp['format']}")
@@ -367,7 +357,7 @@ def repo_worker(comp, repo_name, cur_dest_folder, headers, conf, d_images_q):
 
 
 def comp_worker(repo_name, component_assets, cur_dest_folder, headers, comp_name):
-    logger.info(f'Downloading {comp_name} component from {repo_name}')
+    logger.info(f"Downloading '{comp_name}' component from: '{repo_name}'")
     comp_download_url = component_assets[0]["downloadUrl"]
     comp_data = call_nexus_api(comp_download_url, headers)
     logger.debug(f"Download URL: {comp_download_url}")
