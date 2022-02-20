@@ -30,7 +30,6 @@ def patched_docker(mocker):
 def patched_os(mocker):
     mocker.patch('os.makedirs')
 
-
 class TestClass:
     @pytest.fixture(autouse=True)
     def inject_fixtures(self, caplog):
