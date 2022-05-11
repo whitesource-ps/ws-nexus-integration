@@ -175,7 +175,7 @@ def get_items_from_repo(repo_name: str) -> List[dict]:
         cur_comp_resp = call_nexus_api(cur_repo_comp_url)
         continuation_token = None
 
-        if isinstance(cur_comp_resp, dict):     # TODO: RECONSIDER REMOVING AS THIS SHOULDN'T HAPPEN
+        if isinstance(cur_comp_resp, dict):  # TODO: RECONSIDER REMOVING AS THIS SHOULDN'T HAPPEN
             all_repo_items.extend(cur_comp_resp.get('items', []))
             continuation_token = cur_comp_resp.get('continuationToken')
 
@@ -210,9 +210,16 @@ def download_components_from_repositories(selected_repos):
                 docker_images.add(docker_images_q.get(block=True, timeout=0.05))
 
             if docker_images:
-                config.is_docker_scan = True
                 logger.info(f"Found total {len(docker_images)} docker images")
-                config.docker_images = docker_images
+                for image in docker_images:
+                    config.is_docker_scan = True
+                    # config.docker_images = docker_images
+                    config.ws_conn.ua_conf.docker_includeSingleScan = image
+                    execute_scan()
+            else:
+                config.is_docker_scan = False
+                execute_scan()
+                pass
 
 
 def call_nexus_api(url: str,
@@ -254,6 +261,7 @@ def handle_docker_repo(component: dict, conf) -> str:
     :param conf: global config
     :return: Retrieve Docker Image ID so UA will only scan images downloaded from Nexus
     """
+
     def get_repos_as_dict(c) -> dict:
         """
         Convert repository data into dictionary
@@ -315,16 +323,17 @@ def handle_docker_repo(component: dict, conf) -> str:
     if docker_repo_url:
         image_name = f"{docker_repo_url}/{manifest['name']}"
         image_full_name = f"{image_name}:{manifest['tag']}"
-        logger.info(f"Pulling Docker image: {image_name}")
+        logger.info(f"Pulling Docker image: {image_full_name}")
         try:
             docker_client = docker.from_env(timeout=DOCKER_TIMEOUT)
             # Configuring Nexus user and password are mandatory for non-anonymous Docker repositories
             docker_client.login(username=conf.nexus_user, password=conf.nexus_password, registry=docker_repo_url)
             pull_res = docker_client.images.pull(image_full_name)
             logger.debug(f"Image ID: {image_full_name} successfully pulled")
-            ret = image_name
+            image_full_name = f"{image_name} {manifest['tag']}"  # removing : operator in favour of docker.includeSingleScan
+            ret = image_full_name
         except docker.errors.DockerException:
-            logging.exception(f"Error loading image: {image_name}")
+            logging.exception(f"Error loading image: {image_full_name}")
     else:
         logger.warning(f"Repository was not found for {component['repository']}. Skipping")
 
@@ -373,17 +382,19 @@ def execute_scan() -> int:
     config.ws_conn.ua_conf.checkPolicies = strtobool(config.policies)
     config.ws_conn.ua_conf.forceCheckAllDependencies = strtobool(config.policies)
     config.ws_conn.ua_conf.offline = True if os.environ.get("OFFLINE", "").lower() == "true" else False
+    config.ws_conn.ua_conf.updateType = 'APPEND'
 
     if config.is_docker_scan:
         config.ws_conn.ua_conf.resolveAllDependencies = True
         config.ws_conn.ua_conf.archiveExtractionDepth = 3
         config.ws_conn.ua_conf.archiveIncludes = list(ws_constants.UAArchiveFiles.ALL_ARCHIVE_FILES)
-        ret = config.ws_conn.scan_docker(product_name=config.product_name, docker_images=config.docker_images)
+        # ret = config.ws_conn.scan_docker(product_name=config.product_name, docker_images=config.docker_images)
+        ret = config.ws_conn.scan_docker(product_name=config.product_name)
     else:
         config.ws_conn.ua_conf.projectPerFolder = True
         ret = config.ws_conn.scan(scan_dir=config.scan_dir,
                                   product_name=config.product_name)
-    logger.debug(f"Unified Agent standard output:\n {ret[1]}")
+    logger.info(f"Unified Agent standard output:\n {ret[1]}")
     try:
         app_status = config.ws_conn.get_last_scan_process_status(ret[2])
     except ws_sdk.ws_errors.WsSdkServerInsufficientPermissions:
@@ -463,8 +474,8 @@ def main():
     config = Config(params_f)
     selected_repositories = get_repos_to_scan()
     config.resources_url = set_nexus_resources_url(config.nexus_version)
-    download_components_from_repositories(selected_repositories)
-    return_code = execute_scan()
+    return_code = download_components_from_repositories(selected_repositories)
+    # return_code = execute_scan()
 
     return return_code
 

@@ -18,7 +18,7 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     python_requires='>=3.7',
     install_requires=open('requirements.txt').read().splitlines(),
-    extras_require={"docker": ["docker~=5.0.0"]},
+    # extras_require={"docker": ["docker~=5.0.0"]},
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
     classifiers=[
