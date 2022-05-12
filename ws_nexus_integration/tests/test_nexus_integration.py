@@ -66,7 +66,7 @@ class TestClass:
         with self._caplog.at_level(logging.DEBUG, logger='nexus_integration'):
             mock_get_items_from_repo.return_value = [{}]
 
-            nexus_integration.download_components_from_repositories(["REPO_NAME1"])
+            nexus_integration.scan_components_from_repositories(["REPO_NAME1"])
 
             assert 'Retrieving artifacts...' in self._caplog.text
 
