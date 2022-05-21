@@ -17,8 +17,7 @@ Supported formats: `maven2`, `npm`, `pypi`, `rubygems`, `nuget`, `docker` and `r
 - Python 3.7 or above
 
 ## Install and utilization from PyPi (simplest)
-1. Install ws-nexus-integration: `pip install ws-nexus-integration` 
- * Note: to scan Docker repository on the Nexus execute: `pip install ws-nexus-integration[DOCKER]`
+1. Install ws-nexus-integration: `pip install ws-nexus-integration`
 2. Download and edit _params.config_ (available on git)
 3. Execute `ws_nexus_integration <path/to/params.config>`
 
@@ -35,12 +34,22 @@ Supported formats: `maven2`, `npm`, `pypi`, `rubygems`, `nuget`, `docker` and `r
 -------------------------------------------------------------------------------------------------------------------
 | Nexus Settings       | NexusPassword     | Nexus password. Required if NexusAuthToken is not specified          |
 -------------------------------------------------------------------------------------------------------------------
+| Nexus Settings       | NexusRepositories | Comma-separated list of repository names to scan.                    |
+-------------------------------------------------------------------------------------------------------------------
+| General Settings     | NexusExcludedRepos| Comma-separated list of repository names to excluded from scan.      |
+|                      | itories           |                                                                      |
+-------------------------------------------------------------------------------------------------------------------
+| General Settings     | NexusDockerRepos  | In case of docker repository ,                                       |
+|                      | ImagesIncludes    | Comma-separated regex list of images expressions to be included      |
 -------------------------------------------------------------------------------------------------------------------
 | Nexus Settings       | NexusAltDocker    | Allow specifying specific registry URL (host:port) to download docker|
 |                      | RegistryAddress   | images (i.e, when registry is under NAT due to Nexus K8S deployment).|
 ===================================================================================================================
 | WhiteSource Settings | WSApiKey          | WhiteSource API Key, can be found under the 'Integrate' tab in your  |
 |                      |                   | WhiteSource organization.                                            |
+-------------------------------------------------------------------------------------------------------------------
+| WhiteSource Settings | WSUserKey         | WhiteSource User Key, can be found under the 'user profile' tab in   |
+|                      |                   | your WhiteSource organization.                                       |
 -------------------------------------------------------------------------------------------------------------------
 | WhiteSource Settings | WSProductName     | The WhiteSource product that will aggregate all scanned repositories.|
 -------------------------------------------------------------------------------------------------------------------
@@ -52,11 +61,6 @@ Supported formats: `maven2`, `npm`, `pypi`, `rubygems`, `nuget`, `docker` and `r
 | WhiteSource Settings | WSUrl             | WhiteSource server URL, can be found under the 'Integrate' tab in    |
 |                      |                   | your WhiteSource organization.                                       |
 ===================================================================================================================
-| General Settings     | NexusRepositories | Comma-separated list of repository names to scan.                    |
-|                      |                   |                                                                      |
--------------------------------------------------------------------------------------------------------------------
-| General Settings     | NexusExcludedRepos| Comma-separated list of repository names to excluded from scan.      |
-|                      | itories           |                                                                      |
 -------------------------------------------------------------------------------------------------------------------
 | General Settings     | ThreadCount       | Multi-threading speeds up the scan preperation phase, but it depends |
 |                      |                   | on your environment capabilities (default: 5).                       |

@@ -95,6 +95,11 @@ class Config:
             self.nexus_exc_repos_l = [repo.strip() for repo in self.nexus_exc_repos.split(',')]
         else:
             self.nexus_exc_repos_l = []
+        self.nexus_docker_repos_images_include=conf.get('Nexus Settings', 'NexusDockerReposImagesIncludes',fallback='.*.*')
+        if self.nexus_docker_repos_images_include=='':
+            self.nexus_docker_repos_images_include='.*'
+        self.nexus_docker_repos_images_include_l=[repo.strip() for repo in self.nexus_docker_repos_images_include.split(',')]
+
         self.headers = {'Authorization': f'Basic {self.nexus_auth_token}',
                         'accept': 'application/json'}
         # WhiteSource Settings
@@ -205,8 +210,8 @@ def scan_components_from_repositories(selected_repos):
                 artifacts_to_scan = pool.starmap(repo_worker, [(comp, repo_name, config.headers, config, docker_images_q)
                                                                for i, comp in enumerate(all_repo_items)])
 
-            if len(artifacts_to_scan) > 0:
-                execute_scan(config)
+            if len(artifacts_to_scan) > 0 and os.path.exists(os.path.join(config.scan_dir,repo_name)):
+                execute_scan(config,repo_name)
 
 
 def call_nexus_api(url: str,
@@ -305,20 +310,22 @@ def handle_docker_repo(component: dict, conf) -> tuple:
         image_name = f"{docker_repo_url}/{manifest['name']}"
         image_full_name = f"{image_name}:{manifest['tag']}"
 
-        logger.info(f"Pulling Docker image: {image_full_name}")
-        try:
-            docker_client = docker.from_env(timeout=DOCKER_TIMEOUT)
-            local_image = docker_client.images.list(image_full_name)
-            is_image_exists_locally = True if local_image.__len__() == 1 else False
+        temp = '(?:% s)' % '|'.join(conf.nexus_docker_repos_images_include_l)
+        if re.match(temp, image_full_name):
+            logger.info(f"Pulling Docker image: {image_full_name}")
+            try:
+                docker_client = docker.from_env(timeout=DOCKER_TIMEOUT)
+                local_image = docker_client.images.list(image_full_name)
+                is_image_exists_locally = True if local_image.__len__() == 1 else False
 
-            # Configuring Nexus user and password are mandatory for non-anonymous Docker repositories
-            docker_client.login(username=conf.nexus_user, password=conf.nexus_password, registry=docker_repo_url)
-            pull_res = docker_client.images.pull(image_full_name)
-            logger.debug(f"Image ID: {image_full_name} successfully pulled")
-            ret = f"{image_name} {manifest['tag']}"  # removing : operator in favour of docker.includeSingleScan
+                # Configuring Nexus user and password are mandatory for non-anonymous Docker repositories
+                docker_client.login(username=conf.nexus_user, password=conf.nexus_password, registry=docker_repo_url)
+                pull_res = docker_client.images.pull(image_full_name)
+                logger.debug(f"Image ID: {image_full_name} successfully pulled")
+                ret = f"{image_name} {manifest['tag']}"  # removing : operator in favour of docker.includeSingleScan
 
-        except docker.errors.DockerException:
-            logging.exception(f"Error loading image: {image_full_name}")
+            except docker.errors.DockerException:
+                logging.exception(f"Error loading image: {image_full_name}")
     else:
         logger.warning(f"Repository was not found for {component['repository']}. Skipping")
 
@@ -350,9 +357,9 @@ def repo_worker(comp, repo_name, headers, conf, d_images_q):
             d_images_q.put(image_id)
             conf.is_docker_scan = True
             conf.ws_conn.ua_conf.docker_includeSingleScan = image_id
-            execute_scan(conf)
+            execute_scan(conf,repo_name)
             if is_image_exists_locally:
-                logger.info(f"{image_full_name} already exist locally before the scan - won't be removed")
+                logger.info(f"{image_full_name} already exists locally prior to the scan - won't be removed")
             else:
                 docker_c = docker.from_env(timeout=DOCKER_TIMEOUT)
                 docker_c.images.remove(image=image_full_name, force=True)
@@ -379,12 +386,11 @@ def comp_worker(repo_name, component_assets, cur_dest_folder, headers, comp_name
     logger.info(f'Component {comp_name} has successfully downloaded')
 
 
-def execute_scan(config) -> int:
+def execute_scan(config,repo_name) -> int:
     config.ws_conn.ua_conf.productName = config.product_name
     config.ws_conn.ua_conf.checkPolicies = strtobool(config.policies)
     config.ws_conn.ua_conf.forceCheckAllDependencies = strtobool(config.policies)
     config.ws_conn.ua_conf.offline = True if os.environ.get("OFFLINE", "").lower() == "true" else False
-    config.ws_conn.ua_conf.updateType = 'APPEND'
 
     if config.is_docker_scan:
         config.ws_conn.ua_conf.resolveAllDependencies = True
@@ -392,9 +398,9 @@ def execute_scan(config) -> int:
         config.ws_conn.ua_conf.archiveIncludes = list(ws_constants.UAArchiveFiles.ALL_ARCHIVE_FILES)
         ret = config.ws_conn.scan_docker(product_name=config.product_name)
     else:
-        config.ws_conn.ua_conf.projectPerFolder = True
-        ret = config.ws_conn.scan(scan_dir=config.scan_dir,
-                                  product_name=config.product_name)
+        # config.ws_conn.ua_conf.projectPerFolder = True
+        ret = config.ws_conn.scan(scan_dir=os.path.join(config.scan_dir,repo_name),
+                                  product_name=config.product_name,project_name=repo_name)
     logger.debug(f"Unified Agent standard output:\n {ret[1]}")
     try:
         app_status = config.ws_conn.get_last_scan_process_status(ret[2])
