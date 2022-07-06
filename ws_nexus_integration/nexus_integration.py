@@ -207,7 +207,8 @@ def scan_components_from_repositories(selected_repos):
             manager = Manager()
             docker_images_q = manager.Queue()
             with Pool(config.threads_number) as pool:
-                artifacts_to_scan = pool.starmap(repo_worker, [(comp, repo_name, config.headers, config, docker_images_q)
+                cur_dest_folder=None
+                artifacts_to_scan = pool.starmap(repo_worker, [(comp, repo_name,cur_dest_folder,config.headers, config, docker_images_q)
                                                                for i, comp in enumerate(all_repo_items)])
 
             if len(artifacts_to_scan) > 0 and os.path.exists(os.path.join(config.scan_dir,repo_name)):
@@ -332,7 +333,7 @@ def handle_docker_repo(component: dict, conf) -> tuple:
     return ret, is_image_exists_locally, image_full_name
 
 
-def repo_worker(comp, repo_name, headers, conf, d_images_q):
+def repo_worker(comp, repo_name,cur_dest_folder,headers, conf, d_images_q):
     all_components = []
     component_assets = comp['assets']
     logger.debug(f"Handling component ID: {comp['id']} on repository: {comp['repository']} Format: {comp['format']}")
@@ -375,7 +376,7 @@ def repo_worker(comp, repo_name, headers, conf, d_images_q):
 
 
 def comp_worker(repo_name, component_assets, cur_dest_folder, headers, comp_name):
-    logger.info(f"Downloading '{comp_name}' component from: '{repo_name}'")
+    logger.info(f"Downloading '{comp_name}' component from: '{repo_name}' to {cur_dest_folder}")
     comp_download_url = component_assets[0]["downloadUrl"]
     comp_data = call_nexus_api(comp_download_url, headers)
     logger.debug(f"Download URL: {comp_download_url}")
