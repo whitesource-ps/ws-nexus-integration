@@ -2,5 +2,5 @@ requests==2.27.1
 wget~=3.2
 ws-sdk~=0.9.1
 docker~=5.0.03
-setuptools~=60.2.0
+setuptools~=60.10.0
 pytest~=7.1.2
