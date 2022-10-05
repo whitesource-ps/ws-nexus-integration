@@ -101,9 +101,9 @@ class Config:
 
         self.headers = {'Authorization': f'Basic {self.nexus_auth_token}',
                         'accept': 'application/json'}
-        # WhiteSource Settings
-        self.product_name = conf.get('WhiteSource Settings', 'WSProductName', fallback='Nexus')
-        self.check_policies = conf.getboolean('WhiteSource Settings', 'WSCheckPolicies', fallback=False)
+        # Mend Settings
+        self.product_name = conf.get('Mend Settings', 'WSProductName', fallback='Nexus')
+        self.check_policies = conf.getboolean('Mend Settings', 'WSCheckPolicies', fallback=False)
         self.policies = 'true' if self.check_policies else 'false'
         ws_name = f"ws-{__tool_name__.replace('_', '-')}"
         base_dir = conf.get('General Settings', 'WorkDir')
@@ -113,13 +113,13 @@ class Config:
         self.is_docker_scan = False
         self.scan_dir = os.path.join(self.base_dir, '_wstemp')
         java_bin = conf.get('General Settings', 'JavaBin', fallback="java")
-        self.ws_conn = WS(user_key=conf['WhiteSource Settings']['WSUserKey'],
-                          token=conf['WhiteSource Settings']['WSApiKey'],
-                          url=conf.get('WhiteSource Settings', 'WSUrl'),
+        self.ws_conn = WS(user_key=conf['Mend Settings']['WSUserKey'],
+                          token=conf['Mend Settings']['WSApiKey'],
+                          url=conf.get('Mend Settings', 'WSUrl'),
                           java_bin=java_bin if java_bin else "java",
                           ua_path=self.base_dir,
                           tool_details=(f"ps-{__tool_name__.replace('_', '-')}", __version__))
-        set_lang_include(conf['WhiteSource Settings'].get('WSLang', "").replace(" ", ""))
+        set_lang_include(conf['Mend Settings'].get('WSLang', "").replace(" ", ""))
 
         # General Settings
         self.threads_number = conf.getint('General Settings', 'ThreadCount', fallback=5)
@@ -458,7 +458,7 @@ NexusExcludedRepositories=
 NexusAltDockerRegistryAddress=
 
 
-[WhiteSource Settings]
+[Mend Settings]
 WSUserKey=
 WSApiKey=
 WSProductName=Nexus
