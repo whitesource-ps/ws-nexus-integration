@@ -3,20 +3,19 @@ import json
 import logging
 import os
 import re
-
-import docker
-import sys
 from configparser import ConfigParser
 from distutils.util import strtobool
 from multiprocessing import Pool, Manager
 from typing import Union, List, Tuple
 from urllib.parse import urlparse, urljoin
 
+import docker
+import requests
+import sys
 import ws_sdk.ws_errors
+from ws_sdk import WS, ws_constants
 
 from ws_nexus_integration._version import __version__, __tool_name__
-import requests
-from ws_sdk import WS, ws_constants
 
 is_debug = logging.DEBUG if bool(os.environ.get("DEBUG", 0)) else logging.INFO
 logger = logging.getLogger(__tool_name__)
@@ -95,10 +94,10 @@ class Config:
             self.nexus_exc_repos_l = [repo.strip() for repo in self.nexus_exc_repos.split(',')]
         else:
             self.nexus_exc_repos_l = []
-        self.nexus_docker_repos_images_include=conf.get('Nexus Settings', 'NexusDockerReposImagesIncludes',fallback='.*.*')
-        if self.nexus_docker_repos_images_include=='':
-            self.nexus_docker_repos_images_include='.*'
-        self.nexus_docker_repos_images_include_l=[repo.strip() for repo in self.nexus_docker_repos_images_include.split(',')]
+        self.nexus_docker_repos_images_include = conf.get('Nexus Settings', 'NexusDockerReposImagesIncludes', fallback='.*.*')
+        if self.nexus_docker_repos_images_include == '':
+            self.nexus_docker_repos_images_include = '.*'
+        self.nexus_docker_repos_images_include_l = [repo.strip() for repo in self.nexus_docker_repos_images_include.split(',')]
 
         self.headers = {'Authorization': f'Basic {self.nexus_auth_token}',
                         'accept': 'application/json'}
@@ -207,12 +206,12 @@ def scan_components_from_repositories(selected_repos):
             manager = Manager()
             docker_images_q = manager.Queue()
             with Pool(config.threads_number) as pool:
-                cur_dest_folder=None
-                artifacts_to_scan = pool.starmap(repo_worker, [(comp, repo_name,cur_dest_folder,config.headers, config, docker_images_q)
+                cur_dest_folder = None
+                artifacts_to_scan = pool.starmap(repo_worker, [(comp, repo_name, cur_dest_folder, config.headers, config, docker_images_q)
                                                                for i, comp in enumerate(all_repo_items)])
 
-            if len(artifacts_to_scan) > 0 and os.path.exists(os.path.join(config.scan_dir,repo_name)):
-                execute_scan(config,repo_name)
+            if len(artifacts_to_scan) > 0 and os.path.exists(os.path.join(config.scan_dir, repo_name)):
+                execute_scan(config, repo_name)
 
 
 def call_nexus_api(url: str,
@@ -333,19 +332,17 @@ def handle_docker_repo(component: dict, conf) -> tuple:
     return ret, is_image_exists_locally, image_full_name
 
 
-def repo_worker(comp, repo_name,cur_dest_folder,headers, conf, d_images_q):
+def repo_worker(comp, repo_name, cur_dest_folder, headers, conf, d_images_q):
     all_components = []
     component_assets = comp['assets']
     logger.debug(f"Handling component ID: {comp['id']} on repository: {comp['repository']} Format: {comp['format']}")
     if comp['format'] == 'nuget':
         cur_dest_folder = os.path.join(conf.scan_dir, repo_name)
-        os.makedirs(cur_dest_folder, exist_ok=True)
 
         comp_name = '{}.{}.nupkg'.format(comp['name'], comp['version'])
         all_components.append(comp_name)
     elif re.match('(maven).*', comp['format']):
         cur_dest_folder = os.path.join(conf.scan_dir, repo_name)
-        os.makedirs(cur_dest_folder, exist_ok=True)
 
         component_assets_size = len(component_assets)
         for asset in range(0, component_assets_size):
@@ -358,7 +355,7 @@ def repo_worker(comp, repo_name,cur_dest_folder,headers, conf, d_images_q):
             d_images_q.put(image_id)
             conf.is_docker_scan = True
             conf.ws_conn.ua_conf.docker_includeSingleScan = image_id
-            execute_scan(conf,repo_name)
+            execute_scan(conf, repo_name)
             if is_image_exists_locally:
                 logger.info(f"{image_full_name} already exists locally prior to the scan - won't be removed")
             else:
@@ -368,6 +365,8 @@ def repo_worker(comp, repo_name,cur_dest_folder,headers, conf, d_images_q):
 
     else:
         comp_name = component_assets[0]['path'].rpartition('/')[-1]
+        cur_dest_folder = os.path.join(conf.scan_dir, repo_name)
+
         all_components.append(comp_name)
 
     for comp_name in all_components:
@@ -382,12 +381,15 @@ def comp_worker(repo_name, component_assets, cur_dest_folder, headers, comp_name
     logger.debug(f"Download URL: {comp_download_url}")
     os.makedirs(cur_dest_folder, exist_ok=True)
 
-    with open(os.path.join(cur_dest_folder, comp_name), 'wb') as f:
-        f.write(comp_data)
+    with open(os.path.join(cur_dest_folder, comp_name), 'wb' if isinstance(comp_data, bytes) else 'w') as f:
+        if isinstance(comp_data, dict):
+            json.dump(comp_data, f)
+        else:
+            f.write(comp_data)
     logger.info(f'Component {comp_name} has successfully downloaded')
 
 
-def execute_scan(config,repo_name) -> int:
+def execute_scan(config, repo_name) -> int:
     config.ws_conn.ua_conf.productName = config.product_name
     config.ws_conn.ua_conf.checkPolicies = strtobool(config.policies)
     config.ws_conn.ua_conf.forceCheckAllDependencies = strtobool(config.policies)
@@ -400,8 +402,8 @@ def execute_scan(config,repo_name) -> int:
         ret = config.ws_conn.scan_docker(product_name=config.product_name)
     else:
         # config.ws_conn.ua_conf.projectPerFolder = True
-        ret = config.ws_conn.scan(scan_dir=os.path.join(config.scan_dir,repo_name),
-                                  product_name=config.product_name,project_name=repo_name)
+        ret = config.ws_conn.scan(scan_dir=os.path.join(config.scan_dir, repo_name),
+                                  product_name=config.product_name, project_name=repo_name)
     logger.debug(f"Unified Agent standard output:\n {ret[1]}")
     try:
         app_status = config.ws_conn.get_last_scan_process_status(ret[2])
@@ -482,9 +484,7 @@ def main():
     config = Config(params_f)
     selected_repositories = get_repos_to_scan()
     config.resources_url = set_nexus_resources_url(config.nexus_version)
-    return_code = scan_components_from_repositories(selected_repositories)
-
-    return return_code
+    scan_components_from_repositories(selected_repositories)
 
 
 if __name__ == '__main__':
