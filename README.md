@@ -18,7 +18,7 @@ Supported formats: `maven2`, `npm`, `pypi`, `rubygems`, `nuget`, `docker` and `r
 
 ## Install and utilization from PyPi (simplest)
 1. Install ws-nexus-integration: `pip install ws-nexus-integration`
-2. Download and edit _params.config_ (available on git)
+2. Download and edit [_params.config_](https://github.com/whitesource-ps/ws-nexus-integration/blob/master/config/params.config)
 3. Execute `ws_nexus_integration <path/to/params.config>`
 
 ### Configuration Parameters
