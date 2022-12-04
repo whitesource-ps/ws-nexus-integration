@@ -14,7 +14,7 @@ Supported formats: `maven2`, `npm`, `pypi`, `rubygems`, `nuget`, `docker` and `r
 - Nexus Repository Manager 3.x (any edition)
 - Java VM > 8
 - Docker
-- Python 3.7 or above
+- Python 3.9 or above
 
 ## Install and utilization from PyPi (simplest)
 1. Install ws-nexus-integration: `pip install ws-nexus-integration`

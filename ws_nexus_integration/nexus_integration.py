@@ -335,20 +335,25 @@ def handle_docker_repo(component: dict, conf) -> tuple:
 def repo_worker(comp, repo_name, cur_dest_folder, headers, conf, d_images_q):
     all_components = []
     component_assets = comp['assets']
+
     logger.debug(f"Handling component ID: {comp['id']} on repository: {comp['repository']} Format: {comp['format']}")
     if comp['format'] == 'nuget':
-        cur_dest_folder = os.path.join(conf.scan_dir, repo_name)
 
         comp_name = '{}.{}.nupkg'.format(comp['name'], comp['version'])
         all_components.append(comp_name)
+        component_nexus_path = component_assets[0]['path'].split("/")
+        cur_dest_folder = os.path.join(*[conf.scan_dir, repo_name, *component_nexus_path])
+
     elif re.match('(maven).*', comp['format']):
-        cur_dest_folder = os.path.join(conf.scan_dir, repo_name)
 
         component_assets_size = len(component_assets)
         for asset in range(0, component_assets_size):
             comp_name = component_assets[asset]['path'].rpartition('/')[-1]
             if comp_name.split(".")[-1] == "jar":
                 all_components.append(comp_name)
+                component_nexus_path = component_assets[asset]['path'].replace(comp_name, '').split("/")
+                cur_dest_folder = os.path.join(*[conf.scan_dir, repo_name, *component_nexus_path])
+
     elif comp['format'] == 'docker':
         image_id, is_image_exists_locally, image_full_name = handle_docker_repo(comp, conf)
         if image_id:
@@ -365,7 +370,8 @@ def repo_worker(comp, repo_name, cur_dest_folder, headers, conf, d_images_q):
 
     else:
         comp_name = component_assets[0]['path'].rpartition('/')[-1]
-        cur_dest_folder = os.path.join(conf.scan_dir, repo_name)
+        component_nexus_path = component_assets[0]['path'].replace(comp_name, '').split("/")
+        cur_dest_folder = os.path.join(*[conf.scan_dir, repo_name, *component_nexus_path])
 
         all_components.append(comp_name)
 
