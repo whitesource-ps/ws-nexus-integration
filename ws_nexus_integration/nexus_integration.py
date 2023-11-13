@@ -1,3 +1,4 @@
+import subprocess
 import base64
 import json
 import logging
@@ -12,6 +13,7 @@ from urllib.parse import urlparse, urljoin
 import docker
 import requests
 import sys
+import platform
 import ws_sdk.ws_errors
 from ws_sdk import WS, ws_constants
 
@@ -112,12 +114,18 @@ class Config:
         self.base_dir = base_dir
         self.is_docker_scan = False
         self.scan_dir = os.path.join(self.base_dir, '_wstemp')
+        self.proxyurl = conf.get('General Settings', 'proxyurl', fallback="")
+        self.proxyuser = conf.get('General Settings', 'proxyuser', fallback="")
+        self.proxypsw = conf.get('General Settings', 'proxypsw', fallback="")
         java_bin = conf.get('General Settings', 'JavaBin', fallback="java")
+        self.apikey = conf['Mend Settings']['WSApiKey']
+        self.ws_url = conf.get('Mend Settings', 'WSUrl')
         self.ws_conn = WS(user_key=conf['Mend Settings']['WSUserKey'],
                           token=conf['Mend Settings']['WSApiKey'],
                           url=conf.get('Mend Settings', 'WSUrl'),
                           java_bin=java_bin if java_bin else "java",
                           ua_path=self.base_dir,
+                          proxy_url=self.proxyurl,
                           tool_details=(f"ps-{__tool_name__.replace('_', '-')}", __version__))
         set_lang_include(conf['Mend Settings'].get('WSLang', "").replace(" ", ""))
 
@@ -137,7 +145,7 @@ def set_nexus_resources_url(full_version: str) -> str:
     return resources_url
 
 
-def retrieve_nexus_repositories() -> List[str]:
+def retrieve_nexus_repositories(conf : None) -> List[str]:
     def get_nexus_ver(nexus_version):
         if nexus_version:
             logger.info(f"Nexus Version: {nexus_version}")
@@ -160,14 +168,17 @@ def retrieve_nexus_repositories() -> List[str]:
         return valid_repos
 
     logger.debug("Sending request for retrieving Nexus repository list")
-    repositories, resp_headers = call_nexus_api("/service/rest/v1/repositories", include_resp_headers=True)
-    config.nexus_version = get_nexus_ver(resp_headers.get('Server'))
-    existing_nexus_repository_list = get_valid_repositories(repositories)
-
+    repositories, resp_headers = call_nexus_api("/service/rest/v1/repositories", include_resp_headers=True, conf=conf)
+    try:
+        config.nexus_version = get_nexus_ver(resp_headers.get('Server'))
+        existing_nexus_repository_list = get_valid_repositories(repositories)
+    except:
+        config.nexus_version = ""
+        existing_nexus_repository_list = []
     return existing_nexus_repository_list
 
 
-def get_items_from_repo(repo_name: str) -> List[dict]:
+def get_items_from_repo(repo_name: str, conf) -> List[dict]:
     logger.info(f'Handling repository: {repo_name}')
     repo_comp_url = f'/service/rest/v1/components?repository={repo_name}'
 
@@ -178,7 +189,7 @@ def get_items_from_repo(repo_name: str) -> List[dict]:
         cur_repo_comp_url = repo_comp_url
         if continuation_token is not None:
             cur_repo_comp_url += f"&continuationToken={continuation_token}"
-        cur_comp_resp = call_nexus_api(cur_repo_comp_url)
+        cur_comp_resp = call_nexus_api(cur_repo_comp_url, conf=conf)
         continuation_token = None
 
         if isinstance(cur_comp_resp, dict):  # TODO: RECONSIDER REMOVING AS THIS SHOULDN'T HAPPEN
@@ -193,9 +204,9 @@ def get_items_from_repo(repo_name: str) -> List[dict]:
     return all_repo_items
 
 
-def scan_components_from_repositories(selected_repos):
+def scan_components_from_repositories(selected_repos, conf):
     for repo_name in selected_repos:
-        all_repo_items = get_items_from_repo(repo_name)
+        all_repo_items = get_items_from_repo(repo_name, conf)
 
         if not all_repo_items:
             logger.debug(f'No artifacts found in {repo_name}')
@@ -218,30 +229,81 @@ def call_nexus_api(url: str,
                    headers: dict = None,
                    include_resp_headers: bool = False,
                    method: str = "get",
+                   conf = None,
                    **kwargs) -> Union[dict, bytes, Tuple[List[dict], dict]]:
     if headers is None:
         headers = config.headers
 
     if not url.startswith("http"):
         url = urljoin(config.nexus_base_url, url)
-    logger.debug(f"Calling Nexus URL: {url}")
+
+    logger.info(f"Calling Nexus URL: {url}")
     try:
-        resp = requests.request(method=method, url=url, headers=headers, **kwargs)
-        resp.raise_for_status()
+        if conf:
+            is_https = "https://" in conf.proxyurl
+            proxy_ = conf.proxyurl.replace("https://", "").replace("http://", "")
+            if "@" not in proxy_ and conf.proxyuser and conf.proxypsw:
+                proxy_ = f"{conf.proxyuser}:{conf.proxypsw}@" + proxy_
+            proxy = proxy_ if conf.proxyurl else ""
+            if is_https:
+                proxies = {"https": f"https://{proxy}"} if proxy else {}
+            else:
+                proxies = {"http": f"http://{proxy}"} if proxy else {}
+        else:
+            proxies = {}
+        try:
+            resp = requests.request(method=method, url=url, proxies=proxies, headers=headers,
+                                    verify=not bool(proxies),  **kwargs)
+            resp.raise_for_status()
+        except:
+            try:
+                proxy_ = proxies["http"]
+            except:
+                try:
+                    proxy_ = proxies["https"]
+                except:
+                    proxy_ = ""
+            if proxy_:
+                curl_command = [
+                    'curl',
+                    '--proxy', f'{proxy_}',
+                    '--insecure',
+                    url
+                ]
+            else:
+                curl_command = [
+                    'curl',
+                    '--insecure',
+                    url
+                ]
+            try:
+                resp = subprocess.run(curl_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
+            except:
+                logger.error(f"Received Error on endpoint: {url}")
     except requests.exceptions.RequestException:
         logging.exception(f"Received Error on endpoint: {url}")
         raise
 
     try:
         ret = json.loads(resp.text)
-    except json.decoder.JSONDecodeError:
-        logger.debug("Response is not JSON")
-        ret = resp.content
-
+    except:
+        try:
+            ret = json.loads(resp.stdout)
+        except Exception as err: #json.decoder.JSONDecodeError:
+            logger.debug("Response is not JSON")
+            try:
+                ret = resp.content
+            except:
+                ret = None
+        else:
+            ret = None
     logger.debug(f"Response return type: {type(ret)}")
 
     if include_resp_headers:
-        ret = ret, resp.headers
+        try:
+            ret = ret, resp.headers
+        except:
+            ret = ret, None
 
     return ret
 
@@ -260,7 +322,7 @@ def handle_docker_repo(component: dict, conf) -> tuple:
         :returns name -> repo dictionary
         :rtype: dict
         """
-        repos_list = call_nexus_api(conf.nexus_base_url + conf.resources_url, c.headers)
+        repos_list = call_nexus_api(conf.nexus_base_url + conf.resources_url, c.headers, conf=conf)
         logger.debug(f"found {len(repos_list)} repositories")
         repo_dict = {}
         for r in repos_list:
@@ -268,12 +330,24 @@ def handle_docker_repo(component: dict, conf) -> tuple:
 
         return repo_dict
 
+    def pull_docker_image(image_name, docker_url, uname, upsw):
+        try:
+            login_command = ["docker", "login", docker_url, "-u", uname, "-p", upsw]
+            subprocess.run(login_command, check=True)
+            pull_command = f'docker pull {docker_url}/{image_name}'
+            subprocess.run(pull_command, check=True)
+        except subprocess.CalledProcessError as e:
+            logger.error(f"Error: Failed to pull image {image_name}. Exit code {e.returncode}")
+        except Exception as e:
+            logger.error(f"Error: {e}")
+
     def get_docker_repo_url(repository: dict) -> str:
         """
         Retrieves Repository URL with port
         :param repository:
         :return: Image ID in form of string
         """
+
         https_port = repository['docker'].get('httpsPort')
         http_port = repository['docker']['httpPort']
         parsed_url = urlparse(repository['url'])
@@ -294,7 +368,7 @@ def handle_docker_repo(component: dict, conf) -> tuple:
     dl_url = component['assets'][0]["downloadUrl"]
     logger.debug(f"Component repository: {component['repository']}")
     logger.debug(f"Getting manifest file from: {dl_url}")
-    manifest = call_nexus_api(dl_url, conf.headers)
+    manifest = call_nexus_api(dl_url, conf.headers, conf=conf)
     repos = get_repos_as_dict(conf)
 
     repo = repos.get(component['repository'])
@@ -314,14 +388,37 @@ def handle_docker_repo(component: dict, conf) -> tuple:
         if re.match(temp, image_full_name):
             logger.info(f"Pulling Docker image: {image_full_name}")
             try:
+                if conf:
+                    is_https = "https://" in conf.proxyurl
+                    proxy_ = conf.proxyurl.replace("https://", "").replace("http://", "")
+                    if "@" not in proxy_ and conf.proxyuser and conf.proxypsw:
+                        proxy_ = f"{conf.proxyuser}:{conf.proxypsw}@" + proxy_
+                    proxy = proxy_ if conf.proxyurl else ""
+                else:
+                    proxy = ""
+                if proxy:
+                    if is_https:
+                        os.environ['HTTPS_PROXY'] = f"https://{proxy}"
+                    else:
+                        os.environ['HTTP_PROXY'] = f"http://{proxy}"
+
+                os.environ['DOCKER_CLIENT_DEBUG'] = '1'
                 docker_client = docker.from_env(timeout=DOCKER_TIMEOUT)
                 local_image = docker_client.images.list(image_full_name)
                 is_image_exists_locally = True if local_image.__len__() == 1 else False
 
                 # Configuring Nexus user and password are mandatory for non-anonymous Docker repositories
-                docker_client.login(username=conf.nexus_user, password=conf.nexus_password, registry=docker_repo_url)
-                pull_res = docker_client.images.pull(image_full_name)
-                logger.debug(f"Image ID: {image_full_name} successfully pulled")
+                try:
+                    docker_client.login(username=conf.nexus_user, password=conf.nexus_password, registry=docker_repo_url)
+                    pull_res = docker_client.images.pull(image_full_name)
+                    logger.debug(f"Image ID: {image_full_name} successfully pulled")
+                except Exception as err:
+                    if install_docker(proxy=proxy if proxy else None) != -100:
+                        pull_docker_image(image_full_name, docker_repo_url, conf.nexus_user, conf.nexus_password)
+                        logger.debug(f"Image ID: {image_full_name} successfully pulled")
+                    else:
+                        logging.exception(f"Error loading image: {image_full_name}")
+
                 ret = f"{image_name} {manifest['tag']}"  # removing : operator in favour of docker.includeSingleScan
 
             except docker.errors.DockerException:
@@ -330,6 +427,47 @@ def handle_docker_repo(component: dict, conf) -> tuple:
         logger.warning(f"Repository was not found for {component['repository']}. Skipping")
 
     return ret, is_image_exists_locally, image_full_name
+
+
+def install_docker(proxy = None):
+    def check_docker_installed():
+        try:
+            return subprocess.run(['docker', '--version'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True).returncode == 0
+        except Exception as e:
+            logger.error(f"Error:{e}")
+            return False
+
+    result = -100
+    try:
+        # Detect the operating system
+        system = platform.system()
+        if not check_docker_installed():
+            if system == "Linux":
+                # Run the installation command for Docker on Linux
+                if proxy:
+                    install_command = f"curl -fsSL https://get.docker.com -o get-docker.sh --proxy {proxy} --insecure && sudo sh get-docker.sh"
+                else:
+                    install_command = "curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh"
+                result = subprocess.run(install_command, shell=True, check=True).returncode
+            elif system == "Windows":
+                # Run the installation command for Docker on Windows
+                if proxy:
+                    install_command = f"Invoke-WebRequest -UseBasicParsing -Uri https://desktop.docker.com/win/stable/Docker%20Desktop%20Installer.exe -OutFile DockerInstaller.exe -Proxy {proxy}; Start-Process -Wait -FilePath .\DockerInstaller.exe"
+                else:
+                    install_command = f"Invoke-WebRequest -UseBasicParsing -Uri https://desktop.docker.com/win/stable/Docker%20Desktop%20Installer.exe -OutFile DockerInstaller.exe ; Start-Process -Wait -FilePath .\DockerInstaller.exe"
+                result = subprocess.run(["powershell", "-Command", install_command], check=True).returncode
+            else:
+                logger.warning("Unsupported operating system: ", system)
+                return result
+
+            logger.info("Docker has been installed successfully.")
+        else:
+            logger.info("Docker has been installed successfully already.")
+    except subprocess.CalledProcessError as e:
+        logger.error(f"Error: Docker installation failed with exit code {e.returncode}.")
+    except Exception as e:
+        logger.error(f"Error: {e}")
+    return result
 
 
 def repo_worker(comp, repo_name, cur_dest_folder, headers, conf, d_images_q):
@@ -359,6 +497,19 @@ def repo_worker(comp, repo_name, cur_dest_folder, headers, conf, d_images_q):
             if is_image_exists_locally:
                 logger.info(f"{image_full_name} already exists locally prior to the scan - won't be removed")
             else:
+                if conf:
+                    is_https = "https://" in conf.proxyurl
+                    proxy_ = conf.proxyurl.replace("https://", "").replace("http://", "")
+                    if "@" not in proxy_ and conf.proxyuser and conf.proxypsw:
+                        proxy_ = f"{conf.proxyuser}:{conf.proxypsw}@" + proxy_
+                    proxy = proxy_ if conf.proxyurl else ""
+                else:
+                    proxy = ""
+                if proxy:
+                    if is_https:
+                        os.environ['HTTPS_PROXY'] = f"https://{proxy}"
+                    else:
+                        os.environ['HTTP_PROXY'] = f"http://{proxy}"
                 docker_c = docker.from_env(timeout=DOCKER_TIMEOUT)
                 docker_c.images.remove(image=image_full_name, force=True)
                 logger.info(f"{image_full_name} image was scanned successfully and will be removed from the local environment")
@@ -370,14 +521,14 @@ def repo_worker(comp, repo_name, cur_dest_folder, headers, conf, d_images_q):
         all_components.append(comp_name)
 
     for comp_name in all_components:
-        comp_worker(repo_name, component_assets, cur_dest_folder, headers, comp_name)
+        comp_worker(repo_name, component_assets, cur_dest_folder, headers, comp_name, conf)
     return all_components
 
 
-def comp_worker(repo_name, component_assets, cur_dest_folder, headers, comp_name):
+def comp_worker(repo_name, component_assets, cur_dest_folder, headers, comp_name, conf = None):
     logger.info(f"Downloading '{comp_name}' component from: '{repo_name}' to {cur_dest_folder}")
     comp_download_url = component_assets[0]["downloadUrl"]
-    comp_data = call_nexus_api(comp_download_url, headers)
+    comp_data = call_nexus_api(comp_download_url, headers, conf=conf)
     logger.debug(f"Download URL: {comp_download_url}")
     os.makedirs(cur_dest_folder, exist_ok=True)
 
@@ -406,15 +557,17 @@ def execute_scan(config, repo_name) -> int:
                                   product_name=config.product_name, project_name=repo_name)
     logger.debug(f"Unified Agent standard output:\n {ret[1]}")
     try:
-        app_status = config.ws_conn.get_last_scan_process_status(ret[2])
+        app_status = get_scan_result_by_curl(config.ws_conn, ret[2])
+        #config.ws_conn.get_last_scan_process_status(ret[2])
     except ws_sdk.ws_errors.WsSdkServerInsufficientPermissions:
         logger.debug("Insufficient permissions to execute call")
-
+    except Exception as err:
+        pass
     return ret[0]
 
 
 def get_repos_to_scan() -> List[str]:
-    all_repos = retrieve_nexus_repositories()
+    all_repos = retrieve_nexus_repositories(conf=config)
     logger.debug(f"The following repositories were found: {all_repos}")
     repos_to_scan = []
     if config.nexus_repos:
@@ -474,17 +627,61 @@ JavaBin=
         exit(-1)
 
 
+def get_scan_result_by_curl(conn, request_token):
+    proxies = conn.proxies
+    try:
+        proxy_ = proxies["http"]
+    except:
+        try:
+            proxy_ = proxies["https"]
+        except:
+            proxy_ = ""
+
+    curl_command = [
+            'curl',
+            conn.api_url,
+            '--header', 'Content-Type: application/json',
+            '--data', '{"requestType": "getRequestState", '
+                      '"orgToken": "'+config.apikey+'", '
+                                                    '"userKey": "'+conn.user_key+'","requestToken": "'+request_token+'"}',
+            '--proxy', proxy_,
+            '--insecure',
+        ]
+    try:
+        rs = subprocess.run(curl_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
+        return json.loads(rs.stdout)["requestState"]
+    except:
+        return "UNKNOWN"
+
+
 def main():
     global config
     conf_file = 'params.config'
     if len(sys.argv) > 1:
         conf_file = sys.argv[1]
     params_f = read_conf_file(conf_file)
-
     config = Config(params_f)
+
+    #res = get_scan_result_by_curl(config.ws_conn, "jksdfhjsfdhjsd")
+    '''
+    rs_1 = config.ws_conn.call_ws_api(request_type="getOrganizationProjectVitals",
+                kv_dict={"orgToken": config.apikey})
+    curl_command = [
+        'curl',
+        'https://app-eu.whitesourcesoftware.com/api/v1.3',
+        '--header', 'Content-Type: application/json',
+        '--data', '{"requestType": "getOrganizationProjectVitals", "orgToken": "'+config.apikey+'"}',
+        '--proxy', config.proxyurl,
+        '--insecure',
+        #'--data', '{"requestType": "getProjectAlertsByType", "userKey": "c67a40509d8843a98fb4e16c94d3dfb5bdbfde598edd4f508b7eca6396039aa1",'
+        #          '"alertType": "SECURITY_VULNERABILITY", "projectToken": "d1fbbc267d8543c59a9d16b745e79bd2b5678f6bb3d5425088c4f1c0ecc6b52d",'
+        #'"fromDate": "2023-05-08", "toDate": "2023-05-09"}'
+    ]
+    rs = subprocess.run(curl_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True, shell=True)
+    '''
     selected_repositories = get_repos_to_scan()
     config.resources_url = set_nexus_resources_url(config.nexus_version)
-    scan_components_from_repositories(selected_repositories)
+    scan_components_from_repositories(selected_repositories, config)
 
 
 if __name__ == '__main__':
