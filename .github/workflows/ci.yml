@@ -2,14 +2,9 @@ name: CI
 on:
   push:
     branches:
-      - '**'
-      - '!ws-iac-scan-results/**'
-      - '!whitesource-remediate/master-all**'
-      - '!whitesource/migrate-configuration**'
+      - 'main'
     tags:
       - '*'
-  schedule:
-    - cron: '0 4 * * *'
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
