@@ -254,8 +254,18 @@ def call_nexus_api(url: str,
         try:
             resp = requests.request(method=method, url=url, proxies=proxies, headers=headers,
                                     verify=not bool(proxies),  **kwargs)
+            if 400 <= resp.status_code < 500:
+                if isinstance(resp.reason, bytes):
+                    try:
+                        reason = resp.reason.decode("utf-8")
+                    except UnicodeDecodeError:
+                        reason = resp.reason.decode("iso-8859-1")
+                else:
+                    reason = resp.reason
+                logger.error(f"The request for getting repos failed. Reason: {reason}.Check credentials (Nexus token or pair username/password)")
+                sys.exit(-1)
             resp.raise_for_status()
-        except:
+        except Exception as err:
             try:
                 proxy_ = proxies["http"]
             except:
@@ -295,8 +305,8 @@ def call_nexus_api(url: str,
                 ret = resp.content
             except:
                 ret = None
-        else:
-            ret = None
+        #else:
+        #    ret = None
     logger.debug(f"Response return type: {type(ret)}")
 
     if include_resp_headers:
