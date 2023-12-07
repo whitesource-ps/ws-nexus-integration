@@ -24,6 +24,7 @@ formatter = logging.Formatter('%(levelname)s %(asctime)s %(thread)d %(name)s: %(
 s_handler = logging.StreamHandler()
 s_handler.setFormatter(formatter)
 logger.addHandler(s_handler)
+AGENT_INFO = {"agent": f"{__tool_name__.replace('_', '-') if 'ps' in __tool_name__ else 'ps-'+__tool_name__.replace('_', '-')}", "agentVersion": __version__}
 # logger.propagate = False
 
 SUPPORTED_FORMATS = {'maven2', 'npm', 'pypi', 'rubygems', 'nuget', 'raw', 'docker'}
@@ -484,6 +485,7 @@ def main():
     config = Config(params_f)
     selected_repositories = get_repos_to_scan()
     config.resources_url = set_nexus_resources_url(config.nexus_version)
+    config.ws_conn.call_ws_api("getOrganizationDetails")
     scan_components_from_repositories(selected_repositories)
 
 
