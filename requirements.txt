@@ -1,4 +1,4 @@
-requests==2.27.1
+requests~=2.31.0
 wget~=3.2
 ws-sdk~=0.9.1
 docker~=5.0.03
