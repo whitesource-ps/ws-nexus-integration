@@ -1,6 +1,6 @@
 requests~=2.31.0
 wget~=3.2
-ws-sdk~=0.9.1
+ws-sdk~=23.8.3
 docker~=5.0.03
 setuptools~=60.2.0
 pytest~=7.1.2
