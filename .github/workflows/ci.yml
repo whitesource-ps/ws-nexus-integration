@@ -17,7 +17,7 @@ jobs:
       TOOL_NAME: ws_nexus_integration
     strategy:
       matrix:
-        python-version: [3.7, 3.8, 3.9]
+        python-version: ['3.8', '3.9', '3.10']
     steps:
       - name: Set Environment Variables
         run: |
