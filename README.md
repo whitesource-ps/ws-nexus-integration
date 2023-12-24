@@ -60,6 +60,12 @@ Supported formats: `maven2`, `npm`, `pypi`, `rubygems`, `nuget`, `docker` and `r
 -------------------------------------------------------------------------------------------------------------------
 | Mend Settings        | WSUrl             | Mend server URL, can be found under the 'Integrate' tab in           |
 |                      |                   | your Mend organization.                                              |
+-------------------------------------------------------------------------------------------------------------------
+| Mend Settings        | MendUA            | (OptionaL) If set to True Unified Agent will be used for scanning    |
+|                      |                   | otherwise Mend CLI will be used. (default: empty (False))                    |
+-------------------------------------------------------------------------------------------------------------------
+| Mend Settings        | MendUserEmail     | (OptionaL)The email should be set for using Mend CLI for scanning    |
+|                      |                   | (default: empty)                                                     |
 ===================================================================================================================
 -------------------------------------------------------------------------------------------------------------------
 | General Settings     | ThreadCount       | Multi-threading speeds up the scan preperation phase, but it depends |
