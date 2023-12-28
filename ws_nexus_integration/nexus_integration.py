@@ -99,6 +99,13 @@ class Config:
                 self.mend_cli_file = ""
                 return "Mend CLI was not downloaded"
 
+        def get_mend_name_param(param_name):
+            try:
+                param_ = conf['Mend Settings'][param_name]
+                return param_name
+            except:
+                return param_name.replace("WS", "Mend")
+
         # Nexus Settings
         self.nexus_base_url = conf.get('Nexus Settings', 'NexusBaseUrl', fallback='http://localhost:8081').strip('/')
         self.nexus_alt_docker_registry_address = conf.get('Nexus Settings', 'NexusAltDockerRegistryAddress', fallback=None)
@@ -121,8 +128,8 @@ class Config:
         self.headers = {'Authorization': f'Basic {self.nexus_auth_token}',
                         'accept': 'application/json'}
         # Mend Settings
-        self.product_name = conf.get('Mend Settings', 'WSProductName', fallback='Nexus')
-        self.check_policies = conf.getboolean('Mend Settings', 'WSCheckPolicies', fallback=False)
+        self.product_name = conf.get('Mend Settings', get_mend_name_param('WSProductName'), fallback='Nexus')
+        self.check_policies = conf.getboolean('Mend Settings', get_mend_name_param('WSCheckPolicies'), fallback=False)
         self.policies = 'true' if self.check_policies else 'false'
         ws_name = f"ws-{__tool_name__.replace('_', '-')}"
         base_dir = conf.get('General Settings', 'WorkDir')
@@ -140,19 +147,19 @@ class Config:
         else:
             self.mend_cli_url = MEND_MAC_OS
         if not self.mendua:
-            self.mend_url = conf.get('Mend Settings', 'WSUrl')
+            self.mend_url = conf.get('Mend Settings', get_mend_name_param('WSUrl'))
             self.mend_email = conf.get('Mend Settings', 'MendUserEmail')
-            self.mend_user_key = conf.get('Mend Settings','WSUserKey')
+            self.mend_user_key = conf.get('Mend Settings',get_mend_name_param('WSUserKey'))
             logger.info(download_mend_cli())
 
         java_bin = conf.get('General Settings', 'JavaBin', fallback="java")
-        self.ws_conn = WS(user_key=conf['Mend Settings']['WSUserKey'],
-                          token=conf['Mend Settings']['WSApiKey'],
-                          url=conf.get('Mend Settings', 'WSUrl'),
+        self.ws_conn = WS(user_key=conf['Mend Settings'][get_mend_name_param('WSUserKey')],
+                          token=conf['Mend Settings'][get_mend_name_param('WSApiKey')],
+                          url=conf.get('Mend Settings', get_mend_name_param('WSUrl')),
                           java_bin=java_bin if java_bin else "java",
                           ua_path=self.base_dir,
                           tool_details=(f"ps-{__tool_name__.replace('_', '-')}", __version__))
-        set_lang_include(conf['Mend Settings'].get('WSLang', "").replace(" ", ""))
+        set_lang_include(conf['Mend Settings'].get(get_mend_name_param('WSLang'), "").replace(" ", ""))
 
         # General Settings
         self.threads_number = conf.getint('General Settings', 'ThreadCount', fallback=5)
@@ -528,12 +535,14 @@ NexusAltDockerRegistryAddress=
 
 
 [Mend Settings]
-WSUserKey=
-WSApiKey=
-WSProductName=Nexus
-WSCheckPolicies=False
-WSUrl=
-WSLang=
+MendUserKey=
+MendApiKey=
+MendProductName=Nexus
+MendCheckPolicies=False
+MendUrl=
+MendLang=
+MendUA=False
+MendUserEmail=
 
 [General Settings]
 ThreadCount=1
