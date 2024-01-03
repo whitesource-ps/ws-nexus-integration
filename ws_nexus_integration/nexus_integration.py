@@ -367,10 +367,14 @@ def handle_docker_repo(component: dict, conf) -> tuple:
                 docker_client = docker.from_env(timeout=DOCKER_TIMEOUT)
                 local_image = docker_client.images.list(image_full_name)
                 is_image_exists_locally = True if local_image.__len__() == 1 else False
+                #auth_header = base64.b64encode(conf.nexus_auth_token.encode()).decode()
+                #headers = {"X-Registry-Auth": auth_header}
 
                 # Configuring Nexus user and password are mandatory for non-anonymous Docker repositories
-                login_ = docker_client.login(username=conf.nexus_user, password=conf.nexus_password, registry=docker_repo_url)
+                if conf.nexus_user and conf.nexus_password:
+                    login_ = docker_client.login(username=conf.nexus_user, password=conf.nexus_password, registry=docker_repo_url)
                 pull_res = docker_client.images.pull(image_full_name)
+
                 logger.debug(f"Image ID: {image_full_name} successfully pulled")
                 ret = f"{image_name} {tag}"  # removing : operator in favour of docker.includeSingleScan
 
