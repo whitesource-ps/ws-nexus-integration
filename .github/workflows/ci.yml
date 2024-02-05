@@ -8,8 +8,6 @@ on:
       - '!whitesource/migrate-configuration**'
     tags:
       - '*'
-  schedule:
-    - cron: '0 4 * * *'
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
@@ -21,7 +19,7 @@ jobs:
     steps:
       - name: Set Environment Variables
         run: |
-          echo "VERSION=0.0.0.ci0" >> $GITHUB_ENV
+          echo "VERSION=0.0.0.dev0" >> $GITHUB_ENV
           echo "RELEASE=false" >> $GITHUB_ENV
           echo "TOOL_DIR=$TOOL_NAME" >> $GITHUB_ENV
           if [[ $GITHUB_REF == refs/tags/v* ]]; then
